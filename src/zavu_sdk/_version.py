@@ -3,10 +3,10 @@
 import importlib.metadata
 
 __title__: str = "zavu-sdk"
-__version__: str = "0.0.7"
+__version__: str = "0.0.8"
 __openapi_doc_version__: str = "0.2.0"
 __gen_version__: str = "2.768.1"
-__user_agent__: str = "speakeasy-sdk/python 0.0.7 2.768.1 0.2.0 zavu-sdk"
+__user_agent__: str = "speakeasy-sdk/python 0.0.8 2.768.1 0.2.0 zavu-sdk"
 
 try:
     if __package__ is not None:

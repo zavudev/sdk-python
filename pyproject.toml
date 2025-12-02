@@ -1,7 +1,7 @@
 
 [project]
 name = "zavu-sdk"
-version = "0.0.7"
+version = "0.0.8"
 description = "Python SDK for Zavu multi-channel messaging API."
 authors = [{ name = "Crubing LLC" },]
 readme = "README.md"
