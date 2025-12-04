@@ -1,551 +1,399 @@
-# Zavu Python SDK
+# Zavudev Python API library
 
-Developer-friendly & type-safe Python SDK for the Zavu multi-channel messaging API.
+<!-- prettier-ignore -->
+[![PyPI version](https://img.shields.io/pypi/v/zavudev.svg?label=pypi%20(stable))](https://pypi.org/project/zavudev/)
 
-[![License: MIT](https://img.shields.io/badge/LICENSE_//_MIT-3b5bdb?style=for-the-badge&labelColor=eff6ff)](https://opensource.org/licenses/MIT)
+The Zavudev Python library provides convenient access to the Zavudev REST API from any Python 3.9+
+application. The library includes type definitions for all request params and response fields,
+and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
-<!-- Start Summary [summary] -->
-## Summary
+It is generated with [Stainless](https://www.stainless.com/).
 
-Zavu Messaging API: Unified multi-channel messaging API for Zavu.
+## Documentation
 
-Supported channels:
-- **SMS**: Simple text messages
-- **WhatsApp**: Rich messaging with media, buttons, lists, and templates
+The full API of this library can be found in [api.md](api.md).
 
-Design goals:
-- Simple `send()` entrypoint for developers
-- Project-level authentication via Bearer token
-- Support for all WhatsApp message types (text, image, video, audio, document, sticker, location, contact, buttons, list, reaction, template)
-- If a non-text message type is sent, WhatsApp channel is used automatically
-- 24-hour WhatsApp conversation window enforcement
-<!-- End Summary [summary] -->
+## Installation
 
-<!-- Start Table of Contents [toc] -->
-## Table of Contents
-<!-- $toc-max-depth=2 -->
-* [Zavu Python SDK](#zavu-python-sdk)
-  * [SDK Installation](#sdk-installation)
-  * [IDE Support](#ide-support)
-  * [SDK Example Usage](#sdk-example-usage)
-  * [Authentication](#authentication)
-  * [Available Resources and Operations](#available-resources-and-operations)
-  * [Retries](#retries)
-  * [Error Handling](#error-handling)
-  * [Server Selection](#server-selection)
-  * [Custom HTTP Client](#custom-http-client)
-  * [Resource Management](#resource-management)
-  * [Debugging](#debugging)
-* [Development](#development)
-  * [Maturity](#maturity)
-  * [Contributions](#contributions)
-
-<!-- End Table of Contents [toc] -->
-
-<!-- Start SDK Installation [installation] -->
-## SDK Installation
-
-
+```sh
+# install from the production repo
+pip install git+ssh://git@github.com/zavudev/sdk-python.git
+```
 
 > [!NOTE]
-> **Python version upgrade policy**
->
-> Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
+> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install zavudev`
 
-The SDK can be installed with *uv*, *pip*, or *poetry* package managers.
+## Usage
 
-### uv
-
-*uv* is a fast Python package installer and resolver, designed as a drop-in replacement for pip and pip-tools. It's recommended for its speed and modern Python tooling capabilities.
-
-```bash
-uv add zavu-sdk
-```
-
-### PIP
-
-*PIP* is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
-
-```bash
-pip install zavu-sdk
-```
-
-### Poetry
-
-*Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
-
-```bash
-poetry add zavu-sdk
-```
-
-### Shell and script usage with `uv`
-
-You can use this SDK in a Python shell with [uv](https://docs.astral.sh/uv/) and the `uvx` command that comes with it like so:
-
-```shell
-uvx --from zavu-sdk python
-```
-
-It's also possible to write a standalone Python script without needing to set up a whole project like so:
+The full API of this library can be found in [api.md](api.md).
 
 ```python
-#!/usr/bin/env -S uv run --script
-# /// script
-# requires-python = ">=3.9"
-# dependencies = [
-#     "zavu-sdk",
-# ]
-# ///
+import os
+from zavudev import Zavudev
 
-from zavu_sdk import Zavu
-
-sdk = Zavu(
-  # SDK arguments
+client = Zavudev(
+    api_key=os.environ.get("ZAVUDEV_API_KEY"),  # This is the default and can be omitted
 )
 
-# Rest of script here...
+message_response = client.messages.send(
+    to="+56912345678",
+)
+print(message_response.message)
 ```
 
-Once that is saved to a file, you can run it with `uv run script.py` where
-`script.py` can be replaced with the actual file name.
-<!-- End SDK Installation [installation] -->
+While you can provide an `api_key` keyword argument,
+we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
+to add `ZAVUDEV_API_KEY="My API Key"` to your `.env` file
+so that your API Key is not stored in source control.
 
-<!-- Start IDE Support [idesupport] -->
-## IDE Support
+## Async usage
 
-### PyCharm
-
-Generally, the SDK will work well with most IDEs out of the box. However, when using PyCharm, you can enjoy much better integration with Pydantic by installing an additional plugin.
-
-- [PyCharm Pydantic Plugin](https://docs.pydantic.dev/latest/integrations/pycharm/)
-<!-- End IDE Support [idesupport] -->
-
-<!-- Start SDK Example Usage [usage] -->
-## SDK Example Usage
-
-### Example
+Simply import `AsyncZavudev` instead of `Zavudev` and use `await` with each API call:
 
 ```python
-# Synchronous Example
-from zavu_sdk import Zavu
-
-
-with Zavu(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as zavu:
-
-    res = zavu.send_message(to="+56912345678", zavu_sender="sender_12345", text="Your verification code is 123456", content={
-        "media_url": "https://example.com/image.jpg",
-        "mime_type": "image/jpeg",
-        "filename": "invoice.pdf",
-        "template_variables": {
-            "1": "John",
-            "2": "ORD-12345",
-        },
-    }, idempotency_key="msg_01HZY4ZP7VQY2J3BRW7Z6G0QGE")
-
-    # Handle response
-    print(res)
-```
-
-</br>
-
-The same SDK client can also be used to make asynchronous requests by importing asyncio.
-
-```python
-# Asynchronous Example
+import os
 import asyncio
-from zavu_sdk import Zavu
+from zavudev import AsyncZavudev
 
-async def main():
+client = AsyncZavudev(
+    api_key=os.environ.get("ZAVUDEV_API_KEY"),  # This is the default and can be omitted
+)
 
-    async with Zavu(
-        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-    ) as zavu:
 
-        res = await zavu.send_message_async(to="+56912345678", zavu_sender="sender_12345", text="Your verification code is 123456", content={
-            "media_url": "https://example.com/image.jpg",
-            "mime_type": "image/jpeg",
-            "filename": "invoice.pdf",
-            "template_variables": {
-                "1": "John",
-                "2": "ORD-12345",
-            },
-        }, idempotency_key="msg_01HZY4ZP7VQY2J3BRW7Z6G0QGE")
+async def main() -> None:
+    message_response = await client.messages.send(
+        to="+56912345678",
+    )
+    print(message_response.message)
 
-        # Handle response
-        print(res)
 
 asyncio.run(main())
 ```
-<!-- End SDK Example Usage [usage] -->
 
-<!-- Start Authentication [security] -->
-## Authentication
+Functionality between the synchronous and asynchronous clients is otherwise identical.
 
-### Per-Client Security Schemes
+### With aiohttp
 
-This SDK supports the following security scheme globally:
+By default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.
 
-| Name          | Type | Scheme      |
-| ------------- | ---- | ----------- |
-| `bearer_auth` | http | HTTP Bearer |
+You can enable this by installing `aiohttp`:
 
-To authenticate with the API the `bearer_auth` parameter must be set when initializing the SDK client instance. For example:
-```python
-from zavu_sdk import Zavu
-
-
-with Zavu(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as zavu:
-
-    res = zavu.send_message(to="+56912345678", zavu_sender="sender_12345", text="Your verification code is 123456", content={
-        "media_url": "https://example.com/image.jpg",
-        "mime_type": "image/jpeg",
-        "filename": "invoice.pdf",
-        "template_variables": {
-            "1": "John",
-            "2": "ORD-12345",
-        },
-    }, idempotency_key="msg_01HZY4ZP7VQY2J3BRW7Z6G0QGE")
-
-    # Handle response
-    print(res)
-
-```
-<!-- End Authentication [security] -->
-
-<!-- Start Available Resources and Operations [operations] -->
-## Available Resources and Operations
-
-<details open>
-<summary>Available methods</summary>
-
-### [Zavu SDK](docs/sdks/zavu/README.md)
-
-* [send_message](docs/sdks/zavu/README.md#send_message) - Send a message
-* [list_messages](docs/sdks/zavu/README.md#list_messages) - List messages
-* [get_message](docs/sdks/zavu/README.md#get_message) - Get message by ID
-* [send_reaction](docs/sdks/zavu/README.md#send_reaction) - Send reaction to message
-* [list_templates](docs/sdks/zavu/README.md#list_templates) - List templates
-* [create_template](docs/sdks/zavu/README.md#create_template) - Create template
-* [get_template](docs/sdks/zavu/README.md#get_template) - Get template
-* [delete_template](docs/sdks/zavu/README.md#delete_template) - Delete template
-* [list_senders](docs/sdks/zavu/README.md#list_senders) - List senders
-* [create_sender](docs/sdks/zavu/README.md#create_sender) - Create sender
-* [get_sender](docs/sdks/zavu/README.md#get_sender) - Get sender
-* [update_sender](docs/sdks/zavu/README.md#update_sender) - Update sender
-* [delete_sender](docs/sdks/zavu/README.md#delete_sender) - Delete sender
-* [list_contacts](docs/sdks/zavu/README.md#list_contacts) - List contacts
-* [get_contact](docs/sdks/zavu/README.md#get_contact) - Get contact
-* [update_contact](docs/sdks/zavu/README.md#update_contact) - Update contact
-* [get_contact_by_phone](docs/sdks/zavu/README.md#get_contact_by_phone) - Get contact by phone number
-* [introspect_phone](docs/sdks/zavu/README.md#introspect_phone) - Introspect phone number
-
-</details>
-<!-- End Available Resources and Operations [operations] -->
-
-<!-- Start Retries [retries] -->
-## Retries
-
-Some of the endpoints in this SDK support retries. If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API. However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
-
-To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
-```python
-from zavu_sdk import Zavu
-from zavu_sdk.utils import BackoffStrategy, RetryConfig
-
-
-with Zavu(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as zavu:
-
-    res = zavu.send_message(to="+56912345678", zavu_sender="sender_12345", text="Your verification code is 123456", content={
-        "media_url": "https://example.com/image.jpg",
-        "mime_type": "image/jpeg",
-        "filename": "invoice.pdf",
-        "template_variables": {
-            "1": "John",
-            "2": "ORD-12345",
-        },
-    }, idempotency_key="msg_01HZY4ZP7VQY2J3BRW7Z6G0QGE",
-        RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
-
-    # Handle response
-    print(res)
-
+```sh
+# install from the production repo
+pip install 'zavudev[aiohttp] @ git+ssh://git@github.com/zavudev/sdk-python.git'
 ```
 
-If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
+Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
+
 ```python
-from zavu_sdk import Zavu
-from zavu_sdk.utils import BackoffStrategy, RetryConfig
+import os
+import asyncio
+from zavudev import DefaultAioHttpClient
+from zavudev import AsyncZavudev
 
 
-with Zavu(
-    retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as zavu:
-
-    res = zavu.send_message(to="+56912345678", zavu_sender="sender_12345", text="Your verification code is 123456", content={
-        "media_url": "https://example.com/image.jpg",
-        "mime_type": "image/jpeg",
-        "filename": "invoice.pdf",
-        "template_variables": {
-            "1": "John",
-            "2": "ORD-12345",
-        },
-    }, idempotency_key="msg_01HZY4ZP7VQY2J3BRW7Z6G0QGE")
-
-    # Handle response
-    print(res)
-
-```
-<!-- End Retries [retries] -->
-
-<!-- Start Error Handling [errors] -->
-## Error Handling
-
-[`SDKError`](./src/zavu_sdk/errors/sdkerror.py) is the base class for all HTTP error responses. It has the following properties:
-
-| Property           | Type             | Description                                                                             |
-| ------------------ | ---------------- | --------------------------------------------------------------------------------------- |
-| `err.message`      | `str`            | Error message                                                                           |
-| `err.status_code`  | `int`            | HTTP response status code eg `404`                                                      |
-| `err.headers`      | `httpx.Headers`  | HTTP response headers                                                                   |
-| `err.body`         | `str`            | HTTP body. Can be empty string if no body is returned.                                  |
-| `err.raw_response` | `httpx.Response` | Raw HTTP response                                                                       |
-| `err.data`         |                  | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
-
-### Example
-```python
-from zavu_sdk import Zavu, errors
+async def main() -> None:
+    async with AsyncZavudev(
+        api_key=os.environ.get("ZAVUDEV_API_KEY"),  # This is the default and can be omitted
+        http_client=DefaultAioHttpClient(),
+    ) as client:
+        message_response = await client.messages.send(
+            to="+56912345678",
+        )
+        print(message_response.message)
 
 
-with Zavu(
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as zavu:
-    res = None
-    try:
-
-        res = zavu.send_message(to="+56912345678", zavu_sender="sender_12345", text="Your verification code is 123456", content={
-            "media_url": "https://example.com/image.jpg",
-            "mime_type": "image/jpeg",
-            "filename": "invoice.pdf",
-            "template_variables": {
-                "1": "John",
-                "2": "ORD-12345",
-            },
-        }, idempotency_key="msg_01HZY4ZP7VQY2J3BRW7Z6G0QGE")
-
-        # Handle response
-        print(res)
-
-
-    except errors.SDKError as e:
-        # The base class for HTTP error responses
-        print(e.message)
-        print(e.status_code)
-        print(e.body)
-        print(e.headers)
-        print(e.raw_response)
-
-        # Depending on the method different errors may be thrown
-        if isinstance(e, errors.Error):
-            print(e.data.code)  # str
-            print(e.data.message)  # str
-            print(e.data.details)  # Optional[Dict[str, Any]]
+asyncio.run(main())
 ```
 
-### Error Classes
-**Primary errors:**
-* [`SDKError`](./src/zavu_sdk/errors/sdkerror.py): The base class for HTTP error responses.
-  * [`Error`](./src/zavu_sdk/errors/error.py): Generic error.
+## Using types
 
-<details><summary>Less common errors (5)</summary>
+Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:
 
-<br />
+- Serializing back into JSON, `model.to_json()`
+- Converting to a dictionary, `model.to_dict()`
 
-**Network errors:**
-* [`httpx.RequestError`](https://www.python-httpx.org/exceptions/#httpx.RequestError): Base class for request errors.
-    * [`httpx.ConnectError`](https://www.python-httpx.org/exceptions/#httpx.ConnectError): HTTP client was unable to make a request to a server.
-    * [`httpx.TimeoutException`](https://www.python-httpx.org/exceptions/#httpx.TimeoutException): HTTP request timed out.
+Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
+## Nested params
 
-**Inherit from [`SDKError`](./src/zavu_sdk/errors/sdkerror.py)**:
-* [`ResponseValidationError`](./src/zavu_sdk/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
+Nested parameters are dictionaries, typed using `TypedDict`, for example:
 
-</details>
-<!-- End Error Handling [errors] -->
-
-<!-- Start Server Selection [server] -->
-## Server Selection
-
-### Override Server URL Per-Client
-
-The default server can be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
 ```python
-from zavu_sdk import Zavu
+from zavudev import Zavudev
 
+client = Zavudev()
 
-with Zavu(
-    server_url="https://api.zavu.dev",
-    bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-) as zavu:
-
-    res = zavu.send_message(to="+56912345678", zavu_sender="sender_12345", text="Your verification code is 123456", content={
-        "media_url": "https://example.com/image.jpg",
-        "mime_type": "image/jpeg",
-        "filename": "invoice.pdf",
-        "template_variables": {
-            "1": "John",
-            "2": "ORD-12345",
-        },
-    }, idempotency_key="msg_01HZY4ZP7VQY2J3BRW7Z6G0QGE")
-
-    # Handle response
-    print(res)
-
+message_response = client.messages.send(
+    to="+56912345678",
+    content={},
+)
+print(message_response.content)
 ```
-<!-- End Server Selection [server] -->
 
-<!-- Start Custom HTTP Client [http-client] -->
-## Custom HTTP Client
+## Handling errors
 
-The Python SDK makes API calls using the [httpx](https://www.python-httpx.org/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
-Depending on whether you are using the sync or async version of the SDK, you can pass an instance of `HttpClient` or `AsyncHttpClient` respectively, which are Protocol's ensuring that the client has the necessary methods to make API calls.
-This allows you to wrap the client with your own custom logic, such as adding custom headers, logging, or error handling, or you can just pass an instance of `httpx.Client` or `httpx.AsyncClient` directly.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `zavudev.APIConnectionError` is raised.
 
-For example, you could specify a header for every request that this sdk makes as follows:
+When the API returns a non-success status code (that is, 4xx or 5xx
+response), a subclass of `zavudev.APIStatusError` is raised, containing `status_code` and `response` properties.
+
+All errors inherit from `zavudev.APIError`.
+
 ```python
-from zavu_sdk import Zavu
+import zavudev
+from zavudev import Zavudev
+
+client = Zavudev()
+
+try:
+    client.messages.send(
+        to="+56912345678",
+    )
+except zavudev.APIConnectionError as e:
+    print("The server could not be reached")
+    print(e.__cause__)  # an underlying Exception, likely raised within httpx.
+except zavudev.RateLimitError as e:
+    print("A 429 status code was received; we should back off a bit.")
+except zavudev.APIStatusError as e:
+    print("Another non-200-range status code was received")
+    print(e.status_code)
+    print(e.response)
+```
+
+Error codes are as follows:
+
+| Status Code | Error Type                 |
+| ----------- | -------------------------- |
+| 400         | `BadRequestError`          |
+| 401         | `AuthenticationError`      |
+| 403         | `PermissionDeniedError`    |
+| 404         | `NotFoundError`            |
+| 422         | `UnprocessableEntityError` |
+| 429         | `RateLimitError`           |
+| >=500       | `InternalServerError`      |
+| N/A         | `APIConnectionError`       |
+
+### Retries
+
+Certain errors are automatically retried 2 times by default, with a short exponential backoff.
+Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,
+429 Rate Limit, and >=500 Internal errors are all retried by default.
+
+You can use the `max_retries` option to configure or disable retry settings:
+
+```python
+from zavudev import Zavudev
+
+# Configure the default for all requests:
+client = Zavudev(
+    # default is 2
+    max_retries=0,
+)
+
+# Or, configure per-request:
+client.with_options(max_retries=5).messages.send(
+    to="+56912345678",
+)
+```
+
+### Timeouts
+
+By default requests time out after 1 minute. You can configure this with a `timeout` option,
+which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
+
+```python
+from zavudev import Zavudev
+
+# Configure the default for all requests:
+client = Zavudev(
+    # 20 seconds (default is 1 minute)
+    timeout=20.0,
+)
+
+# More granular control:
+client = Zavudev(
+    timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
+)
+
+# Override per-request:
+client.with_options(timeout=5.0).messages.send(
+    to="+56912345678",
+)
+```
+
+On timeout, an `APITimeoutError` is thrown.
+
+Note that requests that time out are [retried twice by default](#retries).
+
+## Advanced
+
+### Logging
+
+We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
+
+You can enable logging by setting the environment variable `ZAVUDEV_LOG` to `info`.
+
+```shell
+$ export ZAVUDEV_LOG=info
+```
+
+Or to `debug` for more verbose logging.
+
+### How to tell whether `None` means `null` or missing
+
+In an API response, a field may be explicitly `null`, or missing entirely; in either case, its value is `None` in this library. You can differentiate the two cases with `.model_fields_set`:
+
+```py
+if response.my_field is None:
+  if 'my_field' not in response.model_fields_set:
+    print('Got json like {}, without a "my_field" key present at all.')
+  else:
+    print('Got json like {"my_field": null}.')
+```
+
+### Accessing raw response data (e.g. headers)
+
+The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
+
+```py
+from zavudev import Zavudev
+
+client = Zavudev()
+response = client.messages.with_raw_response.send(
+    to="+56912345678",
+)
+print(response.headers.get('X-My-Header'))
+
+message = response.parse()  # get the object that `messages.send()` would have returned
+print(message.message)
+```
+
+These methods return an [`APIResponse`](https://github.com/zavudev/sdk-python/tree/main/src/zavudev/_response.py) object.
+
+The async client returns an [`AsyncAPIResponse`](https://github.com/zavudev/sdk-python/tree/main/src/zavudev/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+
+#### `.with_streaming_response`
+
+The above interface eagerly reads the full response body when you make the request, which may not always be what you want.
+
+To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
+
+```python
+with client.messages.with_streaming_response.send(
+    to="+56912345678",
+) as response:
+    print(response.headers.get("X-My-Header"))
+
+    for line in response.iter_lines():
+        print(line)
+```
+
+The context manager is required so that the response will reliably be closed.
+
+### Making custom/undocumented requests
+
+This library is typed for convenient access to the documented API.
+
+If you need to access undocumented endpoints, params, or response properties, the library can still be used.
+
+#### Undocumented endpoints
+
+To make requests to undocumented endpoints, you can make requests using `client.get`, `client.post`, and other
+http verbs. Options on the client will be respected (such as retries) when making this request.
+
+```py
 import httpx
 
-http_client = httpx.Client(headers={"x-custom-header": "someValue"})
-s = Zavu(client=http_client)
+response = client.post(
+    "/foo",
+    cast_to=httpx.Response,
+    body={"my_param": True},
+)
+
+print(response.headers.get("x-foo"))
 ```
 
-or you could wrap the client with your own custom logic:
+#### Undocumented request params
+
+If you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` request
+options.
+
+#### Undocumented response properties
+
+To access undocumented response properties, you can access the extra fields like `response.unknown_prop`. You
+can also get all the extra fields on the Pydantic model as a dict with
+[`response.model_extra`](https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_extra).
+
+### Configuring the HTTP client
+
+You can directly override the [httpx client](https://www.python-httpx.org/api/#client) to customize it for your use case, including:
+
+- Support for [proxies](https://www.python-httpx.org/advanced/proxies/)
+- Custom [transports](https://www.python-httpx.org/advanced/transports/)
+- Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality
+
 ```python
-from zavu_sdk import Zavu
-from zavu_sdk.httpclient import AsyncHttpClient
 import httpx
+from zavudev import Zavudev, DefaultHttpxClient
 
-class CustomClient(AsyncHttpClient):
-    client: AsyncHttpClient
-
-    def __init__(self, client: AsyncHttpClient):
-        self.client = client
-
-    async def send(
-        self,
-        request: httpx.Request,
-        *,
-        stream: bool = False,
-        auth: Union[
-            httpx._types.AuthTypes, httpx._client.UseClientDefault, None
-        ] = httpx.USE_CLIENT_DEFAULT,
-        follow_redirects: Union[
-            bool, httpx._client.UseClientDefault
-        ] = httpx.USE_CLIENT_DEFAULT,
-    ) -> httpx.Response:
-        request.headers["Client-Level-Header"] = "added by client"
-
-        return await self.client.send(
-            request, stream=stream, auth=auth, follow_redirects=follow_redirects
-        )
-
-    def build_request(
-        self,
-        method: str,
-        url: httpx._types.URLTypes,
-        *,
-        content: Optional[httpx._types.RequestContent] = None,
-        data: Optional[httpx._types.RequestData] = None,
-        files: Optional[httpx._types.RequestFiles] = None,
-        json: Optional[Any] = None,
-        params: Optional[httpx._types.QueryParamTypes] = None,
-        headers: Optional[httpx._types.HeaderTypes] = None,
-        cookies: Optional[httpx._types.CookieTypes] = None,
-        timeout: Union[
-            httpx._types.TimeoutTypes, httpx._client.UseClientDefault
-        ] = httpx.USE_CLIENT_DEFAULT,
-        extensions: Optional[httpx._types.RequestExtensions] = None,
-    ) -> httpx.Request:
-        return self.client.build_request(
-            method,
-            url,
-            content=content,
-            data=data,
-            files=files,
-            json=json,
-            params=params,
-            headers=headers,
-            cookies=cookies,
-            timeout=timeout,
-            extensions=extensions,
-        )
-
-s = Zavu(async_client=CustomClient(httpx.AsyncClient()))
+client = Zavudev(
+    # Or use the `ZAVUDEV_BASE_URL` env var
+    base_url="http://my.test.server.example.com:8083",
+    http_client=DefaultHttpxClient(
+        proxy="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
 ```
-<!-- End Custom HTTP Client [http-client] -->
 
-<!-- Start Resource Management [resource-management] -->
-## Resource Management
-
-The `Zavu` class implements the context manager protocol and registers a finalizer function to close the underlying sync and async HTTPX clients it uses under the hood. This will close HTTP connections, release memory and free up other resources held by the SDK. In short-lived Python programs and notebooks that make a few SDK method calls, resource management may not be a concern. However, in longer-lived programs, it is beneficial to create a single SDK instance via a [context manager][context-manager] and reuse it across the application.
-
-[context-manager]: https://docs.python.org/3/reference/datamodel.html#context-managers
+You can also customize the client on a per-request basis by using `with_options()`:
 
 ```python
-from zavu_sdk import Zavu
-def main():
-
-    with Zavu(
-        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-    ) as zavu:
-        # Rest of application here...
-
-
-# Or when using async:
-async def amain():
-
-    async with Zavu(
-        bearer_auth="<YOUR_BEARER_TOKEN_HERE>",
-    ) as zavu:
-        # Rest of application here...
+client.with_options(http_client=DefaultHttpxClient(...))
 ```
-<!-- End Resource Management [resource-management] -->
 
-<!-- Start Debugging [debug] -->
-## Debugging
+### Managing HTTP resources
 
-You can setup your SDK to emit debug logs for SDK requests and responses.
+By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
-You can pass your own logger class directly into your SDK.
-```python
-from zavu_sdk import Zavu
-import logging
+```py
+from zavudev import Zavudev
 
-logging.basicConfig(level=logging.DEBUG)
-s = Zavu(debug_logger=logging.getLogger("zavu_sdk"))
+with Zavudev() as client:
+  # make requests here
+  ...
+
+# HTTP client is now closed
 ```
-<!-- End Debugging [debug] -->
 
-<!-- Placeholder for Future Speakeasy SDK Sections -->
+## Versioning
 
-# Development
+This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
 
-## Maturity
+1. Changes that only affect static types, without breaking runtime behavior.
+2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_
+3. Changes that we do not expect to impact the vast majority of users in practice.
 
-This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning usage
-to a specific package version. This way, you can install the same version each time without breaking changes unless you are intentionally
-looking for the latest version.
+We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-## Contributions
+We are keen for your feedback; please open an [issue](https://www.github.com/zavudev/sdk-python/issues) with questions, bugs, or suggestions.
 
-While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
-We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
+### Determining the installed version
 
-### SDK Created by [Speakeasy](https://www.speakeasy.com/?utm_source=openapi&utm_campaign=python)
+If you've upgraded to the latest version but aren't seeing any new features you were expecting then your python environment is likely still using an older version.
+
+You can determine the version that is being used at runtime with:
+
+```py
+import zavudev
+print(zavudev.__version__)
+```
+
+## Requirements
+
+Python 3.9 or higher.
+
+## Contributing
+
+See [the contributing documentation](./CONTRIBUTING.md).
