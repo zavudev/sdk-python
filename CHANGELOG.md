@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0 (2025-12-05)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/zavudev/sdk-python/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** fix pagination ([3e6f37a](https://github.com/zavudev/sdk-python/commit/3e6f37aefd021bb8f78757f611e0d572c87a7cc4))
+
 ## 0.6.0 (2025-12-04)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/zavudev/sdk-python/compare/v0.5.0...v0.6.0)
