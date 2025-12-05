@@ -9,7 +9,8 @@ import pytest
 
 from zavudev import Zavudev, AsyncZavudev
 from tests.utils import assert_matches_type
-from zavudev.types import Contact, ContactListResponse
+from zavudev.types import Contact
+from zavudev.pagination import SyncCursor, AsyncCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -115,7 +116,7 @@ class TestContacts:
     @parametrize
     def test_method_list(self, client: Zavudev) -> None:
         contact = client.contacts.list()
-        assert_matches_type(ContactListResponse, contact, path=["response"])
+        assert_matches_type(SyncCursor[Contact], contact, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -125,7 +126,7 @@ class TestContacts:
             limit=100,
             phone_number="phoneNumber",
         )
-        assert_matches_type(ContactListResponse, contact, path=["response"])
+        assert_matches_type(SyncCursor[Contact], contact, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -135,7 +136,7 @@ class TestContacts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         contact = response.parse()
-        assert_matches_type(ContactListResponse, contact, path=["response"])
+        assert_matches_type(SyncCursor[Contact], contact, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -145,7 +146,7 @@ class TestContacts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             contact = response.parse()
-            assert_matches_type(ContactListResponse, contact, path=["response"])
+            assert_matches_type(SyncCursor[Contact], contact, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -295,7 +296,7 @@ class TestAsyncContacts:
     @parametrize
     async def test_method_list(self, async_client: AsyncZavudev) -> None:
         contact = await async_client.contacts.list()
-        assert_matches_type(ContactListResponse, contact, path=["response"])
+        assert_matches_type(AsyncCursor[Contact], contact, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -305,7 +306,7 @@ class TestAsyncContacts:
             limit=100,
             phone_number="phoneNumber",
         )
-        assert_matches_type(ContactListResponse, contact, path=["response"])
+        assert_matches_type(AsyncCursor[Contact], contact, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -315,7 +316,7 @@ class TestAsyncContacts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         contact = await response.parse()
-        assert_matches_type(ContactListResponse, contact, path=["response"])
+        assert_matches_type(AsyncCursor[Contact], contact, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -325,7 +326,7 @@ class TestAsyncContacts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             contact = await response.parse()
-            assert_matches_type(ContactListResponse, contact, path=["response"])
+            assert_matches_type(AsyncCursor[Contact], contact, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

@@ -15,9 +15,9 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
+from ..pagination import SyncCursor, AsyncCursor
+from .._base_client import AsyncPaginator, make_request_options
 from ..types.sender import Sender
-from ..types.sender_list_response import SenderListResponse
 
 __all__ = ["SendersResource", "AsyncSendersResource"]
 
@@ -169,7 +169,7 @@ class SendersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SenderListResponse:
+    ) -> SyncCursor[Sender]:
         """
         List senders
 
@@ -182,8 +182,9 @@ class SendersResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/senders",
+            page=SyncCursor[Sender],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -197,7 +198,7 @@ class SendersResource(SyncAPIResource):
                     sender_list_params.SenderListParams,
                 ),
             ),
-            cast_to=SenderListResponse,
+            model=Sender,
         )
 
     def delete(
@@ -371,7 +372,7 @@ class AsyncSendersResource(AsyncAPIResource):
             cast_to=Sender,
         )
 
-    async def list(
+    def list(
         self,
         *,
         cursor: str | Omit = omit,
@@ -382,7 +383,7 @@ class AsyncSendersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SenderListResponse:
+    ) -> AsyncPaginator[Sender, AsyncCursor[Sender]]:
         """
         List senders
 
@@ -395,14 +396,15 @@ class AsyncSendersResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/senders",
+            page=AsyncCursor[Sender],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "cursor": cursor,
                         "limit": limit,
@@ -410,7 +412,7 @@ class AsyncSendersResource(AsyncAPIResource):
                     sender_list_params.SenderListParams,
                 ),
             ),
-            cast_to=SenderListResponse,
+            model=Sender,
         )
 
     async def delete(
