@@ -33,7 +33,8 @@ client = Zavudev(
 )
 
 message_response = client.messages.send(
-    to="+56912345678",
+    to="+14155551234",
+    text="Hello from Zavu!",
 )
 print(message_response.message)
 ```
@@ -59,7 +60,8 @@ client = AsyncZavudev(
 
 async def main() -> None:
     message_response = await client.messages.send(
-        to="+56912345678",
+        to="+14155551234",
+        text="Hello from Zavu!",
     )
     print(message_response.message)
 
@@ -95,7 +97,8 @@ async def main() -> None:
         http_client=DefaultAioHttpClient(),
     ) as client:
         message_response = await client.messages.send(
-            to="+56912345678",
+            to="+14155551234",
+            text="Hello from Zavu!",
         )
         print(message_response.message)
 
@@ -111,6 +114,69 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 - Converting to a dictionary, `model.to_dict()`
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
+
+## Pagination
+
+List methods in the Zavudev API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
+
+```python
+from zavudev import Zavudev
+
+client = Zavudev()
+
+all_messages = []
+# Automatically fetches more pages as needed.
+for message in client.messages.list():
+    # Do something with message here
+    all_messages.append(message)
+print(all_messages)
+```
+
+Or, asynchronously:
+
+```python
+import asyncio
+from zavudev import AsyncZavudev
+
+client = AsyncZavudev()
+
+
+async def main() -> None:
+    all_messages = []
+    # Iterate through items across all pages, issuing requests as needed.
+    async for message in client.messages.list():
+        all_messages.append(message)
+    print(all_messages)
+
+
+asyncio.run(main())
+```
+
+Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
+
+```python
+first_page = await client.messages.list()
+if first_page.has_next_page():
+    print(f"will fetch next page using these details: {first_page.next_page_info()}")
+    next_page = await first_page.get_next_page()
+    print(f"number of items we just fetched: {len(next_page.items)}")
+
+# Remove `await` for non-async usage.
+```
+
+Or just work directly with the returned data:
+
+```python
+first_page = await client.messages.list()
+
+print(f"next page cursor: {first_page.next_cursor}")  # => "next page cursor: ..."
+for message in first_page.items:
+    print(message.id)
+
+# Remove `await` for non-async usage.
+```
 
 ## Nested params
 
@@ -145,7 +211,8 @@ client = Zavudev()
 
 try:
     client.messages.send(
-        to="+56912345678",
+        to="+14155551234",
+        text="Hello from Zavu!",
     )
 except zavudev.APIConnectionError as e:
     print("The server could not be reached")
@@ -190,7 +257,8 @@ client = Zavudev(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).messages.send(
-    to="+56912345678",
+    to="+14155551234",
+    text="Hello from Zavu!",
 )
 ```
 
@@ -215,7 +283,8 @@ client = Zavudev(
 
 # Override per-request:
 client.with_options(timeout=5.0).messages.send(
-    to="+56912345678",
+    to="+14155551234",
+    text="Hello from Zavu!",
 )
 ```
 
@@ -258,7 +327,8 @@ from zavudev import Zavudev
 
 client = Zavudev()
 response = client.messages.with_raw_response.send(
-    to="+56912345678",
+    to="+14155551234",
+    text="Hello from Zavu!",
 )
 print(response.headers.get('X-My-Header'))
 
@@ -278,7 +348,8 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.messages.with_streaming_response.send(
-    to="+56912345678",
+    to="+14155551234",
+    text="Hello from Zavu!",
 ) as response:
     print(response.headers.get("X-My-Header"))
 
