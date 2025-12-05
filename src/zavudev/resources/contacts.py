@@ -18,9 +18,9 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
+from ..pagination import SyncCursor, AsyncCursor
+from .._base_client import AsyncPaginator, make_request_options
 from ..types.contact import Contact
-from ..types.contact_list_response import ContactListResponse
 
 __all__ = ["ContactsResource", "AsyncContactsResource"]
 
@@ -135,7 +135,7 @@ class ContactsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ContactListResponse:
+    ) -> SyncCursor[Contact]:
         """
         List contacts
 
@@ -148,8 +148,9 @@ class ContactsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/contacts",
+            page=SyncCursor[Contact],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -164,7 +165,7 @@ class ContactsResource(SyncAPIResource):
                     contact_list_params.ContactListParams,
                 ),
             ),
-            cast_to=ContactListResponse,
+            model=Contact,
         )
 
     def retrieve_by_phone(
@@ -299,7 +300,7 @@ class AsyncContactsResource(AsyncAPIResource):
             cast_to=Contact,
         )
 
-    async def list(
+    def list(
         self,
         *,
         cursor: str | Omit = omit,
@@ -311,7 +312,7 @@ class AsyncContactsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ContactListResponse:
+    ) -> AsyncPaginator[Contact, AsyncCursor[Contact]]:
         """
         List contacts
 
@@ -324,14 +325,15 @@ class AsyncContactsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/contacts",
+            page=AsyncCursor[Contact],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "cursor": cursor,
                         "limit": limit,
@@ -340,7 +342,7 @@ class AsyncContactsResource(AsyncAPIResource):
                     contact_list_params.ContactListParams,
                 ),
             ),
-            cast_to=ContactListResponse,
+            model=Contact,
         )
 
     async def retrieve_by_phone(

@@ -24,13 +24,14 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
+from ..pagination import SyncCursor, AsyncCursor
+from .._base_client import AsyncPaginator, make_request_options
 from ..types.channel import Channel
+from ..types.message import Message
 from ..types.message_type import MessageType
 from ..types.message_status import MessageStatus
 from ..types.message_response import MessageResponse
 from ..types.message_content_param import MessageContentParam
-from ..types.message_list_response import MessageListResponse
 
 __all__ = ["MessagesResource", "AsyncMessagesResource"]
 
@@ -102,7 +103,7 @@ class MessagesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MessageListResponse:
+    ) -> SyncCursor[Message]:
         """
         List messages previously sent by this project.
 
@@ -117,8 +118,9 @@ class MessagesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v1/messages",
+            page=SyncCursor[Message],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -135,7 +137,7 @@ class MessagesResource(SyncAPIResource):
                     message_list_params.MessageListParams,
                 ),
             ),
-            cast_to=MessageListResponse,
+            model=Message,
         )
 
     def react(
@@ -324,7 +326,7 @@ class AsyncMessagesResource(AsyncAPIResource):
             cast_to=MessageResponse,
         )
 
-    async def list(
+    def list(
         self,
         *,
         channel: Channel | Omit = omit,
@@ -338,7 +340,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> MessageListResponse:
+    ) -> AsyncPaginator[Message, AsyncCursor[Message]]:
         """
         List messages previously sent by this project.
 
@@ -353,14 +355,15 @@ class AsyncMessagesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v1/messages",
+            page=AsyncCursor[Message],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "channel": channel,
                         "cursor": cursor,
@@ -371,7 +374,7 @@ class AsyncMessagesResource(AsyncAPIResource):
                     message_list_params.MessageListParams,
                 ),
             ),
-            cast_to=MessageListResponse,
+            model=Message,
         )
 
     async def react(

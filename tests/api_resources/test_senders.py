@@ -9,7 +9,8 @@ import pytest
 
 from zavudev import Zavudev, AsyncZavudev
 from tests.utils import assert_matches_type
-from zavudev.types import Sender, SenderListResponse
+from zavudev.types import Sender
+from zavudev.pagination import SyncCursor, AsyncCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -162,7 +163,7 @@ class TestSenders:
     @parametrize
     def test_method_list(self, client: Zavudev) -> None:
         sender = client.senders.list()
-        assert_matches_type(SenderListResponse, sender, path=["response"])
+        assert_matches_type(SyncCursor[Sender], sender, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -171,7 +172,7 @@ class TestSenders:
             cursor="cursor",
             limit=100,
         )
-        assert_matches_type(SenderListResponse, sender, path=["response"])
+        assert_matches_type(SyncCursor[Sender], sender, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -181,7 +182,7 @@ class TestSenders:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         sender = response.parse()
-        assert_matches_type(SenderListResponse, sender, path=["response"])
+        assert_matches_type(SyncCursor[Sender], sender, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -191,7 +192,7 @@ class TestSenders:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             sender = response.parse()
-            assert_matches_type(SenderListResponse, sender, path=["response"])
+            assert_matches_type(SyncCursor[Sender], sender, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -388,7 +389,7 @@ class TestAsyncSenders:
     @parametrize
     async def test_method_list(self, async_client: AsyncZavudev) -> None:
         sender = await async_client.senders.list()
-        assert_matches_type(SenderListResponse, sender, path=["response"])
+        assert_matches_type(AsyncCursor[Sender], sender, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -397,7 +398,7 @@ class TestAsyncSenders:
             cursor="cursor",
             limit=100,
         )
-        assert_matches_type(SenderListResponse, sender, path=["response"])
+        assert_matches_type(AsyncCursor[Sender], sender, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -407,7 +408,7 @@ class TestAsyncSenders:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         sender = await response.parse()
-        assert_matches_type(SenderListResponse, sender, path=["response"])
+        assert_matches_type(AsyncCursor[Sender], sender, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -417,7 +418,7 @@ class TestAsyncSenders:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             sender = await response.parse()
-            assert_matches_type(SenderListResponse, sender, path=["response"])
+            assert_matches_type(AsyncCursor[Sender], sender, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
