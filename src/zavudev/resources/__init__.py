@@ -32,6 +32,14 @@ from .templates import (
     TemplatesResourceWithStreamingResponse,
     AsyncTemplatesResourceWithStreamingResponse,
 )
+from .broadcasts import (
+    BroadcastsResource,
+    AsyncBroadcastsResource,
+    BroadcastsResourceWithRawResponse,
+    AsyncBroadcastsResourceWithRawResponse,
+    BroadcastsResourceWithStreamingResponse,
+    AsyncBroadcastsResourceWithStreamingResponse,
+)
 from .introspect import (
     IntrospectResource,
     AsyncIntrospectResource,
@@ -66,6 +74,12 @@ __all__ = [
     "AsyncContactsResourceWithRawResponse",
     "ContactsResourceWithStreamingResponse",
     "AsyncContactsResourceWithStreamingResponse",
+    "BroadcastsResource",
+    "AsyncBroadcastsResource",
+    "BroadcastsResourceWithRawResponse",
+    "AsyncBroadcastsResourceWithRawResponse",
+    "BroadcastsResourceWithStreamingResponse",
+    "AsyncBroadcastsResourceWithStreamingResponse",
     "IntrospectResource",
     "AsyncIntrospectResource",
     "IntrospectResourceWithRawResponse",

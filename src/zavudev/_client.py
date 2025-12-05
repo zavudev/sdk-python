@@ -29,6 +29,7 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
+from .resources.broadcasts import broadcasts
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Zavudev", "AsyncZavudev", "Client", "AsyncClient"]
 
@@ -38,6 +39,7 @@ class Zavudev(SyncAPIClient):
     templates: templates.TemplatesResource
     senders: senders.SendersResource
     contacts: contacts.ContactsResource
+    broadcasts: broadcasts.BroadcastsResource
     introspect: introspect.IntrospectResource
     with_raw_response: ZavudevWithRawResponse
     with_streaming_response: ZavudevWithStreamedResponse
@@ -100,6 +102,7 @@ class Zavudev(SyncAPIClient):
         self.templates = templates.TemplatesResource(self)
         self.senders = senders.SendersResource(self)
         self.contacts = contacts.ContactsResource(self)
+        self.broadcasts = broadcasts.BroadcastsResource(self)
         self.introspect = introspect.IntrospectResource(self)
         self.with_raw_response = ZavudevWithRawResponse(self)
         self.with_streaming_response = ZavudevWithStreamedResponse(self)
@@ -214,6 +217,7 @@ class AsyncZavudev(AsyncAPIClient):
     templates: templates.AsyncTemplatesResource
     senders: senders.AsyncSendersResource
     contacts: contacts.AsyncContactsResource
+    broadcasts: broadcasts.AsyncBroadcastsResource
     introspect: introspect.AsyncIntrospectResource
     with_raw_response: AsyncZavudevWithRawResponse
     with_streaming_response: AsyncZavudevWithStreamedResponse
@@ -276,6 +280,7 @@ class AsyncZavudev(AsyncAPIClient):
         self.templates = templates.AsyncTemplatesResource(self)
         self.senders = senders.AsyncSendersResource(self)
         self.contacts = contacts.AsyncContactsResource(self)
+        self.broadcasts = broadcasts.AsyncBroadcastsResource(self)
         self.introspect = introspect.AsyncIntrospectResource(self)
         self.with_raw_response = AsyncZavudevWithRawResponse(self)
         self.with_streaming_response = AsyncZavudevWithStreamedResponse(self)
@@ -391,6 +396,7 @@ class ZavudevWithRawResponse:
         self.templates = templates.TemplatesResourceWithRawResponse(client.templates)
         self.senders = senders.SendersResourceWithRawResponse(client.senders)
         self.contacts = contacts.ContactsResourceWithRawResponse(client.contacts)
+        self.broadcasts = broadcasts.BroadcastsResourceWithRawResponse(client.broadcasts)
         self.introspect = introspect.IntrospectResourceWithRawResponse(client.introspect)
 
 
@@ -400,6 +406,7 @@ class AsyncZavudevWithRawResponse:
         self.templates = templates.AsyncTemplatesResourceWithRawResponse(client.templates)
         self.senders = senders.AsyncSendersResourceWithRawResponse(client.senders)
         self.contacts = contacts.AsyncContactsResourceWithRawResponse(client.contacts)
+        self.broadcasts = broadcasts.AsyncBroadcastsResourceWithRawResponse(client.broadcasts)
         self.introspect = introspect.AsyncIntrospectResourceWithRawResponse(client.introspect)
 
 
@@ -409,6 +416,7 @@ class ZavudevWithStreamedResponse:
         self.templates = templates.TemplatesResourceWithStreamingResponse(client.templates)
         self.senders = senders.SendersResourceWithStreamingResponse(client.senders)
         self.contacts = contacts.ContactsResourceWithStreamingResponse(client.contacts)
+        self.broadcasts = broadcasts.BroadcastsResourceWithStreamingResponse(client.broadcasts)
         self.introspect = introspect.IntrospectResourceWithStreamingResponse(client.introspect)
 
 
@@ -418,6 +426,7 @@ class AsyncZavudevWithStreamedResponse:
         self.templates = templates.AsyncTemplatesResourceWithStreamingResponse(client.templates)
         self.senders = senders.AsyncSendersResourceWithStreamingResponse(client.senders)
         self.contacts = contacts.AsyncContactsResourceWithStreamingResponse(client.contacts)
+        self.broadcasts = broadcasts.AsyncBroadcastsResourceWithStreamingResponse(client.broadcasts)
         self.introspect = introspect.AsyncIntrospectResourceWithStreamingResponse(client.introspect)
 
 
