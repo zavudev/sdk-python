@@ -17,13 +17,17 @@ from .message_response import MessageResponse as MessageResponse
 from .broadcast_channel import BroadcastChannel as BroadcastChannel
 from .broadcast_contact import BroadcastContact as BroadcastContact
 from .broadcast_content import BroadcastContent as BroadcastContent
+from .phone_number_type import PhoneNumberType as PhoneNumberType
 from .whatsapp_category import WhatsappCategory as WhatsappCategory
 from .broadcast_progress import BroadcastProgress as BroadcastProgress
+from .owned_phone_number import OwnedPhoneNumber as OwnedPhoneNumber
 from .sender_list_params import SenderListParams as SenderListParams
 from .contact_list_params import ContactListParams as ContactListParams
 from .message_list_params import MessageListParams as MessageListParams
 from .message_send_params import MessageSendParams as MessageSendParams
+from .phone_number_status import PhoneNumberStatus as PhoneNumberStatus
 from .message_react_params import MessageReactParams as MessageReactParams
+from .phone_number_pricing import PhoneNumberPricing as PhoneNumberPricing
 from .sender_create_params import SenderCreateParams as SenderCreateParams
 from .sender_update_params import SenderUpdateParams as SenderUpdateParams
 from .template_list_params import TemplateListParams as TemplateListParams
@@ -31,6 +35,7 @@ from .broadcast_list_params import BroadcastListParams as BroadcastListParams
 from .broadcast_send_params import BroadcastSendParams as BroadcastSendParams
 from .contact_update_params import ContactUpdateParams as ContactUpdateParams
 from .message_content_param import MessageContentParam as MessageContentParam
+from .available_phone_number import AvailablePhoneNumber as AvailablePhoneNumber
 from .broadcast_message_type import BroadcastMessageType as BroadcastMessageType
 from .template_create_params import TemplateCreateParams as TemplateCreateParams
 from .broadcast_content_param import BroadcastContentParam as BroadcastContentParam
@@ -38,9 +43,21 @@ from .broadcast_create_params import BroadcastCreateParams as BroadcastCreatePar
 from .broadcast_send_response import BroadcastSendResponse as BroadcastSendResponse
 from .broadcast_update_params import BroadcastUpdateParams as BroadcastUpdateParams
 from .broadcast_contact_status import BroadcastContactStatus as BroadcastContactStatus
+from .phone_number_list_params import PhoneNumberListParams as PhoneNumberListParams
 from .broadcast_cancel_response import BroadcastCancelResponse as BroadcastCancelResponse
 from .broadcast_create_response import BroadcastCreateResponse as BroadcastCreateResponse
 from .broadcast_update_response import BroadcastUpdateResponse as BroadcastUpdateResponse
+from .phone_number_capabilities import PhoneNumberCapabilities as PhoneNumberCapabilities
+from .owned_phone_number_pricing import OwnedPhoneNumberPricing as OwnedPhoneNumberPricing
+from .phone_number_update_params import PhoneNumberUpdateParams as PhoneNumberUpdateParams
 from .broadcast_retrieve_response import BroadcastRetrieveResponse as BroadcastRetrieveResponse
+from .phone_number_purchase_params import PhoneNumberPurchaseParams as PhoneNumberPurchaseParams
+from .phone_number_update_response import PhoneNumberUpdateResponse as PhoneNumberUpdateResponse
+from .phone_number_purchase_response import PhoneNumberPurchaseResponse as PhoneNumberPurchaseResponse
+from .phone_number_retrieve_response import PhoneNumberRetrieveResponse as PhoneNumberRetrieveResponse
 from .introspect_validate_phone_params import IntrospectValidatePhoneParams as IntrospectValidatePhoneParams
 from .introspect_validate_phone_response import IntrospectValidatePhoneResponse as IntrospectValidatePhoneResponse
+from .phone_number_search_available_params import PhoneNumberSearchAvailableParams as PhoneNumberSearchAvailableParams
+from .phone_number_search_available_response import (
+    PhoneNumberSearchAvailableResponse as PhoneNumberSearchAvailableResponse,
+)

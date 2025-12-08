@@ -21,7 +21,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import senders, contacts, messages, templates, introspect
+from .resources import senders, contacts, messages, templates, introspect, phone_numbers
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import ZavudevError, APIStatusError
 from ._base_client import (
@@ -41,6 +41,7 @@ class Zavudev(SyncAPIClient):
     contacts: contacts.ContactsResource
     broadcasts: broadcasts.BroadcastsResource
     introspect: introspect.IntrospectResource
+    phone_numbers: phone_numbers.PhoneNumbersResource
     with_raw_response: ZavudevWithRawResponse
     with_streaming_response: ZavudevWithStreamedResponse
 
@@ -104,6 +105,7 @@ class Zavudev(SyncAPIClient):
         self.contacts = contacts.ContactsResource(self)
         self.broadcasts = broadcasts.BroadcastsResource(self)
         self.introspect = introspect.IntrospectResource(self)
+        self.phone_numbers = phone_numbers.PhoneNumbersResource(self)
         self.with_raw_response = ZavudevWithRawResponse(self)
         self.with_streaming_response = ZavudevWithStreamedResponse(self)
 
@@ -219,6 +221,7 @@ class AsyncZavudev(AsyncAPIClient):
     contacts: contacts.AsyncContactsResource
     broadcasts: broadcasts.AsyncBroadcastsResource
     introspect: introspect.AsyncIntrospectResource
+    phone_numbers: phone_numbers.AsyncPhoneNumbersResource
     with_raw_response: AsyncZavudevWithRawResponse
     with_streaming_response: AsyncZavudevWithStreamedResponse
 
@@ -282,6 +285,7 @@ class AsyncZavudev(AsyncAPIClient):
         self.contacts = contacts.AsyncContactsResource(self)
         self.broadcasts = broadcasts.AsyncBroadcastsResource(self)
         self.introspect = introspect.AsyncIntrospectResource(self)
+        self.phone_numbers = phone_numbers.AsyncPhoneNumbersResource(self)
         self.with_raw_response = AsyncZavudevWithRawResponse(self)
         self.with_streaming_response = AsyncZavudevWithStreamedResponse(self)
 
@@ -398,6 +402,7 @@ class ZavudevWithRawResponse:
         self.contacts = contacts.ContactsResourceWithRawResponse(client.contacts)
         self.broadcasts = broadcasts.BroadcastsResourceWithRawResponse(client.broadcasts)
         self.introspect = introspect.IntrospectResourceWithRawResponse(client.introspect)
+        self.phone_numbers = phone_numbers.PhoneNumbersResourceWithRawResponse(client.phone_numbers)
 
 
 class AsyncZavudevWithRawResponse:
@@ -408,6 +413,7 @@ class AsyncZavudevWithRawResponse:
         self.contacts = contacts.AsyncContactsResourceWithRawResponse(client.contacts)
         self.broadcasts = broadcasts.AsyncBroadcastsResourceWithRawResponse(client.broadcasts)
         self.introspect = introspect.AsyncIntrospectResourceWithRawResponse(client.introspect)
+        self.phone_numbers = phone_numbers.AsyncPhoneNumbersResourceWithRawResponse(client.phone_numbers)
 
 
 class ZavudevWithStreamedResponse:
@@ -418,6 +424,7 @@ class ZavudevWithStreamedResponse:
         self.contacts = contacts.ContactsResourceWithStreamingResponse(client.contacts)
         self.broadcasts = broadcasts.BroadcastsResourceWithStreamingResponse(client.broadcasts)
         self.introspect = introspect.IntrospectResourceWithStreamingResponse(client.introspect)
+        self.phone_numbers = phone_numbers.PhoneNumbersResourceWithStreamingResponse(client.phone_numbers)
 
 
 class AsyncZavudevWithStreamedResponse:
@@ -428,6 +435,7 @@ class AsyncZavudevWithStreamedResponse:
         self.contacts = contacts.AsyncContactsResourceWithStreamingResponse(client.contacts)
         self.broadcasts = broadcasts.AsyncBroadcastsResourceWithStreamingResponse(client.broadcasts)
         self.introspect = introspect.AsyncIntrospectResourceWithStreamingResponse(client.introspect)
+        self.phone_numbers = phone_numbers.AsyncPhoneNumbersResourceWithStreamingResponse(client.phone_numbers)
 
 
 Client = Zavudev

@@ -124,3 +124,32 @@ from zavudev.types import LineType, IntrospectValidatePhoneResponse
 Methods:
 
 - <code title="post /v1/introspect/phone">client.introspect.<a href="./src/zavudev/resources/introspect.py">validate_phone</a>(\*\*<a href="src/zavudev/types/introspect_validate_phone_params.py">params</a>) -> <a href="./src/zavudev/types/introspect_validate_phone_response.py">IntrospectValidatePhoneResponse</a></code>
+
+# PhoneNumbers
+
+Types:
+
+```python
+from zavudev.types import (
+    AvailablePhoneNumber,
+    OwnedPhoneNumber,
+    OwnedPhoneNumberPricing,
+    PhoneNumberCapabilities,
+    PhoneNumberPricing,
+    PhoneNumberStatus,
+    PhoneNumberType,
+    PhoneNumberRetrieveResponse,
+    PhoneNumberUpdateResponse,
+    PhoneNumberPurchaseResponse,
+    PhoneNumberSearchAvailableResponse,
+)
+```
+
+Methods:
+
+- <code title="get /v1/phone-numbers/{phoneNumberId}">client.phone_numbers.<a href="./src/zavudev/resources/phone_numbers.py">retrieve</a>(phone_number_id) -> <a href="./src/zavudev/types/phone_number_retrieve_response.py">PhoneNumberRetrieveResponse</a></code>
+- <code title="patch /v1/phone-numbers/{phoneNumberId}">client.phone_numbers.<a href="./src/zavudev/resources/phone_numbers.py">update</a>(phone_number_id, \*\*<a href="src/zavudev/types/phone_number_update_params.py">params</a>) -> <a href="./src/zavudev/types/phone_number_update_response.py">PhoneNumberUpdateResponse</a></code>
+- <code title="get /v1/phone-numbers">client.phone_numbers.<a href="./src/zavudev/resources/phone_numbers.py">list</a>(\*\*<a href="src/zavudev/types/phone_number_list_params.py">params</a>) -> <a href="./src/zavudev/types/owned_phone_number.py">SyncCursor[OwnedPhoneNumber]</a></code>
+- <code title="post /v1/phone-numbers">client.phone_numbers.<a href="./src/zavudev/resources/phone_numbers.py">purchase</a>(\*\*<a href="src/zavudev/types/phone_number_purchase_params.py">params</a>) -> <a href="./src/zavudev/types/phone_number_purchase_response.py">PhoneNumberPurchaseResponse</a></code>
+- <code title="delete /v1/phone-numbers/{phoneNumberId}">client.phone_numbers.<a href="./src/zavudev/resources/phone_numbers.py">release</a>(phone_number_id) -> None</code>
+- <code title="get /v1/phone-numbers/available">client.phone_numbers.<a href="./src/zavudev/resources/phone_numbers.py">search_available</a>(\*\*<a href="src/zavudev/types/phone_number_search_available_params.py">params</a>) -> <a href="./src/zavudev/types/phone_number_search_available_response.py">PhoneNumberSearchAvailableResponse</a></code>
