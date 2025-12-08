@@ -48,6 +48,14 @@ from .introspect import (
     IntrospectResourceWithStreamingResponse,
     AsyncIntrospectResourceWithStreamingResponse,
 )
+from .phone_numbers import (
+    PhoneNumbersResource,
+    AsyncPhoneNumbersResource,
+    PhoneNumbersResourceWithRawResponse,
+    AsyncPhoneNumbersResourceWithRawResponse,
+    PhoneNumbersResourceWithStreamingResponse,
+    AsyncPhoneNumbersResourceWithStreamingResponse,
+)
 
 __all__ = [
     "MessagesResource",
@@ -86,4 +94,10 @@ __all__ = [
     "AsyncIntrospectResourceWithRawResponse",
     "IntrospectResourceWithStreamingResponse",
     "AsyncIntrospectResourceWithStreamingResponse",
+    "PhoneNumbersResource",
+    "AsyncPhoneNumbersResource",
+    "PhoneNumbersResourceWithRawResponse",
+    "AsyncPhoneNumbersResourceWithRawResponse",
+    "PhoneNumbersResourceWithStreamingResponse",
+    "AsyncPhoneNumbersResourceWithStreamingResponse",
 ]
