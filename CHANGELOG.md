@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.10.1 (2025-12-09)
+
+Full Changelog: [v0.10.0...v0.10.1](https://github.com/zavudev/sdk-python/compare/v0.10.0...v0.10.1)
+
+### Bug Fixes
+
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([0d56717](https://github.com/zavudev/sdk-python/commit/0d567178f18a477dac78609555ef0f6dab4224cb))
+
+
+### Chores
+
+* add missing docstrings ([bcf0eda](https://github.com/zavudev/sdk-python/commit/bcf0eda247ab50b911f732856086515807097919))
+
 ## 0.10.0 (2025-12-08)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/zavudev/sdk-python/compare/v0.9.0...v0.10.0)
