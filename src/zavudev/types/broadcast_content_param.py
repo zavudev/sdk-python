@@ -11,6 +11,8 @@ __all__ = ["BroadcastContentParam"]
 
 
 class BroadcastContentParam(TypedDict, total=False):
+    """Content for non-text broadcast message types."""
+
     filename: str
     """Filename for documents."""
 

@@ -23,6 +23,8 @@ class Button(BaseModel):
 
 
 class Whatsapp(BaseModel):
+    """WhatsApp-specific template information."""
+
     namespace: Optional[str] = None
     """WhatsApp Business Account namespace."""
 

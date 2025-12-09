@@ -36,6 +36,8 @@ class Section(BaseModel):
 
 
 class MessageContent(BaseModel):
+    """Content for non-text message types (WhatsApp only)."""
+
     buttons: Optional[List[Button]] = None
     """Interactive buttons (max 3)."""
 
