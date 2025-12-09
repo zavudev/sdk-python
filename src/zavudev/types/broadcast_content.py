@@ -10,6 +10,8 @@ __all__ = ["BroadcastContent"]
 
 
 class BroadcastContent(BaseModel):
+    """Content for non-text broadcast message types."""
+
     filename: Optional[str] = None
     """Filename for documents."""
 

@@ -11,6 +11,8 @@ __all__ = ["IntrospectValidatePhoneResponse", "Carrier"]
 
 
 class Carrier(BaseModel):
+    """Carrier information for the phone number."""
+
     name: Optional[str] = None
     """Carrier name."""
 

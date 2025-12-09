@@ -38,6 +38,8 @@ class Section(TypedDict, total=False):
 
 
 class MessageContentParam(TypedDict, total=False):
+    """Content for non-text message types (WhatsApp only)."""
+
     buttons: Iterable[Button]
     """Interactive buttons (max 3)."""
 
