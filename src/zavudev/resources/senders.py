@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from typing import List, Optional
+from typing_extensions import Literal
+
 import httpx
 
 from ..types import sender_list_params, sender_create_params, sender_update_params
@@ -48,6 +51,11 @@ class SendersResource(SyncAPIResource):
         name: str,
         phone_number: str,
         set_as_default: bool | Omit = omit,
+        webhook_events: List[
+            Literal["message.sent", "message.delivered", "message.failed", "message.inbound", "conversation.new"]
+        ]
+        | Omit = omit,
+        webhook_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -59,6 +67,10 @@ class SendersResource(SyncAPIResource):
         Create sender
 
         Args:
+          webhook_events: Events to subscribe to.
+
+          webhook_url: HTTPS URL for webhook events.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -74,6 +86,8 @@ class SendersResource(SyncAPIResource):
                     "name": name,
                     "phone_number": phone_number,
                     "set_as_default": set_as_default,
+                    "webhook_events": webhook_events,
+                    "webhook_url": webhook_url,
                 },
                 sender_create_params.SenderCreateParams,
             ),
@@ -122,6 +136,12 @@ class SendersResource(SyncAPIResource):
         *,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
+        webhook_active: bool | Omit = omit,
+        webhook_events: List[
+            Literal["message.sent", "message.delivered", "message.failed", "message.inbound", "conversation.new"]
+        ]
+        | Omit = omit,
+        webhook_url: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -133,6 +153,12 @@ class SendersResource(SyncAPIResource):
         Update sender
 
         Args:
+          webhook_active: Whether the webhook is active.
+
+          webhook_events: Events to subscribe to.
+
+          webhook_url: HTTPS URL for webhook events. Set to null to remove webhook.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -149,6 +175,9 @@ class SendersResource(SyncAPIResource):
                 {
                     "name": name,
                     "set_as_default": set_as_default,
+                    "webhook_active": webhook_active,
+                    "webhook_events": webhook_events,
+                    "webhook_url": webhook_url,
                 },
                 sender_update_params.SenderUpdateParams,
             ),
@@ -262,6 +291,11 @@ class AsyncSendersResource(AsyncAPIResource):
         name: str,
         phone_number: str,
         set_as_default: bool | Omit = omit,
+        webhook_events: List[
+            Literal["message.sent", "message.delivered", "message.failed", "message.inbound", "conversation.new"]
+        ]
+        | Omit = omit,
+        webhook_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -273,6 +307,10 @@ class AsyncSendersResource(AsyncAPIResource):
         Create sender
 
         Args:
+          webhook_events: Events to subscribe to.
+
+          webhook_url: HTTPS URL for webhook events.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -288,6 +326,8 @@ class AsyncSendersResource(AsyncAPIResource):
                     "name": name,
                     "phone_number": phone_number,
                     "set_as_default": set_as_default,
+                    "webhook_events": webhook_events,
+                    "webhook_url": webhook_url,
                 },
                 sender_create_params.SenderCreateParams,
             ),
@@ -336,6 +376,12 @@ class AsyncSendersResource(AsyncAPIResource):
         *,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
+        webhook_active: bool | Omit = omit,
+        webhook_events: List[
+            Literal["message.sent", "message.delivered", "message.failed", "message.inbound", "conversation.new"]
+        ]
+        | Omit = omit,
+        webhook_url: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -347,6 +393,12 @@ class AsyncSendersResource(AsyncAPIResource):
         Update sender
 
         Args:
+          webhook_active: Whether the webhook is active.
+
+          webhook_events: Events to subscribe to.
+
+          webhook_url: HTTPS URL for webhook events. Set to null to remove webhook.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -363,6 +415,9 @@ class AsyncSendersResource(AsyncAPIResource):
                 {
                     "name": name,
                     "set_as_default": set_as_default,
+                    "webhook_active": webhook_active,
+                    "webhook_events": webhook_events,
+                    "webhook_url": webhook_url,
                 },
                 sender_update_params.SenderUpdateParams,
             ),
