@@ -9,7 +9,7 @@ import pytest
 
 from zavudev import Zavudev, AsyncZavudev
 from tests.utils import assert_matches_type
-from zavudev.types import Sender
+from zavudev.types import Sender, WebhookSecretResponse
 from zavudev.pagination import SyncCursor, AsyncCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -34,6 +34,8 @@ class TestSenders:
             name="name",
             phone_number="phoneNumber",
             set_as_default=True,
+            webhook_events=["message.queued"],
+            webhook_url="https://example.com",
         )
         assert_matches_type(Sender, sender, path=["response"])
 
@@ -122,6 +124,9 @@ class TestSenders:
             sender_id="senderId",
             name="name",
             set_as_default=True,
+            webhook_active=True,
+            webhook_events=["message.queued"],
+            webhook_url="https://example.com",
         )
         assert_matches_type(Sender, sender, path=["response"])
 
@@ -238,6 +243,48 @@ class TestSenders:
                 "",
             )
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_regenerate_webhook_secret(self, client: Zavudev) -> None:
+        sender = client.senders.regenerate_webhook_secret(
+            "senderId",
+        )
+        assert_matches_type(WebhookSecretResponse, sender, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_regenerate_webhook_secret(self, client: Zavudev) -> None:
+        response = client.senders.with_raw_response.regenerate_webhook_secret(
+            "senderId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        sender = response.parse()
+        assert_matches_type(WebhookSecretResponse, sender, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_regenerate_webhook_secret(self, client: Zavudev) -> None:
+        with client.senders.with_streaming_response.regenerate_webhook_secret(
+            "senderId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            sender = response.parse()
+            assert_matches_type(WebhookSecretResponse, sender, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_regenerate_webhook_secret(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
+            client.senders.with_raw_response.regenerate_webhook_secret(
+                "",
+            )
+
 
 class TestAsyncSenders:
     parametrize = pytest.mark.parametrize(
@@ -260,6 +307,8 @@ class TestAsyncSenders:
             name="name",
             phone_number="phoneNumber",
             set_as_default=True,
+            webhook_events=["message.queued"],
+            webhook_url="https://example.com",
         )
         assert_matches_type(Sender, sender, path=["response"])
 
@@ -348,6 +397,9 @@ class TestAsyncSenders:
             sender_id="senderId",
             name="name",
             set_as_default=True,
+            webhook_active=True,
+            webhook_events=["message.queued"],
+            webhook_url="https://example.com",
         )
         assert_matches_type(Sender, sender, path=["response"])
 
@@ -461,5 +513,47 @@ class TestAsyncSenders:
     async def test_path_params_delete(self, async_client: AsyncZavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
             await async_client.senders.with_raw_response.delete(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_regenerate_webhook_secret(self, async_client: AsyncZavudev) -> None:
+        sender = await async_client.senders.regenerate_webhook_secret(
+            "senderId",
+        )
+        assert_matches_type(WebhookSecretResponse, sender, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_regenerate_webhook_secret(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.senders.with_raw_response.regenerate_webhook_secret(
+            "senderId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        sender = await response.parse()
+        assert_matches_type(WebhookSecretResponse, sender, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_regenerate_webhook_secret(self, async_client: AsyncZavudev) -> None:
+        async with async_client.senders.with_streaming_response.regenerate_webhook_secret(
+            "senderId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            sender = await response.parse()
+            assert_matches_type(WebhookSecretResponse, sender, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_regenerate_webhook_secret(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
+            await async_client.senders.with_raw_response.regenerate_webhook_secret(
                 "",
             )

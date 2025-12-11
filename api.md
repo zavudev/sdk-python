@@ -40,7 +40,7 @@ Methods:
 Types:
 
 ```python
-from zavudev.types import Sender
+from zavudev.types import Sender, SenderWebhook, WebhookEvent, WebhookSecretResponse
 ```
 
 Methods:
@@ -50,6 +50,7 @@ Methods:
 - <code title="patch /v1/senders/{senderId}">client.senders.<a href="./src/zavudev/resources/senders.py">update</a>(sender_id, \*\*<a href="src/zavudev/types/sender_update_params.py">params</a>) -> <a href="./src/zavudev/types/sender.py">Sender</a></code>
 - <code title="get /v1/senders">client.senders.<a href="./src/zavudev/resources/senders.py">list</a>(\*\*<a href="src/zavudev/types/sender_list_params.py">params</a>) -> <a href="./src/zavudev/types/sender.py">SyncCursor[Sender]</a></code>
 - <code title="delete /v1/senders/{senderId}">client.senders.<a href="./src/zavudev/resources/senders.py">delete</a>(sender_id) -> None</code>
+- <code title="post /v1/senders/{senderId}/webhook/secret">client.senders.<a href="./src/zavudev/resources/senders.py">regenerate_webhook_secret</a>(sender_id) -> <a href="./src/zavudev/types/webhook_secret_response.py">WebhookSecretResponse</a></code>
 
 # Contacts
 

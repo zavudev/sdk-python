@@ -6,6 +6,7 @@ from datetime import datetime
 from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
+from .sender_webhook import SenderWebhook
 
 __all__ = ["Sender"]
 
@@ -24,3 +25,6 @@ class Sender(BaseModel):
     """Whether this sender is the project's default."""
 
     updated_at: Optional[datetime] = FieldInfo(alias="updatedAt", default=None)
+
+    webhook: Optional[SenderWebhook] = None
+    """Webhook configuration for the sender."""
