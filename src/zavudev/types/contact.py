@@ -29,6 +29,9 @@ class Contact(BaseModel):
 
     metadata: Optional[Dict[str, str]] = None
 
+    profile_name: Optional[str] = FieldInfo(alias="profileName", default=None)
+    """Contact's WhatsApp profile name. Only available for WhatsApp contacts."""
+
     updated_at: Optional[datetime] = FieldInfo(alias="updatedAt", default=None)
 
     verified: Optional[bool] = None
