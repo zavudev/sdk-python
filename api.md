@@ -34,6 +34,7 @@ Methods:
 - <code title="get /v1/templates/{templateId}">client.templates.<a href="./src/zavudev/resources/templates.py">retrieve</a>(template_id) -> <a href="./src/zavudev/types/template.py">Template</a></code>
 - <code title="get /v1/templates">client.templates.<a href="./src/zavudev/resources/templates.py">list</a>(\*\*<a href="src/zavudev/types/template_list_params.py">params</a>) -> <a href="./src/zavudev/types/template.py">SyncCursor[Template]</a></code>
 - <code title="delete /v1/templates/{templateId}">client.templates.<a href="./src/zavudev/resources/templates.py">delete</a>(template_id) -> None</code>
+- <code title="post /v1/templates/{templateId}/submit">client.templates.<a href="./src/zavudev/resources/templates.py">submit</a>(template_id, \*\*<a href="src/zavudev/types/template_submit_params.py">params</a>) -> <a href="./src/zavudev/types/template.py">Template</a></code>
 
 # Senders
 

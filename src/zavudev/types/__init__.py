@@ -40,6 +40,7 @@ from .message_content_param import MessageContentParam as MessageContentParam
 from .available_phone_number import AvailablePhoneNumber as AvailablePhoneNumber
 from .broadcast_message_type import BroadcastMessageType as BroadcastMessageType
 from .template_create_params import TemplateCreateParams as TemplateCreateParams
+from .template_submit_params import TemplateSubmitParams as TemplateSubmitParams
 from .broadcast_content_param import BroadcastContentParam as BroadcastContentParam
 from .broadcast_create_params import BroadcastCreateParams as BroadcastCreateParams
 from .broadcast_send_response import BroadcastSendResponse as BroadcastSendResponse

@@ -9,7 +9,9 @@ import pytest
 
 from zavudev import Zavudev, AsyncZavudev
 from tests.utils import assert_matches_type
-from zavudev.types import Template
+from zavudev.types import (
+    Template,
+)
 from zavudev.pagination import SyncCursor, AsyncCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -191,6 +193,62 @@ class TestTemplates:
                 "",
             )
 
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_submit(self, client: Zavudev) -> None:
+        template = client.templates.submit(
+            template_id="templateId",
+            sender_id="sender_abc123",
+        )
+        assert_matches_type(Template, template, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_submit_with_all_params(self, client: Zavudev) -> None:
+        template = client.templates.submit(
+            template_id="templateId",
+            sender_id="sender_abc123",
+            category="UTILITY",
+        )
+        assert_matches_type(Template, template, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_submit(self, client: Zavudev) -> None:
+        response = client.templates.with_raw_response.submit(
+            template_id="templateId",
+            sender_id="sender_abc123",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        template = response.parse()
+        assert_matches_type(Template, template, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_submit(self, client: Zavudev) -> None:
+        with client.templates.with_streaming_response.submit(
+            template_id="templateId",
+            sender_id="sender_abc123",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            template = response.parse()
+            assert_matches_type(Template, template, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_submit(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `template_id` but received ''"):
+            client.templates.with_raw_response.submit(
+                template_id="",
+                sender_id="sender_abc123",
+            )
+
 
 class TestAsyncTemplates:
     parametrize = pytest.mark.parametrize(
@@ -368,4 +426,60 @@ class TestAsyncTemplates:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `template_id` but received ''"):
             await async_client.templates.with_raw_response.delete(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_submit(self, async_client: AsyncZavudev) -> None:
+        template = await async_client.templates.submit(
+            template_id="templateId",
+            sender_id="sender_abc123",
+        )
+        assert_matches_type(Template, template, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_submit_with_all_params(self, async_client: AsyncZavudev) -> None:
+        template = await async_client.templates.submit(
+            template_id="templateId",
+            sender_id="sender_abc123",
+            category="UTILITY",
+        )
+        assert_matches_type(Template, template, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_submit(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.templates.with_raw_response.submit(
+            template_id="templateId",
+            sender_id="sender_abc123",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        template = await response.parse()
+        assert_matches_type(Template, template, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_submit(self, async_client: AsyncZavudev) -> None:
+        async with async_client.templates.with_streaming_response.submit(
+            template_id="templateId",
+            sender_id="sender_abc123",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            template = await response.parse()
+            assert_matches_type(Template, template, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_submit(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `template_id` but received ''"):
+            await async_client.templates.with_raw_response.submit(
+                template_id="",
+                sender_id="sender_abc123",
             )

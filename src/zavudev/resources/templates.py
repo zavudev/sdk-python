@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import WhatsappCategory, template_list_params, template_create_params
+from ..types import WhatsappCategory, template_list_params, template_create_params, template_submit_params
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -202,6 +202,55 @@ class TemplatesResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    def submit(
+        self,
+        template_id: str,
+        *,
+        sender_id: str,
+        category: WhatsappCategory | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Template:
+        """Submit a WhatsApp template to Meta for approval.
+
+        The template must be in draft
+        status and associated with a sender that has a WhatsApp Business Account
+        configured.
+
+        Args:
+          sender_id: The sender ID with the WhatsApp Business Account to submit the template to.
+
+          category: Template category. If not provided, uses the category set on the template.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not template_id:
+            raise ValueError(f"Expected a non-empty value for `template_id` but received {template_id!r}")
+        return self._post(
+            f"/v1/templates/{template_id}/submit",
+            body=maybe_transform(
+                {
+                    "sender_id": sender_id,
+                    "category": category,
+                },
+                template_submit_params.TemplateSubmitParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Template,
+        )
+
 
 class AsyncTemplatesResource(AsyncAPIResource):
     @cached_property
@@ -382,6 +431,55 @@ class AsyncTemplatesResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def submit(
+        self,
+        template_id: str,
+        *,
+        sender_id: str,
+        category: WhatsappCategory | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Template:
+        """Submit a WhatsApp template to Meta for approval.
+
+        The template must be in draft
+        status and associated with a sender that has a WhatsApp Business Account
+        configured.
+
+        Args:
+          sender_id: The sender ID with the WhatsApp Business Account to submit the template to.
+
+          category: Template category. If not provided, uses the category set on the template.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not template_id:
+            raise ValueError(f"Expected a non-empty value for `template_id` but received {template_id!r}")
+        return await self._post(
+            f"/v1/templates/{template_id}/submit",
+            body=await async_maybe_transform(
+                {
+                    "sender_id": sender_id,
+                    "category": category,
+                },
+                template_submit_params.TemplateSubmitParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Template,
+        )
+
 
 class TemplatesResourceWithRawResponse:
     def __init__(self, templates: TemplatesResource) -> None:
@@ -398,6 +496,9 @@ class TemplatesResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             templates.delete,
+        )
+        self.submit = to_raw_response_wrapper(
+            templates.submit,
         )
 
 
@@ -417,6 +518,9 @@ class AsyncTemplatesResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             templates.delete,
         )
+        self.submit = async_to_raw_response_wrapper(
+            templates.submit,
+        )
 
 
 class TemplatesResourceWithStreamingResponse:
@@ -435,6 +539,9 @@ class TemplatesResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             templates.delete,
         )
+        self.submit = to_streamed_response_wrapper(
+            templates.submit,
+        )
 
 
 class AsyncTemplatesResourceWithStreamingResponse:
@@ -452,4 +559,7 @@ class AsyncTemplatesResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             templates.delete,
+        )
+        self.submit = async_to_streamed_response_wrapper(
+            templates.submit,
         )
