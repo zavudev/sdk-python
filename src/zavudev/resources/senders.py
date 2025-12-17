@@ -3,11 +3,19 @@
 from __future__ import annotations
 
 from typing import List, Optional
+from typing_extensions import Literal
 
 import httpx
 
-from ..types import sender_list_params, sender_create_params, sender_update_params
-from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from ..types import (
+    WhatsappBusinessProfileVertical,
+    sender_list_params,
+    sender_create_params,
+    sender_update_params,
+    sender_update_profile_params,
+    sender_upload_profile_picture_params,
+)
+from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -22,6 +30,10 @@ from .._base_client import AsyncPaginator, make_request_options
 from ..types.sender import Sender
 from ..types.webhook_event import WebhookEvent
 from ..types.webhook_secret_response import WebhookSecretResponse
+from ..types.sender_update_profile_response import SenderUpdateProfileResponse
+from ..types.whatsapp_business_profile_response import WhatsappBusinessProfileResponse
+from ..types.whatsapp_business_profile_vertical import WhatsappBusinessProfileVertical
+from ..types.sender_upload_profile_picture_response import SenderUploadProfilePictureResponse
 
 __all__ = ["SendersResource", "AsyncSendersResource"]
 
@@ -259,6 +271,41 @@ class SendersResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    def get_profile(
+        self,
+        sender_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WhatsappBusinessProfileResponse:
+        """Get the WhatsApp Business profile for a sender.
+
+        The sender must have a WhatsApp
+        Business Account connected.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        return self._get(
+            f"/v1/senders/{sender_id}/profile",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WhatsappBusinessProfileResponse,
+        )
+
     def regenerate_webhook_secret(
         self,
         sender_id: str,
@@ -292,6 +339,118 @@ class SendersResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=WebhookSecretResponse,
+        )
+
+    def update_profile(
+        self,
+        sender_id: str,
+        *,
+        about: str | Omit = omit,
+        address: str | Omit = omit,
+        description: str | Omit = omit,
+        email: str | Omit = omit,
+        vertical: WhatsappBusinessProfileVertical | Omit = omit,
+        websites: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SenderUpdateProfileResponse:
+        """Update the WhatsApp Business profile for a sender.
+
+        The sender must have a
+        WhatsApp Business Account connected.
+
+        Args:
+          about: Short description of the business (max 139 characters).
+
+          address: Physical address of the business (max 256 characters).
+
+          description: Extended description of the business (max 512 characters).
+
+          email: Business email address.
+
+          vertical: Business category for WhatsApp Business profile.
+
+          websites: Business website URLs (maximum 2).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        return self._patch(
+            f"/v1/senders/{sender_id}/profile",
+            body=maybe_transform(
+                {
+                    "about": about,
+                    "address": address,
+                    "description": description,
+                    "email": email,
+                    "vertical": vertical,
+                    "websites": websites,
+                },
+                sender_update_profile_params.SenderUpdateProfileParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SenderUpdateProfileResponse,
+        )
+
+    def upload_profile_picture(
+        self,
+        sender_id: str,
+        *,
+        image_url: str,
+        mime_type: Literal["image/jpeg", "image/png"],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SenderUploadProfilePictureResponse:
+        """Upload a new profile picture for the WhatsApp Business profile.
+
+        The image will
+        be uploaded to Meta and set as the profile picture.
+
+        Args:
+          image_url: URL of the image to upload.
+
+          mime_type: MIME type of the image.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        return self._post(
+            f"/v1/senders/{sender_id}/profile/picture",
+            body=maybe_transform(
+                {
+                    "image_url": image_url,
+                    "mime_type": mime_type,
+                },
+                sender_upload_profile_picture_params.SenderUploadProfilePictureParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SenderUploadProfilePictureResponse,
         )
 
 
@@ -528,6 +687,41 @@ class AsyncSendersResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def get_profile(
+        self,
+        sender_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> WhatsappBusinessProfileResponse:
+        """Get the WhatsApp Business profile for a sender.
+
+        The sender must have a WhatsApp
+        Business Account connected.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        return await self._get(
+            f"/v1/senders/{sender_id}/profile",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=WhatsappBusinessProfileResponse,
+        )
+
     async def regenerate_webhook_secret(
         self,
         sender_id: str,
@@ -563,6 +757,118 @@ class AsyncSendersResource(AsyncAPIResource):
             cast_to=WebhookSecretResponse,
         )
 
+    async def update_profile(
+        self,
+        sender_id: str,
+        *,
+        about: str | Omit = omit,
+        address: str | Omit = omit,
+        description: str | Omit = omit,
+        email: str | Omit = omit,
+        vertical: WhatsappBusinessProfileVertical | Omit = omit,
+        websites: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SenderUpdateProfileResponse:
+        """Update the WhatsApp Business profile for a sender.
+
+        The sender must have a
+        WhatsApp Business Account connected.
+
+        Args:
+          about: Short description of the business (max 139 characters).
+
+          address: Physical address of the business (max 256 characters).
+
+          description: Extended description of the business (max 512 characters).
+
+          email: Business email address.
+
+          vertical: Business category for WhatsApp Business profile.
+
+          websites: Business website URLs (maximum 2).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        return await self._patch(
+            f"/v1/senders/{sender_id}/profile",
+            body=await async_maybe_transform(
+                {
+                    "about": about,
+                    "address": address,
+                    "description": description,
+                    "email": email,
+                    "vertical": vertical,
+                    "websites": websites,
+                },
+                sender_update_profile_params.SenderUpdateProfileParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SenderUpdateProfileResponse,
+        )
+
+    async def upload_profile_picture(
+        self,
+        sender_id: str,
+        *,
+        image_url: str,
+        mime_type: Literal["image/jpeg", "image/png"],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SenderUploadProfilePictureResponse:
+        """Upload a new profile picture for the WhatsApp Business profile.
+
+        The image will
+        be uploaded to Meta and set as the profile picture.
+
+        Args:
+          image_url: URL of the image to upload.
+
+          mime_type: MIME type of the image.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        return await self._post(
+            f"/v1/senders/{sender_id}/profile/picture",
+            body=await async_maybe_transform(
+                {
+                    "image_url": image_url,
+                    "mime_type": mime_type,
+                },
+                sender_upload_profile_picture_params.SenderUploadProfilePictureParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SenderUploadProfilePictureResponse,
+        )
+
 
 class SendersResourceWithRawResponse:
     def __init__(self, senders: SendersResource) -> None:
@@ -583,8 +889,17 @@ class SendersResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             senders.delete,
         )
+        self.get_profile = to_raw_response_wrapper(
+            senders.get_profile,
+        )
         self.regenerate_webhook_secret = to_raw_response_wrapper(
             senders.regenerate_webhook_secret,
+        )
+        self.update_profile = to_raw_response_wrapper(
+            senders.update_profile,
+        )
+        self.upload_profile_picture = to_raw_response_wrapper(
+            senders.upload_profile_picture,
         )
 
 
@@ -607,8 +922,17 @@ class AsyncSendersResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             senders.delete,
         )
+        self.get_profile = async_to_raw_response_wrapper(
+            senders.get_profile,
+        )
         self.regenerate_webhook_secret = async_to_raw_response_wrapper(
             senders.regenerate_webhook_secret,
+        )
+        self.update_profile = async_to_raw_response_wrapper(
+            senders.update_profile,
+        )
+        self.upload_profile_picture = async_to_raw_response_wrapper(
+            senders.upload_profile_picture,
         )
 
 
@@ -631,8 +955,17 @@ class SendersResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             senders.delete,
         )
+        self.get_profile = to_streamed_response_wrapper(
+            senders.get_profile,
+        )
         self.regenerate_webhook_secret = to_streamed_response_wrapper(
             senders.regenerate_webhook_secret,
+        )
+        self.update_profile = to_streamed_response_wrapper(
+            senders.update_profile,
+        )
+        self.upload_profile_picture = to_streamed_response_wrapper(
+            senders.upload_profile_picture,
         )
 
 
@@ -655,6 +988,15 @@ class AsyncSendersResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             senders.delete,
         )
+        self.get_profile = async_to_streamed_response_wrapper(
+            senders.get_profile,
+        )
         self.regenerate_webhook_secret = async_to_streamed_response_wrapper(
             senders.regenerate_webhook_secret,
+        )
+        self.update_profile = async_to_streamed_response_wrapper(
+            senders.update_profile,
+        )
+        self.upload_profile_picture = async_to_streamed_response_wrapper(
+            senders.upload_profile_picture,
         )

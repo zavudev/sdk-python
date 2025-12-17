@@ -41,7 +41,17 @@ Methods:
 Types:
 
 ```python
-from zavudev.types import Sender, SenderWebhook, WebhookEvent, WebhookSecretResponse
+from zavudev.types import (
+    Sender,
+    SenderWebhook,
+    WebhookEvent,
+    WebhookSecretResponse,
+    WhatsappBusinessProfile,
+    WhatsappBusinessProfileResponse,
+    WhatsappBusinessProfileVertical,
+    SenderUpdateProfileResponse,
+    SenderUploadProfilePictureResponse,
+)
 ```
 
 Methods:
@@ -51,7 +61,10 @@ Methods:
 - <code title="patch /v1/senders/{senderId}">client.senders.<a href="./src/zavudev/resources/senders.py">update</a>(sender_id, \*\*<a href="src/zavudev/types/sender_update_params.py">params</a>) -> <a href="./src/zavudev/types/sender.py">Sender</a></code>
 - <code title="get /v1/senders">client.senders.<a href="./src/zavudev/resources/senders.py">list</a>(\*\*<a href="src/zavudev/types/sender_list_params.py">params</a>) -> <a href="./src/zavudev/types/sender.py">SyncCursor[Sender]</a></code>
 - <code title="delete /v1/senders/{senderId}">client.senders.<a href="./src/zavudev/resources/senders.py">delete</a>(sender_id) -> None</code>
+- <code title="get /v1/senders/{senderId}/profile">client.senders.<a href="./src/zavudev/resources/senders.py">get_profile</a>(sender_id) -> <a href="./src/zavudev/types/whatsapp_business_profile_response.py">WhatsappBusinessProfileResponse</a></code>
 - <code title="post /v1/senders/{senderId}/webhook/secret">client.senders.<a href="./src/zavudev/resources/senders.py">regenerate_webhook_secret</a>(sender_id) -> <a href="./src/zavudev/types/webhook_secret_response.py">WebhookSecretResponse</a></code>
+- <code title="patch /v1/senders/{senderId}/profile">client.senders.<a href="./src/zavudev/resources/senders.py">update_profile</a>(sender_id, \*\*<a href="src/zavudev/types/sender_update_profile_params.py">params</a>) -> <a href="./src/zavudev/types/sender_update_profile_response.py">SenderUpdateProfileResponse</a></code>
+- <code title="post /v1/senders/{senderId}/profile/picture">client.senders.<a href="./src/zavudev/resources/senders.py">upload_profile_picture</a>(sender_id, \*\*<a href="src/zavudev/types/sender_upload_profile_picture_params.py">params</a>) -> <a href="./src/zavudev/types/sender_upload_profile_picture_response.py">SenderUploadProfilePictureResponse</a></code>
 
 # Contacts
 
