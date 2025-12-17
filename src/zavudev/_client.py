@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping
+from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -20,8 +20,8 @@ from ._types import (
     not_given,
 )
 from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
-from .resources import senders, contacts, messages, templates, introspect, phone_numbers
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import ZavudevError, APIStatusError
 from ._base_client import (
@@ -29,22 +29,21 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
-from .resources.broadcasts import broadcasts
+
+if TYPE_CHECKING:
+    from .resources import senders, contacts, messages, templates, broadcasts, introspect, phone_numbers
+    from .resources.senders import SendersResource, AsyncSendersResource
+    from .resources.contacts import ContactsResource, AsyncContactsResource
+    from .resources.messages import MessagesResource, AsyncMessagesResource
+    from .resources.templates import TemplatesResource, AsyncTemplatesResource
+    from .resources.introspect import IntrospectResource, AsyncIntrospectResource
+    from .resources.phone_numbers import PhoneNumbersResource, AsyncPhoneNumbersResource
+    from .resources.broadcasts.broadcasts import BroadcastsResource, AsyncBroadcastsResource
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Zavudev", "AsyncZavudev", "Client", "AsyncClient"]
 
 
 class Zavudev(SyncAPIClient):
-    messages: messages.MessagesResource
-    templates: templates.TemplatesResource
-    senders: senders.SendersResource
-    contacts: contacts.ContactsResource
-    broadcasts: broadcasts.BroadcastsResource
-    introspect: introspect.IntrospectResource
-    phone_numbers: phone_numbers.PhoneNumbersResource
-    with_raw_response: ZavudevWithRawResponse
-    with_streaming_response: ZavudevWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -99,15 +98,55 @@ class Zavudev(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.messages = messages.MessagesResource(self)
-        self.templates = templates.TemplatesResource(self)
-        self.senders = senders.SendersResource(self)
-        self.contacts = contacts.ContactsResource(self)
-        self.broadcasts = broadcasts.BroadcastsResource(self)
-        self.introspect = introspect.IntrospectResource(self)
-        self.phone_numbers = phone_numbers.PhoneNumbersResource(self)
-        self.with_raw_response = ZavudevWithRawResponse(self)
-        self.with_streaming_response = ZavudevWithStreamedResponse(self)
+    @cached_property
+    def messages(self) -> MessagesResource:
+        from .resources.messages import MessagesResource
+
+        return MessagesResource(self)
+
+    @cached_property
+    def templates(self) -> TemplatesResource:
+        from .resources.templates import TemplatesResource
+
+        return TemplatesResource(self)
+
+    @cached_property
+    def senders(self) -> SendersResource:
+        from .resources.senders import SendersResource
+
+        return SendersResource(self)
+
+    @cached_property
+    def contacts(self) -> ContactsResource:
+        from .resources.contacts import ContactsResource
+
+        return ContactsResource(self)
+
+    @cached_property
+    def broadcasts(self) -> BroadcastsResource:
+        from .resources.broadcasts import BroadcastsResource
+
+        return BroadcastsResource(self)
+
+    @cached_property
+    def introspect(self) -> IntrospectResource:
+        from .resources.introspect import IntrospectResource
+
+        return IntrospectResource(self)
+
+    @cached_property
+    def phone_numbers(self) -> PhoneNumbersResource:
+        from .resources.phone_numbers import PhoneNumbersResource
+
+        return PhoneNumbersResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> ZavudevWithRawResponse:
+        return ZavudevWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> ZavudevWithStreamedResponse:
+        return ZavudevWithStreamedResponse(self)
 
     @property
     @override
@@ -215,16 +254,6 @@ class Zavudev(SyncAPIClient):
 
 
 class AsyncZavudev(AsyncAPIClient):
-    messages: messages.AsyncMessagesResource
-    templates: templates.AsyncTemplatesResource
-    senders: senders.AsyncSendersResource
-    contacts: contacts.AsyncContactsResource
-    broadcasts: broadcasts.AsyncBroadcastsResource
-    introspect: introspect.AsyncIntrospectResource
-    phone_numbers: phone_numbers.AsyncPhoneNumbersResource
-    with_raw_response: AsyncZavudevWithRawResponse
-    with_streaming_response: AsyncZavudevWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -279,15 +308,55 @@ class AsyncZavudev(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.messages = messages.AsyncMessagesResource(self)
-        self.templates = templates.AsyncTemplatesResource(self)
-        self.senders = senders.AsyncSendersResource(self)
-        self.contacts = contacts.AsyncContactsResource(self)
-        self.broadcasts = broadcasts.AsyncBroadcastsResource(self)
-        self.introspect = introspect.AsyncIntrospectResource(self)
-        self.phone_numbers = phone_numbers.AsyncPhoneNumbersResource(self)
-        self.with_raw_response = AsyncZavudevWithRawResponse(self)
-        self.with_streaming_response = AsyncZavudevWithStreamedResponse(self)
+    @cached_property
+    def messages(self) -> AsyncMessagesResource:
+        from .resources.messages import AsyncMessagesResource
+
+        return AsyncMessagesResource(self)
+
+    @cached_property
+    def templates(self) -> AsyncTemplatesResource:
+        from .resources.templates import AsyncTemplatesResource
+
+        return AsyncTemplatesResource(self)
+
+    @cached_property
+    def senders(self) -> AsyncSendersResource:
+        from .resources.senders import AsyncSendersResource
+
+        return AsyncSendersResource(self)
+
+    @cached_property
+    def contacts(self) -> AsyncContactsResource:
+        from .resources.contacts import AsyncContactsResource
+
+        return AsyncContactsResource(self)
+
+    @cached_property
+    def broadcasts(self) -> AsyncBroadcastsResource:
+        from .resources.broadcasts import AsyncBroadcastsResource
+
+        return AsyncBroadcastsResource(self)
+
+    @cached_property
+    def introspect(self) -> AsyncIntrospectResource:
+        from .resources.introspect import AsyncIntrospectResource
+
+        return AsyncIntrospectResource(self)
+
+    @cached_property
+    def phone_numbers(self) -> AsyncPhoneNumbersResource:
+        from .resources.phone_numbers import AsyncPhoneNumbersResource
+
+        return AsyncPhoneNumbersResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncZavudevWithRawResponse:
+        return AsyncZavudevWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncZavudevWithStreamedResponse:
+        return AsyncZavudevWithStreamedResponse(self)
 
     @property
     @override
@@ -395,47 +464,199 @@ class AsyncZavudev(AsyncAPIClient):
 
 
 class ZavudevWithRawResponse:
+    _client: Zavudev
+
     def __init__(self, client: Zavudev) -> None:
-        self.messages = messages.MessagesResourceWithRawResponse(client.messages)
-        self.templates = templates.TemplatesResourceWithRawResponse(client.templates)
-        self.senders = senders.SendersResourceWithRawResponse(client.senders)
-        self.contacts = contacts.ContactsResourceWithRawResponse(client.contacts)
-        self.broadcasts = broadcasts.BroadcastsResourceWithRawResponse(client.broadcasts)
-        self.introspect = introspect.IntrospectResourceWithRawResponse(client.introspect)
-        self.phone_numbers = phone_numbers.PhoneNumbersResourceWithRawResponse(client.phone_numbers)
+        self._client = client
+
+    @cached_property
+    def messages(self) -> messages.MessagesResourceWithRawResponse:
+        from .resources.messages import MessagesResourceWithRawResponse
+
+        return MessagesResourceWithRawResponse(self._client.messages)
+
+    @cached_property
+    def templates(self) -> templates.TemplatesResourceWithRawResponse:
+        from .resources.templates import TemplatesResourceWithRawResponse
+
+        return TemplatesResourceWithRawResponse(self._client.templates)
+
+    @cached_property
+    def senders(self) -> senders.SendersResourceWithRawResponse:
+        from .resources.senders import SendersResourceWithRawResponse
+
+        return SendersResourceWithRawResponse(self._client.senders)
+
+    @cached_property
+    def contacts(self) -> contacts.ContactsResourceWithRawResponse:
+        from .resources.contacts import ContactsResourceWithRawResponse
+
+        return ContactsResourceWithRawResponse(self._client.contacts)
+
+    @cached_property
+    def broadcasts(self) -> broadcasts.BroadcastsResourceWithRawResponse:
+        from .resources.broadcasts import BroadcastsResourceWithRawResponse
+
+        return BroadcastsResourceWithRawResponse(self._client.broadcasts)
+
+    @cached_property
+    def introspect(self) -> introspect.IntrospectResourceWithRawResponse:
+        from .resources.introspect import IntrospectResourceWithRawResponse
+
+        return IntrospectResourceWithRawResponse(self._client.introspect)
+
+    @cached_property
+    def phone_numbers(self) -> phone_numbers.PhoneNumbersResourceWithRawResponse:
+        from .resources.phone_numbers import PhoneNumbersResourceWithRawResponse
+
+        return PhoneNumbersResourceWithRawResponse(self._client.phone_numbers)
 
 
 class AsyncZavudevWithRawResponse:
+    _client: AsyncZavudev
+
     def __init__(self, client: AsyncZavudev) -> None:
-        self.messages = messages.AsyncMessagesResourceWithRawResponse(client.messages)
-        self.templates = templates.AsyncTemplatesResourceWithRawResponse(client.templates)
-        self.senders = senders.AsyncSendersResourceWithRawResponse(client.senders)
-        self.contacts = contacts.AsyncContactsResourceWithRawResponse(client.contacts)
-        self.broadcasts = broadcasts.AsyncBroadcastsResourceWithRawResponse(client.broadcasts)
-        self.introspect = introspect.AsyncIntrospectResourceWithRawResponse(client.introspect)
-        self.phone_numbers = phone_numbers.AsyncPhoneNumbersResourceWithRawResponse(client.phone_numbers)
+        self._client = client
+
+    @cached_property
+    def messages(self) -> messages.AsyncMessagesResourceWithRawResponse:
+        from .resources.messages import AsyncMessagesResourceWithRawResponse
+
+        return AsyncMessagesResourceWithRawResponse(self._client.messages)
+
+    @cached_property
+    def templates(self) -> templates.AsyncTemplatesResourceWithRawResponse:
+        from .resources.templates import AsyncTemplatesResourceWithRawResponse
+
+        return AsyncTemplatesResourceWithRawResponse(self._client.templates)
+
+    @cached_property
+    def senders(self) -> senders.AsyncSendersResourceWithRawResponse:
+        from .resources.senders import AsyncSendersResourceWithRawResponse
+
+        return AsyncSendersResourceWithRawResponse(self._client.senders)
+
+    @cached_property
+    def contacts(self) -> contacts.AsyncContactsResourceWithRawResponse:
+        from .resources.contacts import AsyncContactsResourceWithRawResponse
+
+        return AsyncContactsResourceWithRawResponse(self._client.contacts)
+
+    @cached_property
+    def broadcasts(self) -> broadcasts.AsyncBroadcastsResourceWithRawResponse:
+        from .resources.broadcasts import AsyncBroadcastsResourceWithRawResponse
+
+        return AsyncBroadcastsResourceWithRawResponse(self._client.broadcasts)
+
+    @cached_property
+    def introspect(self) -> introspect.AsyncIntrospectResourceWithRawResponse:
+        from .resources.introspect import AsyncIntrospectResourceWithRawResponse
+
+        return AsyncIntrospectResourceWithRawResponse(self._client.introspect)
+
+    @cached_property
+    def phone_numbers(self) -> phone_numbers.AsyncPhoneNumbersResourceWithRawResponse:
+        from .resources.phone_numbers import AsyncPhoneNumbersResourceWithRawResponse
+
+        return AsyncPhoneNumbersResourceWithRawResponse(self._client.phone_numbers)
 
 
 class ZavudevWithStreamedResponse:
+    _client: Zavudev
+
     def __init__(self, client: Zavudev) -> None:
-        self.messages = messages.MessagesResourceWithStreamingResponse(client.messages)
-        self.templates = templates.TemplatesResourceWithStreamingResponse(client.templates)
-        self.senders = senders.SendersResourceWithStreamingResponse(client.senders)
-        self.contacts = contacts.ContactsResourceWithStreamingResponse(client.contacts)
-        self.broadcasts = broadcasts.BroadcastsResourceWithStreamingResponse(client.broadcasts)
-        self.introspect = introspect.IntrospectResourceWithStreamingResponse(client.introspect)
-        self.phone_numbers = phone_numbers.PhoneNumbersResourceWithStreamingResponse(client.phone_numbers)
+        self._client = client
+
+    @cached_property
+    def messages(self) -> messages.MessagesResourceWithStreamingResponse:
+        from .resources.messages import MessagesResourceWithStreamingResponse
+
+        return MessagesResourceWithStreamingResponse(self._client.messages)
+
+    @cached_property
+    def templates(self) -> templates.TemplatesResourceWithStreamingResponse:
+        from .resources.templates import TemplatesResourceWithStreamingResponse
+
+        return TemplatesResourceWithStreamingResponse(self._client.templates)
+
+    @cached_property
+    def senders(self) -> senders.SendersResourceWithStreamingResponse:
+        from .resources.senders import SendersResourceWithStreamingResponse
+
+        return SendersResourceWithStreamingResponse(self._client.senders)
+
+    @cached_property
+    def contacts(self) -> contacts.ContactsResourceWithStreamingResponse:
+        from .resources.contacts import ContactsResourceWithStreamingResponse
+
+        return ContactsResourceWithStreamingResponse(self._client.contacts)
+
+    @cached_property
+    def broadcasts(self) -> broadcasts.BroadcastsResourceWithStreamingResponse:
+        from .resources.broadcasts import BroadcastsResourceWithStreamingResponse
+
+        return BroadcastsResourceWithStreamingResponse(self._client.broadcasts)
+
+    @cached_property
+    def introspect(self) -> introspect.IntrospectResourceWithStreamingResponse:
+        from .resources.introspect import IntrospectResourceWithStreamingResponse
+
+        return IntrospectResourceWithStreamingResponse(self._client.introspect)
+
+    @cached_property
+    def phone_numbers(self) -> phone_numbers.PhoneNumbersResourceWithStreamingResponse:
+        from .resources.phone_numbers import PhoneNumbersResourceWithStreamingResponse
+
+        return PhoneNumbersResourceWithStreamingResponse(self._client.phone_numbers)
 
 
 class AsyncZavudevWithStreamedResponse:
+    _client: AsyncZavudev
+
     def __init__(self, client: AsyncZavudev) -> None:
-        self.messages = messages.AsyncMessagesResourceWithStreamingResponse(client.messages)
-        self.templates = templates.AsyncTemplatesResourceWithStreamingResponse(client.templates)
-        self.senders = senders.AsyncSendersResourceWithStreamingResponse(client.senders)
-        self.contacts = contacts.AsyncContactsResourceWithStreamingResponse(client.contacts)
-        self.broadcasts = broadcasts.AsyncBroadcastsResourceWithStreamingResponse(client.broadcasts)
-        self.introspect = introspect.AsyncIntrospectResourceWithStreamingResponse(client.introspect)
-        self.phone_numbers = phone_numbers.AsyncPhoneNumbersResourceWithStreamingResponse(client.phone_numbers)
+        self._client = client
+
+    @cached_property
+    def messages(self) -> messages.AsyncMessagesResourceWithStreamingResponse:
+        from .resources.messages import AsyncMessagesResourceWithStreamingResponse
+
+        return AsyncMessagesResourceWithStreamingResponse(self._client.messages)
+
+    @cached_property
+    def templates(self) -> templates.AsyncTemplatesResourceWithStreamingResponse:
+        from .resources.templates import AsyncTemplatesResourceWithStreamingResponse
+
+        return AsyncTemplatesResourceWithStreamingResponse(self._client.templates)
+
+    @cached_property
+    def senders(self) -> senders.AsyncSendersResourceWithStreamingResponse:
+        from .resources.senders import AsyncSendersResourceWithStreamingResponse
+
+        return AsyncSendersResourceWithStreamingResponse(self._client.senders)
+
+    @cached_property
+    def contacts(self) -> contacts.AsyncContactsResourceWithStreamingResponse:
+        from .resources.contacts import AsyncContactsResourceWithStreamingResponse
+
+        return AsyncContactsResourceWithStreamingResponse(self._client.contacts)
+
+    @cached_property
+    def broadcasts(self) -> broadcasts.AsyncBroadcastsResourceWithStreamingResponse:
+        from .resources.broadcasts import AsyncBroadcastsResourceWithStreamingResponse
+
+        return AsyncBroadcastsResourceWithStreamingResponse(self._client.broadcasts)
+
+    @cached_property
+    def introspect(self) -> introspect.AsyncIntrospectResourceWithStreamingResponse:
+        from .resources.introspect import AsyncIntrospectResourceWithStreamingResponse
+
+        return AsyncIntrospectResourceWithStreamingResponse(self._client.introspect)
+
+    @cached_property
+    def phone_numbers(self) -> phone_numbers.AsyncPhoneNumbersResourceWithStreamingResponse:
+        from .resources.phone_numbers import AsyncPhoneNumbersResourceWithStreamingResponse
+
+        return AsyncPhoneNumbersResourceWithStreamingResponse(self._client.phone_numbers)
 
 
 Client = Zavudev
