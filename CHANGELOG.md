@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.13.0 (2025-12-17)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/zavudev/sdk-python/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* **api:** api update ([1f7ee8c](https://github.com/zavudev/sdk-python/commit/1f7ee8ce8cf2a6a3cb662bdddba1279ca916d1d1))
+* **api:** whatsapp profile ([beb8348](https://github.com/zavudev/sdk-python/commit/beb834894c1b86c9bfe69783ad4ebb0648e3b7d6))
+
 ## 0.12.0 (2025-12-16)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/zavudev/sdk-python/compare/v0.11.0...v0.12.0)
