@@ -27,6 +27,12 @@ class MessageSendParams(TypedDict, total=False):
     content: MessageContentParam
     """Additional content for non-text message types."""
 
+    fallback_enabled: Annotated[bool, PropertyInfo(alias="fallbackEnabled")]
+    """Whether to enable automatic fallback to SMS if WhatsApp fails.
+
+    Defaults to true.
+    """
+
     html_body: Annotated[str, PropertyInfo(alias="htmlBody")]
     """HTML body for email messages.
 

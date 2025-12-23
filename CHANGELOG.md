@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.14.0 (2025-12-21)
+
+Full Changelog: [v0.13.1...v0.14.0](https://github.com/zavudev/sdk-python/compare/v0.13.1...v0.14.0)
+
+### Features
+
+* **api:** api update ([6e140ca](https://github.com/zavudev/sdk-python/commit/6e140caf1465a60925fcf925c7e4ea39dad31916))
+
+
+### Chores
+
+* **internal:** add `--fix` argument to lint script ([24b14b7](https://github.com/zavudev/sdk-python/commit/24b14b78710431593ac3c6a2c31602c7c763bf2d))
+
 ## 0.13.1 (2025-12-18)
 
 Full Changelog: [v0.13.0...v0.13.1](https://github.com/zavudev/sdk-python/compare/v0.13.0...v0.13.1)

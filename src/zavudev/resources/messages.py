@@ -187,6 +187,7 @@ class MessagesResource(SyncAPIResource):
         to: str,
         channel: Channel | Omit = omit,
         content: MessageContentParam | Omit = omit,
+        fallback_enabled: bool | Omit = omit,
         html_body: str | Omit = omit,
         idempotency_key: str | Omit = omit,
         message_type: MessageType | Omit = omit,
@@ -224,6 +225,8 @@ class MessagesResource(SyncAPIResource):
 
           content: Additional content for non-text message types.
 
+          fallback_enabled: Whether to enable automatic fallback to SMS if WhatsApp fails. Defaults to true.
+
           html_body: HTML body for email messages. If provided, email will be sent as multipart with
               both text and HTML.
 
@@ -256,6 +259,7 @@ class MessagesResource(SyncAPIResource):
                     "to": to,
                     "channel": channel,
                     "content": content,
+                    "fallback_enabled": fallback_enabled,
                     "html_body": html_body,
                     "idempotency_key": idempotency_key,
                     "message_type": message_type,
@@ -424,6 +428,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         to: str,
         channel: Channel | Omit = omit,
         content: MessageContentParam | Omit = omit,
+        fallback_enabled: bool | Omit = omit,
         html_body: str | Omit = omit,
         idempotency_key: str | Omit = omit,
         message_type: MessageType | Omit = omit,
@@ -461,6 +466,8 @@ class AsyncMessagesResource(AsyncAPIResource):
 
           content: Additional content for non-text message types.
 
+          fallback_enabled: Whether to enable automatic fallback to SMS if WhatsApp fails. Defaults to true.
+
           html_body: HTML body for email messages. If provided, email will be sent as multipart with
               both text and HTML.
 
@@ -493,6 +500,7 @@ class AsyncMessagesResource(AsyncAPIResource):
                     "to": to,
                     "channel": channel,
                     "content": content,
+                    "fallback_enabled": fallback_enabled,
                     "html_body": html_body,
                     "idempotency_key": idempotency_key,
                     "message_type": message_type,
