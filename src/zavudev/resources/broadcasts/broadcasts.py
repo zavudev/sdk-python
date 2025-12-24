@@ -101,7 +101,7 @@ class BroadcastsResource(SyncAPIResource):
         Add contacts after creation, then send.
 
         Args:
-          channel: Broadcast delivery channel.
+          channel: Broadcast delivery channel. Use 'smart' for per-contact intelligent routing.
 
           name: Name of the broadcast campaign.
 
@@ -478,7 +478,7 @@ class AsyncBroadcastsResource(AsyncAPIResource):
         Add contacts after creation, then send.
 
         Args:
-          channel: Broadcast delivery channel.
+          channel: Broadcast delivery channel. Use 'smart' for per-contact intelligent routing.
 
           name: Name of the broadcast campaign.
 
