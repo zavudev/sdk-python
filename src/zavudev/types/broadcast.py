@@ -18,7 +18,7 @@ class Broadcast(BaseModel):
     id: str
 
     channel: BroadcastChannel
-    """Broadcast delivery channel."""
+    """Broadcast delivery channel. Use 'smart' for per-contact intelligent routing."""
 
     created_at: datetime = FieldInfo(alias="createdAt")
 

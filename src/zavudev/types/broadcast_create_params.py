@@ -16,7 +16,7 @@ __all__ = ["BroadcastCreateParams"]
 
 class BroadcastCreateParams(TypedDict, total=False):
     channel: Required[BroadcastChannel]
-    """Broadcast delivery channel."""
+    """Broadcast delivery channel. Use 'smart' for per-contact intelligent routing."""
 
     name: Required[str]
     """Name of the broadcast campaign."""
