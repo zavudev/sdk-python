@@ -17,6 +17,7 @@ from zavudev.types import (
     BroadcastCreateResponse,
     BroadcastUpdateResponse,
     BroadcastRetrieveResponse,
+    BroadcastRescheduleResponse,
 )
 from zavudev._utils import parse_datetime
 from zavudev.pagination import SyncCursor, AsyncCursor
@@ -356,6 +357,52 @@ class TestBroadcasts:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `broadcast_id` but received ''"):
             client.broadcasts.with_raw_response.progress(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_reschedule(self, client: Zavudev) -> None:
+        broadcast = client.broadcasts.reschedule(
+            broadcast_id="broadcastId",
+            scheduled_at=parse_datetime("2024-01-15T14:00:00Z"),
+        )
+        assert_matches_type(BroadcastRescheduleResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_reschedule(self, client: Zavudev) -> None:
+        response = client.broadcasts.with_raw_response.reschedule(
+            broadcast_id="broadcastId",
+            scheduled_at=parse_datetime("2024-01-15T14:00:00Z"),
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        broadcast = response.parse()
+        assert_matches_type(BroadcastRescheduleResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_reschedule(self, client: Zavudev) -> None:
+        with client.broadcasts.with_streaming_response.reschedule(
+            broadcast_id="broadcastId",
+            scheduled_at=parse_datetime("2024-01-15T14:00:00Z"),
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            broadcast = response.parse()
+            assert_matches_type(BroadcastRescheduleResponse, broadcast, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_path_params_reschedule(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `broadcast_id` but received ''"):
+            client.broadcasts.with_raw_response.reschedule(
+                broadcast_id="",
+                scheduled_at=parse_datetime("2024-01-15T14:00:00Z"),
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
@@ -744,6 +791,52 @@ class TestAsyncBroadcasts:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `broadcast_id` but received ''"):
             await async_client.broadcasts.with_raw_response.progress(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_reschedule(self, async_client: AsyncZavudev) -> None:
+        broadcast = await async_client.broadcasts.reschedule(
+            broadcast_id="broadcastId",
+            scheduled_at=parse_datetime("2024-01-15T14:00:00Z"),
+        )
+        assert_matches_type(BroadcastRescheduleResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_reschedule(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.broadcasts.with_raw_response.reschedule(
+            broadcast_id="broadcastId",
+            scheduled_at=parse_datetime("2024-01-15T14:00:00Z"),
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        broadcast = await response.parse()
+        assert_matches_type(BroadcastRescheduleResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_reschedule(self, async_client: AsyncZavudev) -> None:
+        async with async_client.broadcasts.with_streaming_response.reschedule(
+            broadcast_id="broadcastId",
+            scheduled_at=parse_datetime("2024-01-15T14:00:00Z"),
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            broadcast = await response.parse()
+            assert_matches_type(BroadcastRescheduleResponse, broadcast, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_path_params_reschedule(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `broadcast_id` but received ''"):
+            await async_client.broadcasts.with_raw_response.reschedule(
+                broadcast_id="",
+                scheduled_at=parse_datetime("2024-01-15T14:00:00Z"),
             )
 
     @pytest.mark.skip(reason="Prism tests are disabled")
