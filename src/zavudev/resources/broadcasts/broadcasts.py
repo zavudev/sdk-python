@@ -15,6 +15,7 @@ from ...types import (
     broadcast_send_params,
     broadcast_create_params,
     broadcast_update_params,
+    broadcast_reschedule_params,
 )
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
@@ -47,6 +48,7 @@ from ...types.broadcast_cancel_response import BroadcastCancelResponse
 from ...types.broadcast_create_response import BroadcastCreateResponse
 from ...types.broadcast_update_response import BroadcastUpdateResponse
 from ...types.broadcast_retrieve_response import BroadcastRetrieveResponse
+from ...types.broadcast_reschedule_response import BroadcastRescheduleResponse
 
 __all__ = ["BroadcastsResource", "AsyncBroadcastsResource"]
 
@@ -386,6 +388,45 @@ class BroadcastsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=BroadcastProgress,
+        )
+
+    def reschedule(
+        self,
+        broadcast_id: str,
+        *,
+        scheduled_at: Union[str, datetime],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BroadcastRescheduleResponse:
+        """Update the scheduled time for a broadcast.
+
+        The broadcast must be in scheduled
+        status.
+
+        Args:
+          scheduled_at: New scheduled time for the broadcast.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not broadcast_id:
+            raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
+        return self._patch(
+            f"/v1/broadcasts/{broadcast_id}/schedule",
+            body=maybe_transform({"scheduled_at": scheduled_at}, broadcast_reschedule_params.BroadcastRescheduleParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=BroadcastRescheduleResponse,
         )
 
     def send(
@@ -765,6 +806,47 @@ class AsyncBroadcastsResource(AsyncAPIResource):
             cast_to=BroadcastProgress,
         )
 
+    async def reschedule(
+        self,
+        broadcast_id: str,
+        *,
+        scheduled_at: Union[str, datetime],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BroadcastRescheduleResponse:
+        """Update the scheduled time for a broadcast.
+
+        The broadcast must be in scheduled
+        status.
+
+        Args:
+          scheduled_at: New scheduled time for the broadcast.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not broadcast_id:
+            raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
+        return await self._patch(
+            f"/v1/broadcasts/{broadcast_id}/schedule",
+            body=await async_maybe_transform(
+                {"scheduled_at": scheduled_at}, broadcast_reschedule_params.BroadcastRescheduleParams
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=BroadcastRescheduleResponse,
+        )
+
     async def send(
         self,
         broadcast_id: str,
@@ -830,6 +912,9 @@ class BroadcastsResourceWithRawResponse:
         self.progress = to_raw_response_wrapper(
             broadcasts.progress,
         )
+        self.reschedule = to_raw_response_wrapper(
+            broadcasts.reschedule,
+        )
         self.send = to_raw_response_wrapper(
             broadcasts.send,
         )
@@ -863,6 +948,9 @@ class AsyncBroadcastsResourceWithRawResponse:
         )
         self.progress = async_to_raw_response_wrapper(
             broadcasts.progress,
+        )
+        self.reschedule = async_to_raw_response_wrapper(
+            broadcasts.reschedule,
         )
         self.send = async_to_raw_response_wrapper(
             broadcasts.send,
@@ -898,6 +986,9 @@ class BroadcastsResourceWithStreamingResponse:
         self.progress = to_streamed_response_wrapper(
             broadcasts.progress,
         )
+        self.reschedule = to_streamed_response_wrapper(
+            broadcasts.reschedule,
+        )
         self.send = to_streamed_response_wrapper(
             broadcasts.send,
         )
@@ -931,6 +1022,9 @@ class AsyncBroadcastsResourceWithStreamingResponse:
         )
         self.progress = async_to_streamed_response_wrapper(
             broadcasts.progress,
+        )
+        self.reschedule = async_to_streamed_response_wrapper(
+            broadcasts.reschedule,
         )
         self.send = async_to_streamed_response_wrapper(
             broadcasts.send,

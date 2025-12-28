@@ -31,13 +31,25 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import senders, contacts, messages, templates, broadcasts, introspect, phone_numbers
-    from .resources.senders import SendersResource, AsyncSendersResource
+    from .resources import (
+        senders,
+        contacts,
+        messages,
+        addresses,
+        templates,
+        broadcasts,
+        introspect,
+        phone_numbers,
+        regulatory_documents,
+    )
     from .resources.contacts import ContactsResource, AsyncContactsResource
     from .resources.messages import MessagesResource, AsyncMessagesResource
+    from .resources.addresses import AddressesResource, AsyncAddressesResource
     from .resources.templates import TemplatesResource, AsyncTemplatesResource
     from .resources.introspect import IntrospectResource, AsyncIntrospectResource
     from .resources.phone_numbers import PhoneNumbersResource, AsyncPhoneNumbersResource
+    from .resources.senders.senders import SendersResource, AsyncSendersResource
+    from .resources.regulatory_documents import RegulatoryDocumentsResource, AsyncRegulatoryDocumentsResource
     from .resources.broadcasts.broadcasts import BroadcastsResource, AsyncBroadcastsResource
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Zavudev", "AsyncZavudev", "Client", "AsyncClient"]
@@ -139,6 +151,18 @@ class Zavudev(SyncAPIClient):
         from .resources.phone_numbers import PhoneNumbersResource
 
         return PhoneNumbersResource(self)
+
+    @cached_property
+    def addresses(self) -> AddressesResource:
+        from .resources.addresses import AddressesResource
+
+        return AddressesResource(self)
+
+    @cached_property
+    def regulatory_documents(self) -> RegulatoryDocumentsResource:
+        from .resources.regulatory_documents import RegulatoryDocumentsResource
+
+        return RegulatoryDocumentsResource(self)
 
     @cached_property
     def with_raw_response(self) -> ZavudevWithRawResponse:
@@ -351,6 +375,18 @@ class AsyncZavudev(AsyncAPIClient):
         return AsyncPhoneNumbersResource(self)
 
     @cached_property
+    def addresses(self) -> AsyncAddressesResource:
+        from .resources.addresses import AsyncAddressesResource
+
+        return AsyncAddressesResource(self)
+
+    @cached_property
+    def regulatory_documents(self) -> AsyncRegulatoryDocumentsResource:
+        from .resources.regulatory_documents import AsyncRegulatoryDocumentsResource
+
+        return AsyncRegulatoryDocumentsResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncZavudevWithRawResponse:
         return AsyncZavudevWithRawResponse(self)
 
@@ -511,6 +547,18 @@ class ZavudevWithRawResponse:
 
         return PhoneNumbersResourceWithRawResponse(self._client.phone_numbers)
 
+    @cached_property
+    def addresses(self) -> addresses.AddressesResourceWithRawResponse:
+        from .resources.addresses import AddressesResourceWithRawResponse
+
+        return AddressesResourceWithRawResponse(self._client.addresses)
+
+    @cached_property
+    def regulatory_documents(self) -> regulatory_documents.RegulatoryDocumentsResourceWithRawResponse:
+        from .resources.regulatory_documents import RegulatoryDocumentsResourceWithRawResponse
+
+        return RegulatoryDocumentsResourceWithRawResponse(self._client.regulatory_documents)
+
 
 class AsyncZavudevWithRawResponse:
     _client: AsyncZavudev
@@ -559,6 +607,18 @@ class AsyncZavudevWithRawResponse:
         from .resources.phone_numbers import AsyncPhoneNumbersResourceWithRawResponse
 
         return AsyncPhoneNumbersResourceWithRawResponse(self._client.phone_numbers)
+
+    @cached_property
+    def addresses(self) -> addresses.AsyncAddressesResourceWithRawResponse:
+        from .resources.addresses import AsyncAddressesResourceWithRawResponse
+
+        return AsyncAddressesResourceWithRawResponse(self._client.addresses)
+
+    @cached_property
+    def regulatory_documents(self) -> regulatory_documents.AsyncRegulatoryDocumentsResourceWithRawResponse:
+        from .resources.regulatory_documents import AsyncRegulatoryDocumentsResourceWithRawResponse
+
+        return AsyncRegulatoryDocumentsResourceWithRawResponse(self._client.regulatory_documents)
 
 
 class ZavudevWithStreamedResponse:
@@ -609,6 +669,18 @@ class ZavudevWithStreamedResponse:
 
         return PhoneNumbersResourceWithStreamingResponse(self._client.phone_numbers)
 
+    @cached_property
+    def addresses(self) -> addresses.AddressesResourceWithStreamingResponse:
+        from .resources.addresses import AddressesResourceWithStreamingResponse
+
+        return AddressesResourceWithStreamingResponse(self._client.addresses)
+
+    @cached_property
+    def regulatory_documents(self) -> regulatory_documents.RegulatoryDocumentsResourceWithStreamingResponse:
+        from .resources.regulatory_documents import RegulatoryDocumentsResourceWithStreamingResponse
+
+        return RegulatoryDocumentsResourceWithStreamingResponse(self._client.regulatory_documents)
+
 
 class AsyncZavudevWithStreamedResponse:
     _client: AsyncZavudev
@@ -657,6 +729,18 @@ class AsyncZavudevWithStreamedResponse:
         from .resources.phone_numbers import AsyncPhoneNumbersResourceWithStreamingResponse
 
         return AsyncPhoneNumbersResourceWithStreamingResponse(self._client.phone_numbers)
+
+    @cached_property
+    def addresses(self) -> addresses.AsyncAddressesResourceWithStreamingResponse:
+        from .resources.addresses import AsyncAddressesResourceWithStreamingResponse
+
+        return AsyncAddressesResourceWithStreamingResponse(self._client.addresses)
+
+    @cached_property
+    def regulatory_documents(self) -> regulatory_documents.AsyncRegulatoryDocumentsResourceWithStreamingResponse:
+        from .resources.regulatory_documents import AsyncRegulatoryDocumentsResourceWithStreamingResponse
+
+        return AsyncRegulatoryDocumentsResourceWithStreamingResponse(self._client.regulatory_documents)
 
 
 Client = Zavudev

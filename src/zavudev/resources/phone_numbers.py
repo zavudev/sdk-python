@@ -12,6 +12,7 @@ from ..types import (
     phone_number_list_params,
     phone_number_update_params,
     phone_number_purchase_params,
+    phone_number_requirements_params,
     phone_number_search_available_params,
 )
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
@@ -32,6 +33,7 @@ from ..types.phone_number_status import PhoneNumberStatus
 from ..types.phone_number_update_response import PhoneNumberUpdateResponse
 from ..types.phone_number_purchase_response import PhoneNumberPurchaseResponse
 from ..types.phone_number_retrieve_response import PhoneNumberRetrieveResponse
+from ..types.phone_number_requirements_response import PhoneNumberRequirementsResponse
 from ..types.phone_number_search_available_response import PhoneNumberSearchAvailableResponse
 
 __all__ = ["PhoneNumbersResource", "AsyncPhoneNumbersResource"]
@@ -263,6 +265,54 @@ class PhoneNumbersResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=NoneType,
+        )
+
+    def requirements(
+        self,
+        *,
+        country_code: str,
+        type: PhoneNumberType | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PhoneNumberRequirementsResponse:
+        """
+        Get regulatory requirements for purchasing phone numbers in a specific country.
+        Some countries require additional documentation (addresses, identity documents)
+        before phone numbers can be activated.
+
+        Args:
+          country_code: Two-letter ISO country code.
+
+          type: Type of phone number (local, mobile, tollFree).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/v1/phone-numbers/requirements",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "country_code": country_code,
+                        "type": type,
+                    },
+                    phone_number_requirements_params.PhoneNumberRequirementsParams,
+                ),
+            ),
+            cast_to=PhoneNumberRequirementsResponse,
         )
 
     def search_available(
@@ -548,6 +598,54 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def requirements(
+        self,
+        *,
+        country_code: str,
+        type: PhoneNumberType | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PhoneNumberRequirementsResponse:
+        """
+        Get regulatory requirements for purchasing phone numbers in a specific country.
+        Some countries require additional documentation (addresses, identity documents)
+        before phone numbers can be activated.
+
+        Args:
+          country_code: Two-letter ISO country code.
+
+          type: Type of phone number (local, mobile, tollFree).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/v1/phone-numbers/requirements",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "country_code": country_code,
+                        "type": type,
+                    },
+                    phone_number_requirements_params.PhoneNumberRequirementsParams,
+                ),
+            ),
+            cast_to=PhoneNumberRequirementsResponse,
+        )
+
     async def search_available(
         self,
         *,
@@ -622,6 +720,9 @@ class PhoneNumbersResourceWithRawResponse:
         self.release = to_raw_response_wrapper(
             phone_numbers.release,
         )
+        self.requirements = to_raw_response_wrapper(
+            phone_numbers.requirements,
+        )
         self.search_available = to_raw_response_wrapper(
             phone_numbers.search_available,
         )
@@ -645,6 +746,9 @@ class AsyncPhoneNumbersResourceWithRawResponse:
         )
         self.release = async_to_raw_response_wrapper(
             phone_numbers.release,
+        )
+        self.requirements = async_to_raw_response_wrapper(
+            phone_numbers.requirements,
         )
         self.search_available = async_to_raw_response_wrapper(
             phone_numbers.search_available,
@@ -670,6 +774,9 @@ class PhoneNumbersResourceWithStreamingResponse:
         self.release = to_streamed_response_wrapper(
             phone_numbers.release,
         )
+        self.requirements = to_streamed_response_wrapper(
+            phone_numbers.requirements,
+        )
         self.search_available = to_streamed_response_wrapper(
             phone_numbers.search_available,
         )
@@ -693,6 +800,9 @@ class AsyncPhoneNumbersResourceWithStreamingResponse:
         )
         self.release = async_to_streamed_response_wrapper(
             phone_numbers.release,
+        )
+        self.requirements = async_to_streamed_response_wrapper(
+            phone_numbers.requirements,
         )
         self.search_available = async_to_streamed_response_wrapper(
             phone_numbers.search_available,
