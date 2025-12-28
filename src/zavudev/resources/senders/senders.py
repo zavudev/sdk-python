@@ -7,7 +7,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import (
+from ...types import (
     WhatsappBusinessProfileVertical,
     sender_list_params,
     sender_create_params,
@@ -15,30 +15,42 @@ from ..types import (
     sender_update_profile_params,
     sender_upload_profile_picture_params,
 )
-from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
-from .._utils import maybe_transform, async_maybe_transform
-from .._compat import cached_property
-from .._resource import SyncAPIResource, AsyncAPIResource
-from .._response import (
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
+from ..._utils import maybe_transform, async_maybe_transform
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..pagination import SyncCursor, AsyncCursor
-from .._base_client import AsyncPaginator, make_request_options
-from ..types.sender import Sender
-from ..types.webhook_event import WebhookEvent
-from ..types.webhook_secret_response import WebhookSecretResponse
-from ..types.sender_update_profile_response import SenderUpdateProfileResponse
-from ..types.whatsapp_business_profile_response import WhatsappBusinessProfileResponse
-from ..types.whatsapp_business_profile_vertical import WhatsappBusinessProfileVertical
-from ..types.sender_upload_profile_picture_response import SenderUploadProfilePictureResponse
+from .agent.agent import (
+    AgentResource,
+    AsyncAgentResource,
+    AgentResourceWithRawResponse,
+    AsyncAgentResourceWithRawResponse,
+    AgentResourceWithStreamingResponse,
+    AsyncAgentResourceWithStreamingResponse,
+)
+from ...pagination import SyncCursor, AsyncCursor
+from ..._base_client import AsyncPaginator, make_request_options
+from ...types.sender import Sender
+from ...types.webhook_event import WebhookEvent
+from ...types.webhook_secret_response import WebhookSecretResponse
+from ...types.sender_update_profile_response import SenderUpdateProfileResponse
+from ...types.whatsapp_business_profile_response import WhatsappBusinessProfileResponse
+from ...types.whatsapp_business_profile_vertical import WhatsappBusinessProfileVertical
+from ...types.sender_upload_profile_picture_response import SenderUploadProfilePictureResponse
 
 __all__ = ["SendersResource", "AsyncSendersResource"]
 
 
 class SendersResource(SyncAPIResource):
+    @cached_property
+    def agent(self) -> AgentResource:
+        return AgentResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> SendersResourceWithRawResponse:
         """
@@ -455,6 +467,10 @@ class SendersResource(SyncAPIResource):
 
 
 class AsyncSendersResource(AsyncAPIResource):
+    @cached_property
+    def agent(self) -> AsyncAgentResource:
+        return AsyncAgentResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> AsyncSendersResourceWithRawResponse:
         """
@@ -902,6 +918,10 @@ class SendersResourceWithRawResponse:
             senders.upload_profile_picture,
         )
 
+    @cached_property
+    def agent(self) -> AgentResourceWithRawResponse:
+        return AgentResourceWithRawResponse(self._senders.agent)
+
 
 class AsyncSendersResourceWithRawResponse:
     def __init__(self, senders: AsyncSendersResource) -> None:
@@ -934,6 +954,10 @@ class AsyncSendersResourceWithRawResponse:
         self.upload_profile_picture = async_to_raw_response_wrapper(
             senders.upload_profile_picture,
         )
+
+    @cached_property
+    def agent(self) -> AsyncAgentResourceWithRawResponse:
+        return AsyncAgentResourceWithRawResponse(self._senders.agent)
 
 
 class SendersResourceWithStreamingResponse:
@@ -968,6 +992,10 @@ class SendersResourceWithStreamingResponse:
             senders.upload_profile_picture,
         )
 
+    @cached_property
+    def agent(self) -> AgentResourceWithStreamingResponse:
+        return AgentResourceWithStreamingResponse(self._senders.agent)
+
 
 class AsyncSendersResourceWithStreamingResponse:
     def __init__(self, senders: AsyncSendersResource) -> None:
@@ -1000,3 +1028,7 @@ class AsyncSendersResourceWithStreamingResponse:
         self.upload_profile_picture = async_to_streamed_response_wrapper(
             senders.upload_profile_picture,
         )
+
+    @cached_property
+    def agent(self) -> AsyncAgentResourceWithStreamingResponse:
+        return AsyncAgentResourceWithStreamingResponse(self._senders.agent)

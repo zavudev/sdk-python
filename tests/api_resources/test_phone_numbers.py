@@ -14,6 +14,7 @@ from zavudev.types import (
     PhoneNumberUpdateResponse,
     PhoneNumberPurchaseResponse,
     PhoneNumberRetrieveResponse,
+    PhoneNumberRequirementsResponse,
     PhoneNumberSearchAvailableResponse,
 )
 from zavudev.pagination import SyncCursor, AsyncCursor
@@ -240,6 +241,49 @@ class TestPhoneNumbers:
             client.phone_numbers.with_raw_response.release(
                 "",
             )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_requirements(self, client: Zavudev) -> None:
+        phone_number = client.phone_numbers.requirements(
+            country_code="xx",
+        )
+        assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_requirements_with_all_params(self, client: Zavudev) -> None:
+        phone_number = client.phone_numbers.requirements(
+            country_code="xx",
+            type="local",
+        )
+        assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_requirements(self, client: Zavudev) -> None:
+        response = client.phone_numbers.with_raw_response.requirements(
+            country_code="xx",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        phone_number = response.parse()
+        assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_requirements(self, client: Zavudev) -> None:
+        with client.phone_numbers.with_streaming_response.requirements(
+            country_code="xx",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            phone_number = response.parse()
+            assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -508,6 +552,49 @@ class TestAsyncPhoneNumbers:
             await async_client.phone_numbers.with_raw_response.release(
                 "",
             )
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_requirements(self, async_client: AsyncZavudev) -> None:
+        phone_number = await async_client.phone_numbers.requirements(
+            country_code="xx",
+        )
+        assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_requirements_with_all_params(self, async_client: AsyncZavudev) -> None:
+        phone_number = await async_client.phone_numbers.requirements(
+            country_code="xx",
+            type="local",
+        )
+        assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_requirements(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.phone_numbers.with_raw_response.requirements(
+            country_code="xx",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        phone_number = await response.parse()
+        assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_requirements(self, async_client: AsyncZavudev) -> None:
+        async with async_client.phone_numbers.with_streaming_response.requirements(
+            country_code="xx",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            phone_number = await response.parse()
+            assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize

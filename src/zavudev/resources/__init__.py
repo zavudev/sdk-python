@@ -24,6 +24,14 @@ from .messages import (
     MessagesResourceWithStreamingResponse,
     AsyncMessagesResourceWithStreamingResponse,
 )
+from .addresses import (
+    AddressesResource,
+    AsyncAddressesResource,
+    AddressesResourceWithRawResponse,
+    AsyncAddressesResourceWithRawResponse,
+    AddressesResourceWithStreamingResponse,
+    AsyncAddressesResourceWithStreamingResponse,
+)
 from .templates import (
     TemplatesResource,
     AsyncTemplatesResource,
@@ -55,6 +63,14 @@ from .phone_numbers import (
     AsyncPhoneNumbersResourceWithRawResponse,
     PhoneNumbersResourceWithStreamingResponse,
     AsyncPhoneNumbersResourceWithStreamingResponse,
+)
+from .regulatory_documents import (
+    RegulatoryDocumentsResource,
+    AsyncRegulatoryDocumentsResource,
+    RegulatoryDocumentsResourceWithRawResponse,
+    AsyncRegulatoryDocumentsResourceWithRawResponse,
+    RegulatoryDocumentsResourceWithStreamingResponse,
+    AsyncRegulatoryDocumentsResourceWithStreamingResponse,
 )
 
 __all__ = [
@@ -100,4 +116,16 @@ __all__ = [
     "AsyncPhoneNumbersResourceWithRawResponse",
     "PhoneNumbersResourceWithStreamingResponse",
     "AsyncPhoneNumbersResourceWithStreamingResponse",
+    "AddressesResource",
+    "AsyncAddressesResource",
+    "AddressesResourceWithRawResponse",
+    "AsyncAddressesResourceWithRawResponse",
+    "AddressesResourceWithStreamingResponse",
+    "AsyncAddressesResourceWithStreamingResponse",
+    "RegulatoryDocumentsResource",
+    "AsyncRegulatoryDocumentsResource",
+    "RegulatoryDocumentsResourceWithRawResponse",
+    "AsyncRegulatoryDocumentsResourceWithRawResponse",
+    "RegulatoryDocumentsResourceWithStreamingResponse",
+    "AsyncRegulatoryDocumentsResourceWithStreamingResponse",
 ]
