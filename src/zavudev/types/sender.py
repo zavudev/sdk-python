@@ -50,6 +50,9 @@ class Sender(BaseModel):
 
     created_at: Optional[datetime] = FieldInfo(alias="createdAt", default=None)
 
+    email_receiving_enabled: Optional[bool] = FieldInfo(alias="emailReceivingEnabled", default=None)
+    """Whether inbound email receiving is enabled for this sender."""
+
     is_default: Optional[bool] = FieldInfo(alias="isDefault", default=None)
     """Whether this sender is the project's default."""
 
