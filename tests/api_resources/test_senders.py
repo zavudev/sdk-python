@@ -128,6 +128,7 @@ class TestSenders:
     def test_method_update_with_all_params(self, client: Zavudev) -> None:
         sender = client.senders.update(
             sender_id="senderId",
+            email_receiving_enabled=True,
             name="name",
             set_as_default=True,
             webhook_active=True,
@@ -549,6 +550,7 @@ class TestAsyncSenders:
     async def test_method_update_with_all_params(self, async_client: AsyncZavudev) -> None:
         sender = await async_client.senders.update(
             sender_id="senderId",
+            email_receiving_enabled=True,
             name="name",
             set_as_default=True,
             webhook_active=True,

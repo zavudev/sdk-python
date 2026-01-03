@@ -12,6 +12,9 @@ __all__ = ["SenderUpdateParams"]
 
 
 class SenderUpdateParams(TypedDict, total=False):
+    email_receiving_enabled: Annotated[bool, PropertyInfo(alias="emailReceivingEnabled")]
+    """Enable or disable inbound email receiving for this sender."""
+
     name: str
 
     set_as_default: Annotated[bool, PropertyInfo(alias="setAsDefault")]

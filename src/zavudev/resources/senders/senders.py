@@ -156,6 +156,7 @@ class SendersResource(SyncAPIResource):
         self,
         sender_id: str,
         *,
+        email_receiving_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
         webhook_active: bool | Omit = omit,
@@ -172,6 +173,8 @@ class SendersResource(SyncAPIResource):
         Update sender
 
         Args:
+          email_receiving_enabled: Enable or disable inbound email receiving for this sender.
+
           webhook_active: Whether the webhook is active.
 
           webhook_events: Events to subscribe to.
@@ -192,6 +195,7 @@ class SendersResource(SyncAPIResource):
             f"/v1/senders/{sender_id}",
             body=maybe_transform(
                 {
+                    "email_receiving_enabled": email_receiving_enabled,
                     "name": name,
                     "set_as_default": set_as_default,
                     "webhook_active": webhook_active,
@@ -576,6 +580,7 @@ class AsyncSendersResource(AsyncAPIResource):
         self,
         sender_id: str,
         *,
+        email_receiving_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
         webhook_active: bool | Omit = omit,
@@ -592,6 +597,8 @@ class AsyncSendersResource(AsyncAPIResource):
         Update sender
 
         Args:
+          email_receiving_enabled: Enable or disable inbound email receiving for this sender.
+
           webhook_active: Whether the webhook is active.
 
           webhook_events: Events to subscribe to.
@@ -612,6 +619,7 @@ class AsyncSendersResource(AsyncAPIResource):
             f"/v1/senders/{sender_id}",
             body=await async_maybe_transform(
                 {
+                    "email_receiving_enabled": email_receiving_enabled,
                     "name": name,
                     "set_as_default": set_as_default,
                     "webhook_active": webhook_active,
