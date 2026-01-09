@@ -13,11 +13,20 @@ __all__ = ["Template", "Button", "Whatsapp"]
 
 
 class Button(BaseModel):
+    otp_type: Optional[Literal["COPY_CODE", "ONE_TAP"]] = FieldInfo(alias="otpType", default=None)
+    """OTP button type. Required when type is 'otp'."""
+
+    package_name: Optional[str] = FieldInfo(alias="packageName", default=None)
+    """Android package name. Required for ONE_TAP buttons."""
+
     phone_number: Optional[str] = FieldInfo(alias="phoneNumber", default=None)
+
+    signature_hash: Optional[str] = FieldInfo(alias="signatureHash", default=None)
+    """Android app signature hash. Required for ONE_TAP buttons."""
 
     text: Optional[str] = None
 
-    type: Optional[str] = None
+    type: Optional[Literal["quick_reply", "url", "phone", "otp"]] = None
 
     url: Optional[str] = None
 
@@ -50,8 +59,14 @@ class Template(BaseModel):
     name: str
     """Template name (must match WhatsApp template name)."""
 
+    add_security_recommendation: Optional[bool] = FieldInfo(alias="addSecurityRecommendation", default=None)
+    """Add 'Do not share this code' disclaimer. Only for AUTHENTICATION templates."""
+
     buttons: Optional[List[Button]] = None
     """Template buttons."""
+
+    code_expiration_minutes: Optional[int] = FieldInfo(alias="codeExpirationMinutes", default=None)
+    """Code expiration time in minutes. Only for AUTHENTICATION templates."""
 
     created_at: Optional[datetime] = FieldInfo(alias="createdAt", default=None)
 
