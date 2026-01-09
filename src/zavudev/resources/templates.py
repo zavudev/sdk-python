@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Iterable
+
 import httpx
 
 from ..types import WhatsappCategory, template_list_params, template_create_params, template_submit_params
@@ -49,6 +51,9 @@ class TemplatesResource(SyncAPIResource):
         body: str,
         language: str,
         name: str,
+        add_security_recommendation: bool | Omit = omit,
+        buttons: Iterable[template_create_params.Button] | Omit = omit,
+        code_expiration_minutes: int | Omit = omit,
         variables: SequenceNotStr[str] | Omit = omit,
         whatsapp_category: WhatsappCategory | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -64,6 +69,12 @@ class TemplatesResource(SyncAPIResource):
         before use.
 
         Args:
+          add_security_recommendation: Add 'Do not share this code' disclaimer. Only for AUTHENTICATION templates.
+
+          buttons: Template buttons (max 3).
+
+          code_expiration_minutes: Code expiration time in minutes. Only for AUTHENTICATION templates.
+
           whatsapp_category: WhatsApp template category.
 
           extra_headers: Send extra headers
@@ -81,6 +92,9 @@ class TemplatesResource(SyncAPIResource):
                     "body": body,
                     "language": language,
                     "name": name,
+                    "add_security_recommendation": add_security_recommendation,
+                    "buttons": buttons,
+                    "code_expiration_minutes": code_expiration_minutes,
                     "variables": variables,
                     "whatsapp_category": whatsapp_category,
                 },
@@ -278,6 +292,9 @@ class AsyncTemplatesResource(AsyncAPIResource):
         body: str,
         language: str,
         name: str,
+        add_security_recommendation: bool | Omit = omit,
+        buttons: Iterable[template_create_params.Button] | Omit = omit,
+        code_expiration_minutes: int | Omit = omit,
         variables: SequenceNotStr[str] | Omit = omit,
         whatsapp_category: WhatsappCategory | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -293,6 +310,12 @@ class AsyncTemplatesResource(AsyncAPIResource):
         before use.
 
         Args:
+          add_security_recommendation: Add 'Do not share this code' disclaimer. Only for AUTHENTICATION templates.
+
+          buttons: Template buttons (max 3).
+
+          code_expiration_minutes: Code expiration time in minutes. Only for AUTHENTICATION templates.
+
           whatsapp_category: WhatsApp template category.
 
           extra_headers: Send extra headers
@@ -310,6 +333,9 @@ class AsyncTemplatesResource(AsyncAPIResource):
                     "body": body,
                     "language": language,
                     "name": name,
+                    "add_security_recommendation": add_security_recommendation,
+                    "buttons": buttons,
+                    "code_expiration_minutes": code_expiration_minutes,
                     "variables": variables,
                     "whatsapp_category": whatsapp_category,
                 },
