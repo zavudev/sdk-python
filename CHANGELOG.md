@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.17.1 (2026-01-06)
+
+Full Changelog: [v0.17.0...v0.17.1](https://github.com/zavudev/sdk-python/compare/v0.17.0...v0.17.1)
+
+### Documentation
+
+* prominently feature MCP server setup in root SDK readmes ([2fa3b9f](https://github.com/zavudev/sdk-python/commit/2fa3b9f6fc37f20107e16d175cb1c4ff3001e8fb))
+
 ## 0.17.0 (2026-01-01)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/zavudev/sdk-python/compare/v0.16.0...v0.17.0)
