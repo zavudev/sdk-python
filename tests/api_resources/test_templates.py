@@ -37,6 +37,19 @@ class TestTemplates:
             body="Hi {{1}}, your order {{2}} has been confirmed and will ship within 24 hours.",
             language="en",
             name="order_confirmation",
+            add_security_recommendation=True,
+            buttons=[
+                {
+                    "text": "text",
+                    "type": "quick_reply",
+                    "otp_type": "COPY_CODE",
+                    "package_name": "packageName",
+                    "phone_number": "phoneNumber",
+                    "signature_hash": "signatureHash",
+                    "url": "https://example.com",
+                }
+            ],
+            code_expiration_minutes=1,
             variables=["customer_name", "order_id"],
             whatsapp_category="UTILITY",
         )
@@ -272,6 +285,19 @@ class TestAsyncTemplates:
             body="Hi {{1}}, your order {{2}} has been confirmed and will ship within 24 hours.",
             language="en",
             name="order_confirmation",
+            add_security_recommendation=True,
+            buttons=[
+                {
+                    "text": "text",
+                    "type": "quick_reply",
+                    "otp_type": "COPY_CODE",
+                    "package_name": "packageName",
+                    "phone_number": "phoneNumber",
+                    "signature_hash": "signatureHash",
+                    "url": "https://example.com",
+                }
+            ],
+            code_expiration_minutes=1,
             variables=["customer_name", "order_id"],
             whatsapp_category="UTILITY",
         )
