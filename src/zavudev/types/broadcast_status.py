@@ -4,4 +4,17 @@ from typing_extensions import Literal, TypeAlias
 
 __all__ = ["BroadcastStatus"]
 
-BroadcastStatus: TypeAlias = Literal["draft", "scheduled", "sending", "paused", "completed", "cancelled", "failed"]
+BroadcastStatus: TypeAlias = Literal[
+    "draft",
+    "pending_review",
+    "approved",
+    "rejected",
+    "escalated",
+    "rejected_final",
+    "scheduled",
+    "sending",
+    "paused",
+    "completed",
+    "cancelled",
+    "failed",
+]

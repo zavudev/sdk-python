@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 from datetime import datetime
 
 from pydantic import Field as FieldInfo
@@ -11,7 +11,25 @@ from .broadcast_channel import BroadcastChannel
 from .broadcast_content import BroadcastContent
 from .broadcast_message_type import BroadcastMessageType
 
-__all__ = ["Broadcast"]
+__all__ = ["Broadcast", "ReviewResult"]
+
+
+class ReviewResult(BaseModel):
+    """AI content review result."""
+
+    categories: Optional[List[str]] = None
+    """Policy categories violated, if any."""
+
+    flagged_content: Optional[List[str]] = FieldInfo(alias="flaggedContent", default=None)
+    """Problematic text fragments, if any."""
+
+    reasoning: Optional[str] = None
+    """Explanation of the review decision."""
+
+    reviewed_at: Optional[datetime] = FieldInfo(alias="reviewedAt", default=None)
+
+    score: Optional[float] = None
+    """Content safety score from 0.0 to 1.0, where 1.0 is completely safe."""
 
 
 class Broadcast(BaseModel):
@@ -56,6 +74,12 @@ class Broadcast(BaseModel):
 
     reserved_amount: Optional[float] = FieldInfo(alias="reservedAmount", default=None)
     """Amount reserved from balance in USD."""
+
+    review_attempts: Optional[int] = FieldInfo(alias="reviewAttempts", default=None)
+    """Number of review attempts (max 3)."""
+
+    review_result: Optional[ReviewResult] = FieldInfo(alias="reviewResult", default=None)
+    """AI content review result."""
 
     scheduled_at: Optional[datetime] = FieldInfo(alias="scheduledAt", default=None)
 

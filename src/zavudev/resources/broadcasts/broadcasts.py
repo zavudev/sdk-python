@@ -443,8 +443,10 @@ class BroadcastsResource(SyncAPIResource):
     ) -> BroadcastSendResponse:
         """Start sending the broadcast immediately or schedule for later.
 
-        Reserves the
-        estimated cost from your balance.
+        Broadcasts go
+        through automated AI content review before sending. If the review passes, the
+        broadcast proceeds. If rejected, use PATCH to edit content, then call POST
+        /retry-review. Reserves the estimated cost from your balance.
 
         Args:
           scheduled_at: Schedule for future delivery. Omit to send immediately.
@@ -861,8 +863,10 @@ class AsyncBroadcastsResource(AsyncAPIResource):
     ) -> BroadcastSendResponse:
         """Start sending the broadcast immediately or schedule for later.
 
-        Reserves the
-        estimated cost from your balance.
+        Broadcasts go
+        through automated AI content review before sending. If the review passes, the
+        broadcast proceeds. If rejected, use PATCH to edit content, then call POST
+        /retry-review. Reserves the estimated cost from your balance.
 
         Args:
           scheduled_at: Schedule for future delivery. Omit to send immediately.
