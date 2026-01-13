@@ -23,14 +23,17 @@ class Message(BaseModel):
     created_at: datetime = FieldInfo(alias="createdAt")
 
     message_type: MessageType = FieldInfo(alias="messageType")
-    """Type of message. Non-text types are WhatsApp only."""
+    """Type of message.
+
+    Non-text types are supported by WhatsApp and Telegram (varies by type).
+    """
 
     status: MessageStatus
 
     to: str
 
     content: Optional[MessageContent] = None
-    """Content for non-text message types (WhatsApp only)."""
+    """Content for non-text message types (WhatsApp and Telegram)."""
 
     cost: Optional[float] = None
     """MAU cost in USD (charged for first contact of the month)."""

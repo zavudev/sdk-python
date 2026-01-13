@@ -36,7 +36,7 @@ class Section(BaseModel):
 
 
 class MessageContent(BaseModel):
-    """Content for non-text message types (WhatsApp only)."""
+    """Content for non-text message types (WhatsApp and Telegram)."""
 
     buttons: Optional[List[Button]] = None
     """Interactive buttons (max 3)."""

@@ -24,7 +24,9 @@ class Contact(BaseModel):
 
     created_at: Optional[datetime] = FieldInfo(alias="createdAt", default=None)
 
-    default_channel: Optional[Literal["sms", "whatsapp", "email"]] = FieldInfo(alias="defaultChannel", default=None)
+    default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email"]] = FieldInfo(
+        alias="defaultChannel", default=None
+    )
     """Preferred channel for this contact."""
 
     metadata: Optional[Dict[str, str]] = None
