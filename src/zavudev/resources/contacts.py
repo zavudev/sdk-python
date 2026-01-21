@@ -137,7 +137,7 @@ class ContactsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncCursor[Contact]:
         """
-        List contacts
+        List contacts with their communication channels.
 
         Args:
           extra_headers: Send extra headers
@@ -314,7 +314,7 @@ class AsyncContactsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Contact, AsyncCursor[Contact]]:
         """
-        List contacts
+        List contacts with their communication channels.
 
         Args:
           extra_headers: Send extra headers

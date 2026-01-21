@@ -8,33 +8,98 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Contact"]
+__all__ = ["Contact", "Channel", "ChannelMetrics"]
+
+
+class ChannelMetrics(BaseModel):
+    """Delivery metrics for this channel."""
+
+    avg_delivery_time_ms: Optional[float] = FieldInfo(alias="avgDeliveryTimeMs", default=None)
+
+    failure_count: Optional[int] = FieldInfo(alias="failureCount", default=None)
+
+    last_success_at: Optional[datetime] = FieldInfo(alias="lastSuccessAt", default=None)
+
+    success_count: Optional[int] = FieldInfo(alias="successCount", default=None)
+
+    total_attempts: Optional[int] = FieldInfo(alias="totalAttempts", default=None)
+
+
+class Channel(BaseModel):
+    """A communication channel for a contact."""
+
+    id: str
+
+    channel: Literal["sms", "whatsapp", "email", "telegram"]
+    """Channel type."""
+
+    created_at: datetime = FieldInfo(alias="createdAt")
+
+    identifier: str
+    """Channel identifier (phone number or email address)."""
+
+    is_primary: bool = FieldInfo(alias="isPrimary")
+    """Whether this is the primary channel for its type."""
+
+    verified: bool
+    """Whether this channel has been verified."""
+
+    country_code: Optional[str] = FieldInfo(alias="countryCode", default=None)
+    """ISO country code for phone numbers."""
+
+    label: Optional[str] = None
+    """Optional label for the channel."""
+
+    last_inbound_at: Optional[datetime] = FieldInfo(alias="lastInboundAt", default=None)
+    """Last time a message was received on this channel."""
+
+    metadata: Optional[Dict[str, str]] = None
+
+    metrics: Optional[ChannelMetrics] = None
+    """Delivery metrics for this channel."""
+
+    updated_at: Optional[datetime] = FieldInfo(alias="updatedAt", default=None)
 
 
 class Contact(BaseModel):
     id: str
 
-    phone_number: str = FieldInfo(alias="phoneNumber")
-    """E.164 phone number."""
-
-    available_channels: Optional[List[str]] = FieldInfo(alias="availableChannels", default=None)
+    available_channels: List[str] = FieldInfo(alias="availableChannels")
     """List of available messaging channels for this contact."""
 
-    country_code: Optional[str] = FieldInfo(alias="countryCode", default=None)
+    created_at: datetime = FieldInfo(alias="createdAt")
 
-    created_at: Optional[datetime] = FieldInfo(alias="createdAt", default=None)
+    metadata: Dict[str, str]
+
+    verified: bool
+    """Whether this contact has been verified."""
+
+    channels: Optional[List[Channel]] = None
+    """All communication channels for this contact."""
+
+    country_code: Optional[str] = FieldInfo(alias="countryCode", default=None)
 
     default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email"]] = FieldInfo(
         alias="defaultChannel", default=None
     )
     """Preferred channel for this contact."""
 
-    metadata: Optional[Dict[str, str]] = None
+    display_name: Optional[str] = FieldInfo(alias="displayName", default=None)
+    """Display name for the contact."""
+
+    phone_number: Optional[str] = FieldInfo(alias="phoneNumber", default=None)
+    """DEPRECATED: Use primaryPhone instead. Primary phone number in E.164 format."""
+
+    primary_email: Optional[str] = FieldInfo(alias="primaryEmail", default=None)
+    """Primary email address."""
+
+    primary_phone: Optional[str] = FieldInfo(alias="primaryPhone", default=None)
+    """Primary phone number in E.164 format."""
 
     profile_name: Optional[str] = FieldInfo(alias="profileName", default=None)
     """Contact's WhatsApp profile name. Only available for WhatsApp contacts."""
 
-    updated_at: Optional[datetime] = FieldInfo(alias="updatedAt", default=None)
+    suggested_merge_with: Optional[str] = FieldInfo(alias="suggestedMergeWith", default=None)
+    """ID of a contact suggested for merging."""
 
-    verified: Optional[bool] = None
-    """Whether this contact has been verified."""
+    updated_at: Optional[datetime] = FieldInfo(alias="updatedAt", default=None)
