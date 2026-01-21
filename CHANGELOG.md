@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.20.0 (2026-01-17)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/zavudev/sdk-python/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* **api:** api update ([6998197](https://github.com/zavudev/sdk-python/commit/6998197ad56cee88c9a59b84f62e277fa5d2af74))
+* **client:** add support for binary request streaming ([0005048](https://github.com/zavudev/sdk-python/commit/00050480bc677325704fb30af40819c0e0f93d4e))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([e57abb1](https://github.com/zavudev/sdk-python/commit/e57abb153176d4c1c7d407bc071c4a4bc1e8f813))
+
 ## 0.19.0 (2026-01-13)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/zavudev/sdk-python/compare/v0.18.0...v0.19.0)
