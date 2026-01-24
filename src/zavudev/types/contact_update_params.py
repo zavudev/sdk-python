@@ -12,7 +12,7 @@ __all__ = ["ContactUpdateParams"]
 
 class ContactUpdateParams(TypedDict, total=False):
     default_channel: Annotated[
-        Optional[Literal["sms", "whatsapp", "telegram", "email"]], PropertyInfo(alias="defaultChannel")
+        Optional[Literal["sms", "whatsapp", "telegram", "email", "instagram"]], PropertyInfo(alias="defaultChannel")
     ]
     """Preferred channel for this contact. Set to null to clear."""
 
