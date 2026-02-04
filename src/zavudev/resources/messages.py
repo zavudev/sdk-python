@@ -217,6 +217,11 @@ class MessagesResource(SyncAPIResource):
         - Window opens when the user messages you first
         - Use template messages to initiate conversations outside the window
 
+        **Email requirements:**
+
+        - Email channel requires KYC verification. Complete identity verification in the
+          dashboard before sending emails.
+
         Args:
           to: Recipient phone number in E.164 format or email address.
 
@@ -457,6 +462,11 @@ class AsyncMessagesResource(AsyncAPIResource):
         - Free-form messages (non-template) require an open 24h window
         - Window opens when the user messages you first
         - Use template messages to initiate conversations outside the window
+
+        **Email requirements:**
+
+        - Email channel requires KYC verification. Complete identity verification in the
+          dashboard before sending emails.
 
         Args:
           to: Recipient phone number in E.164 format or email address.
