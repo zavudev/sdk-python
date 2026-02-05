@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.22.0 (2026-02-04)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/zavudev/sdk-python/compare/v0.21.0...v0.22.0)
+
+### Features
+
+* **api:** api update ([6fceacb](https://github.com/zavudev/sdk-python/commit/6fceacb65de6d9c8229e66e27d3d0c7b214684ff))
+* **api:** api update ([08c1d9e](https://github.com/zavudev/sdk-python/commit/08c1d9eaa44e3a9ca2b952ea38ba28d4ad3d416f))
+* **api:** api update ([048c987](https://github.com/zavudev/sdk-python/commit/048c987a5ddb5abf311456de72c2cb060271f7c3))
+* **client:** add custom JSON encoder for extended type support ([60767c0](https://github.com/zavudev/sdk-python/commit/60767c0f65814fa4cb3f3666c0d8d2f7ee0674d4))
+
+
+### Bug Fixes
+
+* **docs:** fix mcp installation instructions for remote servers ([9a62f07](https://github.com/zavudev/sdk-python/commit/9a62f07bda3f2b2eebe22d57257408ece37e0303))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([c29efb3](https://github.com/zavudev/sdk-python/commit/c29efb3d32ffa4d70f63841efc51028dc73103e6))
+
 ## 0.21.0 (2026-01-21)
 
 Full Changelog: [v0.20.0...v0.21.0](https://github.com/zavudev/sdk-python/compare/v0.20.0...v0.21.0)

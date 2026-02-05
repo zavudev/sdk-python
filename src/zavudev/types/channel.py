@@ -4,4 +4,4 @@ from typing_extensions import Literal, TypeAlias
 
 __all__ = ["Channel"]
 
-Channel: TypeAlias = Literal["auto", "sms", "whatsapp", "telegram", "email"]
+Channel: TypeAlias = Literal["auto", "sms", "whatsapp", "telegram", "email", "instagram", "voice"]

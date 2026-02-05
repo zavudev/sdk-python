@@ -30,7 +30,7 @@ class Channel(BaseModel):
 
     id: str
 
-    channel: Literal["sms", "whatsapp", "email", "telegram"]
+    channel: Literal["sms", "whatsapp", "email", "telegram", "voice"]
     """Channel type."""
 
     created_at: datetime = FieldInfo(alias="createdAt")
@@ -79,7 +79,7 @@ class Contact(BaseModel):
 
     country_code: Optional[str] = FieldInfo(alias="countryCode", default=None)
 
-    default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email"]] = FieldInfo(
+    default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email", "instagram", "voice"]] = FieldInfo(
         alias="defaultChannel", default=None
     )
     """Preferred channel for this contact."""
