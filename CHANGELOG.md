@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.22.1 (2026-02-10)
+
+Full Changelog: [v0.22.0...v0.22.1](https://github.com/zavudev/sdk-python/compare/v0.22.0...v0.22.1)
+
+### Chores
+
+* **internal:** bump dependencies ([9b87c38](https://github.com/zavudev/sdk-python/commit/9b87c38766193f9649bc68bd014e7056b72d2b2a))
+
 ## 0.22.0 (2026-02-04)
 
 Full Changelog: [v0.21.0...v0.22.0](https://github.com/zavudev/sdk-python/compare/v0.21.0...v0.22.0)
