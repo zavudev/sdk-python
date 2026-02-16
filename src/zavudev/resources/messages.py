@@ -195,6 +195,7 @@ class MessagesResource(SyncAPIResource):
         reply_to: str | Omit = omit,
         subject: str | Omit = omit,
         text: str | Omit = omit,
+        voice_language: str | Omit = omit,
         zavu_sender: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -248,6 +249,9 @@ class MessagesResource(SyncAPIResource):
 
           text: Text body for text messages or caption for media messages.
 
+          voice_language: Language code for voice text-to-speech (e.g., 'en-US', 'es-ES', 'pt-BR'). If
+              omitted, language is auto-detected from recipient's country code.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -272,6 +276,7 @@ class MessagesResource(SyncAPIResource):
                     "reply_to": reply_to,
                     "subject": subject,
                     "text": text,
+                    "voice_language": voice_language,
                 },
                 message_send_params.MessageSendParams,
             ),
@@ -441,6 +446,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         reply_to: str | Omit = omit,
         subject: str | Omit = omit,
         text: str | Omit = omit,
+        voice_language: str | Omit = omit,
         zavu_sender: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -494,6 +500,9 @@ class AsyncMessagesResource(AsyncAPIResource):
 
           text: Text body for text messages or caption for media messages.
 
+          voice_language: Language code for voice text-to-speech (e.g., 'en-US', 'es-ES', 'pt-BR'). If
+              omitted, language is auto-detected from recipient's country code.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -518,6 +527,7 @@ class AsyncMessagesResource(AsyncAPIResource):
                     "reply_to": reply_to,
                     "subject": subject,
                     "text": text,
+                    "voice_language": voice_language,
                 },
                 message_send_params.MessageSendParams,
             ),
