@@ -60,4 +60,10 @@ class MessageSendParams(TypedDict, total=False):
     text: str
     """Text body for text messages or caption for media messages."""
 
+    voice_language: Annotated[str, PropertyInfo(alias="voiceLanguage")]
+    """Language code for voice text-to-speech (e.g., 'en-US', 'es-ES', 'pt-BR').
+
+    If omitted, language is auto-detected from recipient's country code.
+    """
+
     zavu_sender: Annotated[str, PropertyInfo(alias="Zavu-Sender")]

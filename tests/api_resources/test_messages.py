@@ -223,6 +223,7 @@ class TestMessages:
             reply_to="support@example.com",
             subject="Your order confirmation",
             text="Your verification code is 123456",
+            voice_language="es-ES",
             zavu_sender="sender_12345",
         )
         assert_matches_type(MessageResponse, message, path=["response"])
@@ -461,6 +462,7 @@ class TestAsyncMessages:
             reply_to="support@example.com",
             subject="Your order confirmation",
             text="Your verification code is 123456",
+            voice_language="es-ES",
             zavu_sender="sender_12345",
         )
         assert_matches_type(MessageResponse, message, path=["response"])
