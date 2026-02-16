@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.23.0 (2026-02-16)
+
+Full Changelog: [v0.22.1...v0.23.0](https://github.com/zavudev/sdk-python/compare/v0.22.1...v0.23.0)
+
+### Features
+
+* **api:** api update ([8ceec7f](https://github.com/zavudev/sdk-python/commit/8ceec7f444f5cb3a880ed70f523b3feb8f25a657))
+
+
+### Chores
+
+* format all `api.md` files ([d92b104](https://github.com/zavudev/sdk-python/commit/d92b104ae588ea500f4122c61f73f83c45efffb6))
+* **internal:** fix lint error on Python 3.14 ([9af8eb2](https://github.com/zavudev/sdk-python/commit/9af8eb2e78778847613f303e35b709c9c0de3888))
+
 ## 0.22.1 (2026-02-10)
 
 Full Changelog: [v0.22.0...v0.22.1](https://github.com/zavudev/sdk-python/compare/v0.22.0...v0.22.1)
