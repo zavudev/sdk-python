@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.23.1 (2026-02-25)
+
+Full Changelog: [v0.23.0...v0.23.1](https://github.com/zavudev/sdk-python/compare/v0.23.0...v0.23.1)
+
+### Chores
+
+* **internal:** add request options to SSE classes ([850940c](https://github.com/zavudev/sdk-python/commit/850940c41cb72baeb91a56f95cf82c050b3bcfe7))
+* **internal:** make `test_proxy_environment_variables` more resilient ([53aafc8](https://github.com/zavudev/sdk-python/commit/53aafc8045acf6605175012a4877f04029e84d42))
+* **internal:** make `test_proxy_environment_variables` more resilient to env ([8f5baba](https://github.com/zavudev/sdk-python/commit/8f5babacc1ec6f4171d786a769e0f359c2372644))
+* **internal:** remove mock server code ([42be322](https://github.com/zavudev/sdk-python/commit/42be3225969c7695dddd3cb5e13f4a49d4125d50))
+* update mock server docs ([f780c63](https://github.com/zavudev/sdk-python/commit/f780c632d833c96ecd6e7a60b4d2e76b050d6cfe))
+
 ## 0.23.0 (2026-02-16)
 
 Full Changelog: [v0.22.1...v0.23.0](https://github.com/zavudev/sdk-python/compare/v0.22.1...v0.23.0)

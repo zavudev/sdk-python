@@ -24,7 +24,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestTools:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: Zavudev) -> None:
         tool = client.senders.agent.tools.create(
@@ -40,7 +40,7 @@ class TestTools:
         )
         assert_matches_type(ToolCreateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: Zavudev) -> None:
         tool = client.senders.agent.tools.create(
@@ -63,7 +63,7 @@ class TestTools:
         )
         assert_matches_type(ToolCreateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: Zavudev) -> None:
         response = client.senders.agent.tools.with_raw_response.create(
@@ -83,7 +83,7 @@ class TestTools:
         tool = response.parse()
         assert_matches_type(ToolCreateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: Zavudev) -> None:
         with client.senders.agent.tools.with_streaming_response.create(
@@ -105,7 +105,7 @@ class TestTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_create(self, client: Zavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
@@ -121,7 +121,7 @@ class TestTools:
                 webhook_url="https://api.example.com/webhooks/order-status",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: Zavudev) -> None:
         tool = client.senders.agent.tools.retrieve(
@@ -130,7 +130,7 @@ class TestTools:
         )
         assert_matches_type(ToolRetrieveResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: Zavudev) -> None:
         response = client.senders.agent.tools.with_raw_response.retrieve(
@@ -143,7 +143,7 @@ class TestTools:
         tool = response.parse()
         assert_matches_type(ToolRetrieveResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: Zavudev) -> None:
         with client.senders.agent.tools.with_streaming_response.retrieve(
@@ -158,7 +158,7 @@ class TestTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: Zavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
@@ -173,7 +173,7 @@ class TestTools:
                 sender_id="senderId",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: Zavudev) -> None:
         tool = client.senders.agent.tools.update(
@@ -182,7 +182,7 @@ class TestTools:
         )
         assert_matches_type(ToolUpdateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: Zavudev) -> None:
         tool = client.senders.agent.tools.update(
@@ -206,7 +206,7 @@ class TestTools:
         )
         assert_matches_type(ToolUpdateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: Zavudev) -> None:
         response = client.senders.agent.tools.with_raw_response.update(
@@ -219,7 +219,7 @@ class TestTools:
         tool = response.parse()
         assert_matches_type(ToolUpdateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: Zavudev) -> None:
         with client.senders.agent.tools.with_streaming_response.update(
@@ -234,7 +234,7 @@ class TestTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update(self, client: Zavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
@@ -249,7 +249,7 @@ class TestTools:
                 sender_id="senderId",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: Zavudev) -> None:
         tool = client.senders.agent.tools.list(
@@ -257,7 +257,7 @@ class TestTools:
         )
         assert_matches_type(SyncCursor[AgentTool], tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Zavudev) -> None:
         tool = client.senders.agent.tools.list(
@@ -268,7 +268,7 @@ class TestTools:
         )
         assert_matches_type(SyncCursor[AgentTool], tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: Zavudev) -> None:
         response = client.senders.agent.tools.with_raw_response.list(
@@ -280,7 +280,7 @@ class TestTools:
         tool = response.parse()
         assert_matches_type(SyncCursor[AgentTool], tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: Zavudev) -> None:
         with client.senders.agent.tools.with_streaming_response.list(
@@ -294,7 +294,7 @@ class TestTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_list(self, client: Zavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
@@ -302,7 +302,7 @@ class TestTools:
                 sender_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete(self, client: Zavudev) -> None:
         tool = client.senders.agent.tools.delete(
@@ -311,7 +311,7 @@ class TestTools:
         )
         assert tool is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: Zavudev) -> None:
         response = client.senders.agent.tools.with_raw_response.delete(
@@ -324,7 +324,7 @@ class TestTools:
         tool = response.parse()
         assert tool is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: Zavudev) -> None:
         with client.senders.agent.tools.with_streaming_response.delete(
@@ -339,7 +339,7 @@ class TestTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: Zavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
@@ -354,7 +354,7 @@ class TestTools:
                 sender_id="senderId",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_test(self, client: Zavudev) -> None:
         tool = client.senders.agent.tools.test(
@@ -364,7 +364,7 @@ class TestTools:
         )
         assert_matches_type(ToolTestResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_test(self, client: Zavudev) -> None:
         response = client.senders.agent.tools.with_raw_response.test(
@@ -378,7 +378,7 @@ class TestTools:
         tool = response.parse()
         assert_matches_type(ToolTestResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_test(self, client: Zavudev) -> None:
         with client.senders.agent.tools.with_streaming_response.test(
@@ -394,7 +394,7 @@ class TestTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_test(self, client: Zavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
@@ -417,7 +417,7 @@ class TestAsyncTools:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncZavudev) -> None:
         tool = await async_client.senders.agent.tools.create(
@@ -433,7 +433,7 @@ class TestAsyncTools:
         )
         assert_matches_type(ToolCreateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncZavudev) -> None:
         tool = await async_client.senders.agent.tools.create(
@@ -456,7 +456,7 @@ class TestAsyncTools:
         )
         assert_matches_type(ToolCreateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncZavudev) -> None:
         response = await async_client.senders.agent.tools.with_raw_response.create(
@@ -476,7 +476,7 @@ class TestAsyncTools:
         tool = await response.parse()
         assert_matches_type(ToolCreateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncZavudev) -> None:
         async with async_client.senders.agent.tools.with_streaming_response.create(
@@ -498,7 +498,7 @@ class TestAsyncTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_create(self, async_client: AsyncZavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
@@ -514,7 +514,7 @@ class TestAsyncTools:
                 webhook_url="https://api.example.com/webhooks/order-status",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncZavudev) -> None:
         tool = await async_client.senders.agent.tools.retrieve(
@@ -523,7 +523,7 @@ class TestAsyncTools:
         )
         assert_matches_type(ToolRetrieveResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncZavudev) -> None:
         response = await async_client.senders.agent.tools.with_raw_response.retrieve(
@@ -536,7 +536,7 @@ class TestAsyncTools:
         tool = await response.parse()
         assert_matches_type(ToolRetrieveResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncZavudev) -> None:
         async with async_client.senders.agent.tools.with_streaming_response.retrieve(
@@ -551,7 +551,7 @@ class TestAsyncTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncZavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
@@ -566,7 +566,7 @@ class TestAsyncTools:
                 sender_id="senderId",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncZavudev) -> None:
         tool = await async_client.senders.agent.tools.update(
@@ -575,7 +575,7 @@ class TestAsyncTools:
         )
         assert_matches_type(ToolUpdateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncZavudev) -> None:
         tool = await async_client.senders.agent.tools.update(
@@ -599,7 +599,7 @@ class TestAsyncTools:
         )
         assert_matches_type(ToolUpdateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncZavudev) -> None:
         response = await async_client.senders.agent.tools.with_raw_response.update(
@@ -612,7 +612,7 @@ class TestAsyncTools:
         tool = await response.parse()
         assert_matches_type(ToolUpdateResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncZavudev) -> None:
         async with async_client.senders.agent.tools.with_streaming_response.update(
@@ -627,7 +627,7 @@ class TestAsyncTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncZavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
@@ -642,7 +642,7 @@ class TestAsyncTools:
                 sender_id="senderId",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncZavudev) -> None:
         tool = await async_client.senders.agent.tools.list(
@@ -650,7 +650,7 @@ class TestAsyncTools:
         )
         assert_matches_type(AsyncCursor[AgentTool], tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncZavudev) -> None:
         tool = await async_client.senders.agent.tools.list(
@@ -661,7 +661,7 @@ class TestAsyncTools:
         )
         assert_matches_type(AsyncCursor[AgentTool], tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncZavudev) -> None:
         response = await async_client.senders.agent.tools.with_raw_response.list(
@@ -673,7 +673,7 @@ class TestAsyncTools:
         tool = await response.parse()
         assert_matches_type(AsyncCursor[AgentTool], tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncZavudev) -> None:
         async with async_client.senders.agent.tools.with_streaming_response.list(
@@ -687,7 +687,7 @@ class TestAsyncTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_list(self, async_client: AsyncZavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
@@ -695,7 +695,7 @@ class TestAsyncTools:
                 sender_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncZavudev) -> None:
         tool = await async_client.senders.agent.tools.delete(
@@ -704,7 +704,7 @@ class TestAsyncTools:
         )
         assert tool is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncZavudev) -> None:
         response = await async_client.senders.agent.tools.with_raw_response.delete(
@@ -717,7 +717,7 @@ class TestAsyncTools:
         tool = await response.parse()
         assert tool is None
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncZavudev) -> None:
         async with async_client.senders.agent.tools.with_streaming_response.delete(
@@ -732,7 +732,7 @@ class TestAsyncTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncZavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
@@ -747,7 +747,7 @@ class TestAsyncTools:
                 sender_id="senderId",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_test(self, async_client: AsyncZavudev) -> None:
         tool = await async_client.senders.agent.tools.test(
@@ -757,7 +757,7 @@ class TestAsyncTools:
         )
         assert_matches_type(ToolTestResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_test(self, async_client: AsyncZavudev) -> None:
         response = await async_client.senders.agent.tools.with_raw_response.test(
@@ -771,7 +771,7 @@ class TestAsyncTools:
         tool = await response.parse()
         assert_matches_type(ToolTestResponse, tool, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_test(self, async_client: AsyncZavudev) -> None:
         async with async_client.senders.agent.tools.with_streaming_response.test(
@@ -787,7 +787,7 @@ class TestAsyncTools:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_test(self, async_client: AsyncZavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):

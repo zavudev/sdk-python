@@ -18,7 +18,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestContacts:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: Zavudev) -> None:
         contact = client.contacts.retrieve(
@@ -26,7 +26,7 @@ class TestContacts:
         )
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: Zavudev) -> None:
         response = client.contacts.with_raw_response.retrieve(
@@ -38,7 +38,7 @@ class TestContacts:
         contact = response.parse()
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: Zavudev) -> None:
         with client.contacts.with_streaming_response.retrieve(
@@ -52,7 +52,7 @@ class TestContacts:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: Zavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
@@ -60,7 +60,7 @@ class TestContacts:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update(self, client: Zavudev) -> None:
         contact = client.contacts.update(
@@ -68,7 +68,7 @@ class TestContacts:
         )
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_update_with_all_params(self, client: Zavudev) -> None:
         contact = client.contacts.update(
@@ -78,7 +78,7 @@ class TestContacts:
         )
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_update(self, client: Zavudev) -> None:
         response = client.contacts.with_raw_response.update(
@@ -90,7 +90,7 @@ class TestContacts:
         contact = response.parse()
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_update(self, client: Zavudev) -> None:
         with client.contacts.with_streaming_response.update(
@@ -104,7 +104,7 @@ class TestContacts:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_update(self, client: Zavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
@@ -112,13 +112,13 @@ class TestContacts:
                 contact_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: Zavudev) -> None:
         contact = client.contacts.list()
         assert_matches_type(SyncCursor[Contact], contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Zavudev) -> None:
         contact = client.contacts.list(
@@ -128,7 +128,7 @@ class TestContacts:
         )
         assert_matches_type(SyncCursor[Contact], contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: Zavudev) -> None:
         response = client.contacts.with_raw_response.list()
@@ -138,7 +138,7 @@ class TestContacts:
         contact = response.parse()
         assert_matches_type(SyncCursor[Contact], contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: Zavudev) -> None:
         with client.contacts.with_streaming_response.list() as response:
@@ -150,7 +150,7 @@ class TestContacts:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_retrieve_by_phone(self, client: Zavudev) -> None:
         contact = client.contacts.retrieve_by_phone(
@@ -158,7 +158,7 @@ class TestContacts:
         )
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_retrieve_by_phone(self, client: Zavudev) -> None:
         response = client.contacts.with_raw_response.retrieve_by_phone(
@@ -170,7 +170,7 @@ class TestContacts:
         contact = response.parse()
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_retrieve_by_phone(self, client: Zavudev) -> None:
         with client.contacts.with_streaming_response.retrieve_by_phone(
@@ -184,7 +184,7 @@ class TestContacts:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_retrieve_by_phone(self, client: Zavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `phone_number` but received ''"):
@@ -198,7 +198,7 @@ class TestAsyncContacts:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncZavudev) -> None:
         contact = await async_client.contacts.retrieve(
@@ -206,7 +206,7 @@ class TestAsyncContacts:
         )
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncZavudev) -> None:
         response = await async_client.contacts.with_raw_response.retrieve(
@@ -218,7 +218,7 @@ class TestAsyncContacts:
         contact = await response.parse()
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncZavudev) -> None:
         async with async_client.contacts.with_streaming_response.retrieve(
@@ -232,7 +232,7 @@ class TestAsyncContacts:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncZavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
@@ -240,7 +240,7 @@ class TestAsyncContacts:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update(self, async_client: AsyncZavudev) -> None:
         contact = await async_client.contacts.update(
@@ -248,7 +248,7 @@ class TestAsyncContacts:
         )
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_update_with_all_params(self, async_client: AsyncZavudev) -> None:
         contact = await async_client.contacts.update(
@@ -258,7 +258,7 @@ class TestAsyncContacts:
         )
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncZavudev) -> None:
         response = await async_client.contacts.with_raw_response.update(
@@ -270,7 +270,7 @@ class TestAsyncContacts:
         contact = await response.parse()
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncZavudev) -> None:
         async with async_client.contacts.with_streaming_response.update(
@@ -284,7 +284,7 @@ class TestAsyncContacts:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_update(self, async_client: AsyncZavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
@@ -292,13 +292,13 @@ class TestAsyncContacts:
                 contact_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncZavudev) -> None:
         contact = await async_client.contacts.list()
         assert_matches_type(AsyncCursor[Contact], contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncZavudev) -> None:
         contact = await async_client.contacts.list(
@@ -308,7 +308,7 @@ class TestAsyncContacts:
         )
         assert_matches_type(AsyncCursor[Contact], contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncZavudev) -> None:
         response = await async_client.contacts.with_raw_response.list()
@@ -318,7 +318,7 @@ class TestAsyncContacts:
         contact = await response.parse()
         assert_matches_type(AsyncCursor[Contact], contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncZavudev) -> None:
         async with async_client.contacts.with_streaming_response.list() as response:
@@ -330,7 +330,7 @@ class TestAsyncContacts:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_retrieve_by_phone(self, async_client: AsyncZavudev) -> None:
         contact = await async_client.contacts.retrieve_by_phone(
@@ -338,7 +338,7 @@ class TestAsyncContacts:
         )
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_retrieve_by_phone(self, async_client: AsyncZavudev) -> None:
         response = await async_client.contacts.with_raw_response.retrieve_by_phone(
@@ -350,7 +350,7 @@ class TestAsyncContacts:
         contact = await response.parse()
         assert_matches_type(Contact, contact, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve_by_phone(self, async_client: AsyncZavudev) -> None:
         async with async_client.contacts.with_streaming_response.retrieve_by_phone(
@@ -364,7 +364,7 @@ class TestAsyncContacts:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_retrieve_by_phone(self, async_client: AsyncZavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `phone_number` but received ''"):
