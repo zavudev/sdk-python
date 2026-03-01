@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.24.0 (2026-03-01)
+
+Full Changelog: [v0.23.1...v0.24.0](https://github.com/zavudev/sdk-python/compare/v0.23.1...v0.24.0)
+
+### Features
+
+* **api:** api update ([2f12a36](https://github.com/zavudev/sdk-python/commit/2f12a360541e036cc0142c8a236ee1e393bf9da0))
+
+
+### Chores
+
+* **ci:** bump uv version ([06b14a0](https://github.com/zavudev/sdk-python/commit/06b14a01649f8cf35f139563e27d44dfad4fd6d1))
+
 ## 0.23.1 (2026-02-25)
 
 Full Changelog: [v0.23.0...v0.23.1](https://github.com/zavudev/sdk-python/compare/v0.23.0...v0.23.1)
