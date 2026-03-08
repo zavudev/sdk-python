@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.24.1 (2026-03-07)
+
+Full Changelog: [v0.24.0...v0.24.1](https://github.com/zavudev/sdk-python/compare/v0.24.0...v0.24.1)
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([72bd989](https://github.com/zavudev/sdk-python/commit/72bd98962e04915ace6d9a4720afeeee7c4358f6))
+* update SDK settings ([6206fe7](https://github.com/zavudev/sdk-python/commit/6206fe7b32f332c0193803d4bc0b951accf5e300))
+
 ## 0.24.0 (2026-03-01)
 
 Full Changelog: [v0.23.1...v0.24.0](https://github.com/zavudev/sdk-python/compare/v0.23.1...v0.24.0)
