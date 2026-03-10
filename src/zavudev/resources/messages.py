@@ -218,10 +218,10 @@ class MessagesResource(SyncAPIResource):
         - Window opens when the user messages you first
         - Use template messages to initiate conversations outside the window
 
-        **Email requirements:**
+        **Daily limits:**
 
-        - Email channel requires KYC verification. Complete identity verification in the
-          dashboard before sending emails.
+        - Unverified accounts: 200 messages per channel per day
+        - Complete KYC verification to increase limits to 10,000/day
 
         Args:
           to: Recipient phone number in E.164 format or email address.
@@ -469,10 +469,10 @@ class AsyncMessagesResource(AsyncAPIResource):
         - Window opens when the user messages you first
         - Use template messages to initiate conversations outside the window
 
-        **Email requirements:**
+        **Daily limits:**
 
-        - Email channel requires KYC verification. Complete identity verification in the
-          dashboard before sending emails.
+        - Unverified accounts: 200 messages per channel per day
+        - Complete KYC verification to increase limits to 10,000/day
 
         Args:
           to: Recipient phone number in E.164 format or email address.
