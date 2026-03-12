@@ -224,7 +224,8 @@ class MessagesResource(SyncAPIResource):
         - Complete KYC verification to increase limits to 10,000/day
 
         Args:
-          to: Recipient phone number in E.164 format or email address.
+          to: Recipient phone number in E.164 format, email address, or numeric chat ID (for
+              Telegram/Instagram).
 
           channel: Delivery channel. Use 'auto' for intelligent routing. If omitted with non-text
               messageType, WhatsApp is used. For email recipients, defaults to 'email'.
@@ -475,7 +476,8 @@ class AsyncMessagesResource(AsyncAPIResource):
         - Complete KYC verification to increase limits to 10,000/day
 
         Args:
-          to: Recipient phone number in E.164 format or email address.
+          to: Recipient phone number in E.164 format, email address, or numeric chat ID (for
+              Telegram/Instagram).
 
           channel: Delivery channel. Use 'auto' for intelligent routing. If omitted with non-text
               messageType, WhatsApp is used. For email recipients, defaults to 'email'.
