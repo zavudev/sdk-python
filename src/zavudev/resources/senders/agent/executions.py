@@ -5,7 +5,7 @@ from __future__ import annotations
 import httpx
 
 from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from ...._utils import maybe_transform
+from ...._utils import path_template, maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
 from ...._response import (
@@ -75,7 +75,7 @@ class ExecutionsResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._get_api_list(
-            f"/v1/senders/{sender_id}/agent/executions",
+            path_template("/v1/senders/{sender_id}/agent/executions", sender_id=sender_id),
             page=SyncCursor[AgentExecution],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -146,7 +146,7 @@ class AsyncExecutionsResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._get_api_list(
-            f"/v1/senders/{sender_id}/agent/executions",
+            path_template("/v1/senders/{sender_id}/agent/executions", sender_id=sender_id),
             page=AsyncCursor[AgentExecution],
             options=make_request_options(
                 extra_headers=extra_headers,

@@ -8,7 +8,7 @@ import httpx
 
 from ...types import BroadcastContactStatus
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -78,7 +78,7 @@ class ContactsResource(SyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return self._get_api_list(
-            f"/v1/broadcasts/{broadcast_id}/contacts",
+            path_template("/v1/broadcasts/{broadcast_id}/contacts", broadcast_id=broadcast_id),
             page=SyncCursor[BroadcastContact],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -127,7 +127,7 @@ class ContactsResource(SyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return self._post(
-            f"/v1/broadcasts/{broadcast_id}/contacts",
+            path_template("/v1/broadcasts/{broadcast_id}/contacts", broadcast_id=broadcast_id),
             body=maybe_transform({"contacts": contacts}, contact_add_params.ContactAddParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -165,7 +165,9 @@ class ContactsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `contact_id` but received {contact_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/broadcasts/{broadcast_id}/contacts/{contact_id}",
+            path_template(
+                "/v1/broadcasts/{broadcast_id}/contacts/{contact_id}", broadcast_id=broadcast_id, contact_id=contact_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -224,7 +226,7 @@ class AsyncContactsResource(AsyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return self._get_api_list(
-            f"/v1/broadcasts/{broadcast_id}/contacts",
+            path_template("/v1/broadcasts/{broadcast_id}/contacts", broadcast_id=broadcast_id),
             page=AsyncCursor[BroadcastContact],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -273,7 +275,7 @@ class AsyncContactsResource(AsyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return await self._post(
-            f"/v1/broadcasts/{broadcast_id}/contacts",
+            path_template("/v1/broadcasts/{broadcast_id}/contacts", broadcast_id=broadcast_id),
             body=await async_maybe_transform({"contacts": contacts}, contact_add_params.ContactAddParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -311,7 +313,9 @@ class AsyncContactsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `contact_id` but received {contact_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/broadcasts/{broadcast_id}/contacts/{contact_id}",
+            path_template(
+                "/v1/broadcasts/{broadcast_id}/contacts/{contact_id}", broadcast_id=broadcast_id, contact_id=contact_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

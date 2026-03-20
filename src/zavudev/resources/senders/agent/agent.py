@@ -23,7 +23,7 @@ from .tools import (
     AsyncToolsResourceWithStreamingResponse,
 )
 from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
-from ...._utils import maybe_transform, async_maybe_transform
+from ...._utils import path_template, maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from .executions import (
     ExecutionsResource,
@@ -135,7 +135,7 @@ class AgentResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._post(
-            f"/v1/senders/{sender_id}/agent",
+            path_template("/v1/senders/{sender_id}/agent", sender_id=sender_id),
             body=maybe_transform(
                 {
                     "model": model,
@@ -184,7 +184,7 @@ class AgentResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._get(
-            f"/v1/senders/{sender_id}/agent",
+            path_template("/v1/senders/{sender_id}/agent", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -231,7 +231,7 @@ class AgentResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._patch(
-            f"/v1/senders/{sender_id}/agent",
+            path_template("/v1/senders/{sender_id}/agent", sender_id=sender_id),
             body=maybe_transform(
                 {
                     "api_key": api_key,
@@ -282,7 +282,7 @@ class AgentResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/senders/{sender_id}/agent",
+            path_template("/v1/senders/{sender_id}/agent", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -315,7 +315,7 @@ class AgentResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._get(
-            f"/v1/senders/{sender_id}/agent/stats",
+            path_template("/v1/senders/{sender_id}/agent/stats", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -401,7 +401,7 @@ class AsyncAgentResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return await self._post(
-            f"/v1/senders/{sender_id}/agent",
+            path_template("/v1/senders/{sender_id}/agent", sender_id=sender_id),
             body=await async_maybe_transform(
                 {
                     "model": model,
@@ -450,7 +450,7 @@ class AsyncAgentResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return await self._get(
-            f"/v1/senders/{sender_id}/agent",
+            path_template("/v1/senders/{sender_id}/agent", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -497,7 +497,7 @@ class AsyncAgentResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return await self._patch(
-            f"/v1/senders/{sender_id}/agent",
+            path_template("/v1/senders/{sender_id}/agent", sender_id=sender_id),
             body=await async_maybe_transform(
                 {
                     "api_key": api_key,
@@ -548,7 +548,7 @@ class AsyncAgentResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/senders/{sender_id}/agent",
+            path_template("/v1/senders/{sender_id}/agent", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -581,7 +581,7 @@ class AsyncAgentResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return await self._get(
-            f"/v1/senders/{sender_id}/agent/stats",
+            path_template("/v1/senders/{sender_id}/agent/stats", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
