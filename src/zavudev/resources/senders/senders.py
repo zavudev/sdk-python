@@ -16,7 +16,7 @@ from ...types import (
     sender_upload_profile_picture_params,
 )
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -145,7 +145,7 @@ class SendersResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._get(
-            f"/v1/senders/{sender_id}",
+            path_template("/v1/senders/{sender_id}", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -192,7 +192,7 @@ class SendersResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._patch(
-            f"/v1/senders/{sender_id}",
+            path_template("/v1/senders/{sender_id}", sender_id=sender_id),
             body=maybe_transform(
                 {
                     "email_receiving_enabled": email_receiving_enabled,
@@ -280,7 +280,7 @@ class SendersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/senders/{sender_id}",
+            path_template("/v1/senders/{sender_id}", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -315,7 +315,7 @@ class SendersResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._get(
-            f"/v1/senders/{sender_id}/profile",
+            path_template("/v1/senders/{sender_id}/profile", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -350,7 +350,7 @@ class SendersResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._post(
-            f"/v1/senders/{sender_id}/webhook/secret",
+            path_template("/v1/senders/{sender_id}/webhook/secret", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -403,7 +403,7 @@ class SendersResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._patch(
-            f"/v1/senders/{sender_id}/profile",
+            path_template("/v1/senders/{sender_id}/profile", sender_id=sender_id),
             body=maybe_transform(
                 {
                     "about": about,
@@ -455,7 +455,7 @@ class SendersResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._post(
-            f"/v1/senders/{sender_id}/profile/picture",
+            path_template("/v1/senders/{sender_id}/profile/picture", sender_id=sender_id),
             body=maybe_transform(
                 {
                     "image_url": image_url,
@@ -569,7 +569,7 @@ class AsyncSendersResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return await self._get(
-            f"/v1/senders/{sender_id}",
+            path_template("/v1/senders/{sender_id}", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -616,7 +616,7 @@ class AsyncSendersResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return await self._patch(
-            f"/v1/senders/{sender_id}",
+            path_template("/v1/senders/{sender_id}", sender_id=sender_id),
             body=await async_maybe_transform(
                 {
                     "email_receiving_enabled": email_receiving_enabled,
@@ -704,7 +704,7 @@ class AsyncSendersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/senders/{sender_id}",
+            path_template("/v1/senders/{sender_id}", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -739,7 +739,7 @@ class AsyncSendersResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return await self._get(
-            f"/v1/senders/{sender_id}/profile",
+            path_template("/v1/senders/{sender_id}/profile", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -774,7 +774,7 @@ class AsyncSendersResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return await self._post(
-            f"/v1/senders/{sender_id}/webhook/secret",
+            path_template("/v1/senders/{sender_id}/webhook/secret", sender_id=sender_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -827,7 +827,7 @@ class AsyncSendersResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return await self._patch(
-            f"/v1/senders/{sender_id}/profile",
+            path_template("/v1/senders/{sender_id}/profile", sender_id=sender_id),
             body=await async_maybe_transform(
                 {
                     "about": about,
@@ -879,7 +879,7 @@ class AsyncSendersResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return await self._post(
-            f"/v1/senders/{sender_id}/profile/picture",
+            path_template("/v1/senders/{sender_id}/profile/picture", sender_id=sender_id),
             body=await async_maybe_transform(
                 {
                     "image_url": image_url,

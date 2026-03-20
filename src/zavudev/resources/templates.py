@@ -8,7 +8,7 @@ import httpx
 
 from ..types import WhatsappCategory, template_list_params, template_create_params, template_submit_params
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
-from .._utils import maybe_transform, async_maybe_transform
+from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -132,7 +132,7 @@ class TemplatesResource(SyncAPIResource):
         if not template_id:
             raise ValueError(f"Expected a non-empty value for `template_id` but received {template_id!r}")
         return self._get(
-            f"/v1/templates/{template_id}",
+            path_template("/v1/templates/{template_id}", template_id=template_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -209,7 +209,7 @@ class TemplatesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `template_id` but received {template_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/templates/{template_id}",
+            path_template("/v1/templates/{template_id}", template_id=template_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -251,7 +251,7 @@ class TemplatesResource(SyncAPIResource):
         if not template_id:
             raise ValueError(f"Expected a non-empty value for `template_id` but received {template_id!r}")
         return self._post(
-            f"/v1/templates/{template_id}/submit",
+            path_template("/v1/templates/{template_id}/submit", template_id=template_id),
             body=maybe_transform(
                 {
                     "sender_id": sender_id,
@@ -373,7 +373,7 @@ class AsyncTemplatesResource(AsyncAPIResource):
         if not template_id:
             raise ValueError(f"Expected a non-empty value for `template_id` but received {template_id!r}")
         return await self._get(
-            f"/v1/templates/{template_id}",
+            path_template("/v1/templates/{template_id}", template_id=template_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -450,7 +450,7 @@ class AsyncTemplatesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `template_id` but received {template_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/templates/{template_id}",
+            path_template("/v1/templates/{template_id}", template_id=template_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -492,7 +492,7 @@ class AsyncTemplatesResource(AsyncAPIResource):
         if not template_id:
             raise ValueError(f"Expected a non-empty value for `template_id` but received {template_id!r}")
         return await self._post(
-            f"/v1/templates/{template_id}/submit",
+            path_template("/v1/templates/{template_id}/submit", template_id=template_id),
             body=await async_maybe_transform(
                 {
                     "sender_id": sender_id,

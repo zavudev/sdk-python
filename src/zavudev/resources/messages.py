@@ -15,7 +15,7 @@ from ..types import (
     message_react_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from .._utils import maybe_transform, strip_not_given, async_maybe_transform
+from .._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -82,7 +82,7 @@ class MessagesResource(SyncAPIResource):
         if not message_id:
             raise ValueError(f"Expected a non-empty value for `message_id` but received {message_id!r}")
         return self._get(
-            f"/v1/messages/{message_id}",
+            path_template("/v1/messages/{message_id}", message_id=message_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -173,7 +173,7 @@ class MessagesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `message_id` but received {message_id!r}")
         extra_headers = {**strip_not_given({"Zavu-Sender": zavu_sender}), **(extra_headers or {})}
         return self._post(
-            f"/v1/messages/{message_id}/reactions",
+            path_template("/v1/messages/{message_id}/reactions", message_id=message_id),
             body=maybe_transform({"emoji": emoji}, message_react_params.MessageReactParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -334,7 +334,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         if not message_id:
             raise ValueError(f"Expected a non-empty value for `message_id` but received {message_id!r}")
         return await self._get(
-            f"/v1/messages/{message_id}",
+            path_template("/v1/messages/{message_id}", message_id=message_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -425,7 +425,7 @@ class AsyncMessagesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `message_id` but received {message_id!r}")
         extra_headers = {**strip_not_given({"Zavu-Sender": zavu_sender}), **(extra_headers or {})}
         return await self._post(
-            f"/v1/messages/{message_id}/reactions",
+            path_template("/v1/messages/{message_id}/reactions", message_id=message_id),
             body=await async_maybe_transform({"emoji": emoji}, message_react_params.MessageReactParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout

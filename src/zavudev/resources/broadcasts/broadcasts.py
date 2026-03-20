@@ -18,7 +18,7 @@ from ...types import (
     broadcast_reschedule_params,
 )
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import path_template, maybe_transform, async_maybe_transform
 from .contacts import (
     ContactsResource,
     AsyncContactsResource,
@@ -181,7 +181,7 @@ class BroadcastsResource(SyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return self._get(
-            f"/v1/broadcasts/{broadcast_id}",
+            path_template("/v1/broadcasts/{broadcast_id}", broadcast_id=broadcast_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -222,7 +222,7 @@ class BroadcastsResource(SyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return self._patch(
-            f"/v1/broadcasts/{broadcast_id}",
+            path_template("/v1/broadcasts/{broadcast_id}", broadcast_id=broadcast_id),
             body=maybe_transform(
                 {
                     "content": content,
@@ -314,7 +314,7 @@ class BroadcastsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/broadcasts/{broadcast_id}",
+            path_template("/v1/broadcasts/{broadcast_id}", broadcast_id=broadcast_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -349,7 +349,7 @@ class BroadcastsResource(SyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return self._post(
-            f"/v1/broadcasts/{broadcast_id}/cancel",
+            path_template("/v1/broadcasts/{broadcast_id}/cancel", broadcast_id=broadcast_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -383,7 +383,7 @@ class BroadcastsResource(SyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return self._get(
-            f"/v1/broadcasts/{broadcast_id}/progress",
+            path_template("/v1/broadcasts/{broadcast_id}/progress", broadcast_id=broadcast_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -421,7 +421,7 @@ class BroadcastsResource(SyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return self._patch(
-            f"/v1/broadcasts/{broadcast_id}/schedule",
+            path_template("/v1/broadcasts/{broadcast_id}/schedule", broadcast_id=broadcast_id),
             body=maybe_transform({"scheduled_at": scheduled_at}, broadcast_reschedule_params.BroadcastRescheduleParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -462,7 +462,7 @@ class BroadcastsResource(SyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return self._post(
-            f"/v1/broadcasts/{broadcast_id}/send",
+            path_template("/v1/broadcasts/{broadcast_id}/send", broadcast_id=broadcast_id),
             body=maybe_transform({"scheduled_at": scheduled_at}, broadcast_send_params.BroadcastSendParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -599,7 +599,7 @@ class AsyncBroadcastsResource(AsyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return await self._get(
-            f"/v1/broadcasts/{broadcast_id}",
+            path_template("/v1/broadcasts/{broadcast_id}", broadcast_id=broadcast_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -640,7 +640,7 @@ class AsyncBroadcastsResource(AsyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return await self._patch(
-            f"/v1/broadcasts/{broadcast_id}",
+            path_template("/v1/broadcasts/{broadcast_id}", broadcast_id=broadcast_id),
             body=await async_maybe_transform(
                 {
                     "content": content,
@@ -732,7 +732,7 @@ class AsyncBroadcastsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/broadcasts/{broadcast_id}",
+            path_template("/v1/broadcasts/{broadcast_id}", broadcast_id=broadcast_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -767,7 +767,7 @@ class AsyncBroadcastsResource(AsyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return await self._post(
-            f"/v1/broadcasts/{broadcast_id}/cancel",
+            path_template("/v1/broadcasts/{broadcast_id}/cancel", broadcast_id=broadcast_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -801,7 +801,7 @@ class AsyncBroadcastsResource(AsyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return await self._get(
-            f"/v1/broadcasts/{broadcast_id}/progress",
+            path_template("/v1/broadcasts/{broadcast_id}/progress", broadcast_id=broadcast_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -839,7 +839,7 @@ class AsyncBroadcastsResource(AsyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return await self._patch(
-            f"/v1/broadcasts/{broadcast_id}/schedule",
+            path_template("/v1/broadcasts/{broadcast_id}/schedule", broadcast_id=broadcast_id),
             body=await async_maybe_transform(
                 {"scheduled_at": scheduled_at}, broadcast_reschedule_params.BroadcastRescheduleParams
             ),
@@ -882,7 +882,7 @@ class AsyncBroadcastsResource(AsyncAPIResource):
         if not broadcast_id:
             raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
         return await self._post(
-            f"/v1/broadcasts/{broadcast_id}/send",
+            path_template("/v1/broadcasts/{broadcast_id}/send", broadcast_id=broadcast_id),
             body=await async_maybe_transform({"scheduled_at": scheduled_at}, broadcast_send_params.BroadcastSendParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout

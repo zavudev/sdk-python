@@ -15,7 +15,7 @@ from .documents import (
     AsyncDocumentsResourceWithStreamingResponse,
 )
 from ....._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ....._utils import maybe_transform, async_maybe_transform
+from ....._utils import path_template, maybe_transform, async_maybe_transform
 from ....._compat import cached_property
 from ....._resource import SyncAPIResource, AsyncAPIResource
 from ....._response import (
@@ -91,7 +91,7 @@ class KnowledgeBasesResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._post(
-            f"/v1/senders/{sender_id}/agent/knowledge-bases",
+            path_template("/v1/senders/{sender_id}/agent/knowledge-bases", sender_id=sender_id),
             body=maybe_transform(
                 {
                     "name": name,
@@ -134,7 +134,7 @@ class KnowledgeBasesResource(SyncAPIResource):
         if not kb_id:
             raise ValueError(f"Expected a non-empty value for `kb_id` but received {kb_id!r}")
         return self._get(
-            f"/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}",
+            path_template("/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}", sender_id=sender_id, kb_id=kb_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -172,7 +172,7 @@ class KnowledgeBasesResource(SyncAPIResource):
         if not kb_id:
             raise ValueError(f"Expected a non-empty value for `kb_id` but received {kb_id!r}")
         return self._patch(
-            f"/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}",
+            path_template("/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}", sender_id=sender_id, kb_id=kb_id),
             body=maybe_transform(
                 {
                     "description": description,
@@ -214,7 +214,7 @@ class KnowledgeBasesResource(SyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._get_api_list(
-            f"/v1/senders/{sender_id}/agent/knowledge-bases",
+            path_template("/v1/senders/{sender_id}/agent/knowledge-bases", sender_id=sender_id),
             page=SyncCursor[AgentKnowledgeBase],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -262,7 +262,7 @@ class KnowledgeBasesResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `kb_id` but received {kb_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}",
+            path_template("/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}", sender_id=sender_id, kb_id=kb_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -322,7 +322,7 @@ class AsyncKnowledgeBasesResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return await self._post(
-            f"/v1/senders/{sender_id}/agent/knowledge-bases",
+            path_template("/v1/senders/{sender_id}/agent/knowledge-bases", sender_id=sender_id),
             body=await async_maybe_transform(
                 {
                     "name": name,
@@ -365,7 +365,7 @@ class AsyncKnowledgeBasesResource(AsyncAPIResource):
         if not kb_id:
             raise ValueError(f"Expected a non-empty value for `kb_id` but received {kb_id!r}")
         return await self._get(
-            f"/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}",
+            path_template("/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}", sender_id=sender_id, kb_id=kb_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -403,7 +403,7 @@ class AsyncKnowledgeBasesResource(AsyncAPIResource):
         if not kb_id:
             raise ValueError(f"Expected a non-empty value for `kb_id` but received {kb_id!r}")
         return await self._patch(
-            f"/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}",
+            path_template("/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}", sender_id=sender_id, kb_id=kb_id),
             body=await async_maybe_transform(
                 {
                     "description": description,
@@ -445,7 +445,7 @@ class AsyncKnowledgeBasesResource(AsyncAPIResource):
         if not sender_id:
             raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
         return self._get_api_list(
-            f"/v1/senders/{sender_id}/agent/knowledge-bases",
+            path_template("/v1/senders/{sender_id}/agent/knowledge-bases", sender_id=sender_id),
             page=AsyncCursor[AgentKnowledgeBase],
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -493,7 +493,7 @@ class AsyncKnowledgeBasesResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `kb_id` but received {kb_id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}",
+            path_template("/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}", sender_id=sender_id, kb_id=kb_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
