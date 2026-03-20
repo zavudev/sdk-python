@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.26.1 (2026-03-20)
+
+Full Changelog: [v0.26.0...v0.26.1](https://github.com/zavudev/sdk-python/compare/v0.26.0...v0.26.1)
+
+### Bug Fixes
+
+* **deps:** bump minimum typing-extensions version ([06f7e5d](https://github.com/zavudev/sdk-python/commit/06f7e5d2dd7984cd9bfeaf5db5a90573b1822d99))
+* **pydantic:** do not pass `by_alias` unless set ([19875c6](https://github.com/zavudev/sdk-python/commit/19875c62ad994e3b3512dce6eaa8c53859129758))
+* sanitize endpoint path params ([639eae0](https://github.com/zavudev/sdk-python/commit/639eae025c22245b021ceeab2cbdd0412643f78f))
+
+
+### Chores
+
+* **internal:** tweak CI branches ([96168a3](https://github.com/zavudev/sdk-python/commit/96168a3df9dbbeaa763c0bf99300935460b08d71))
+
 ## 0.26.0 (2026-03-12)
 
 Full Changelog: [v0.25.0...v0.26.0](https://github.com/zavudev/sdk-python/compare/v0.25.0...v0.26.0)
