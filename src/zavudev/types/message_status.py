@@ -5,5 +5,5 @@ from typing_extensions import Literal, TypeAlias
 __all__ = ["MessageStatus"]
 
 MessageStatus: TypeAlias = Literal[
-    "queued", "sending", "sent", "delivered", "failed", "received", "pending_url_verification"
+    "queued", "sending", "sent", "delivered", "read", "failed", "received", "pending_url_verification"
 ]
