@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.28.0 (2026-03-26)
+
+Full Changelog: [v0.27.0...v0.28.0](https://github.com/zavudev/sdk-python/compare/v0.27.0...v0.28.0)
+
+### Features
+
+* **api:** api update ([3028bb1](https://github.com/zavudev/sdk-python/commit/3028bb16894abb6a452872442a76b9c727803245))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([1d3077d](https://github.com/zavudev/sdk-python/commit/1d3077d742c4c0fb2ff6d12cdce8764854fe75a7))
+* **internal:** update gitignore ([c623d06](https://github.com/zavudev/sdk-python/commit/c623d06b7f3dcc50d672be8d4463e624aa034406))
+
 ## 0.27.0 (2026-03-21)
 
 Full Changelog: [v0.26.1...v0.27.0](https://github.com/zavudev/sdk-python/compare/v0.26.1...v0.27.0)
