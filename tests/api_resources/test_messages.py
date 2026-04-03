@@ -172,6 +172,15 @@ class TestMessages:
     def test_method_send_with_all_params(self, client: Zavudev) -> None:
         message = client.messages.send(
             to="+56912345678",
+            attachments=[
+                {
+                    "filename": "invoice.pdf",
+                    "content": "content",
+                    "content_id": "logo",
+                    "content_type": "application/pdf",
+                    "path": "https://example.com",
+                }
+            ],
             channel="auto",
             content={
                 "buttons": [
@@ -411,6 +420,15 @@ class TestAsyncMessages:
     async def test_method_send_with_all_params(self, async_client: AsyncZavudev) -> None:
         message = await async_client.messages.send(
             to="+56912345678",
+            attachments=[
+                {
+                    "filename": "invoice.pdf",
+                    "content": "content",
+                    "content_id": "logo",
+                    "content_type": "application/pdf",
+                    "path": "https://example.com",
+                }
+            ],
             channel="auto",
             content={
                 "buttons": [

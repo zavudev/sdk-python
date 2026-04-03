@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, Iterable
 from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
@@ -10,7 +10,7 @@ from .channel import Channel
 from .message_type import MessageType
 from .message_content_param import MessageContentParam
 
-__all__ = ["MessageSendParams"]
+__all__ = ["MessageSendParams", "Attachment"]
 
 
 class MessageSendParams(TypedDict, total=False):
@@ -18,6 +18,12 @@ class MessageSendParams(TypedDict, total=False):
     """
     Recipient phone number in E.164 format, email address, or numeric chat ID (for
     Telegram/Instagram).
+    """
+
+    attachments: Iterable[Attachment]
+    """Email attachments.
+
+    Only supported when channel is 'email'. Maximum 40MB total size.
     """
 
     channel: Channel
@@ -70,3 +76,25 @@ class MessageSendParams(TypedDict, total=False):
     """
 
     zavu_sender: Annotated[str, PropertyInfo(alias="Zavu-Sender")]
+
+
+class Attachment(TypedDict, total=False):
+    """Email attachment. Provide either `content` (base64) or `path` (URL), not both."""
+
+    filename: Required[str]
+    """Name of the attached file."""
+
+    content: str
+    """Content of the attached file as a Base64-encoded string."""
+
+    content_id: str
+    """Content ID for inline images.
+
+    Reference in HTML as `<img src="cid:your_content_id">`.
+    """
+
+    content_type: str
+    """MIME type of the attachment. If not set, will be derived from the filename."""
+
+    path: str
+    """URL where the attachment file is hosted. The server will fetch the file."""
