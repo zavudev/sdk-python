@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.29.0 (2026-03-27)
+
+Full Changelog: [v0.28.0...v0.29.0](https://github.com/zavudev/sdk-python/compare/v0.28.0...v0.29.0)
+
+### Features
+
+* **internal:** implement indices array format for query and form serialization ([e47c5a9](https://github.com/zavudev/sdk-python/commit/e47c5a96dbc88d3e00ed92986db28541a7097cba))
+
 ## 0.28.0 (2026-03-26)
 
 Full Changelog: [v0.27.0...v0.28.0](https://github.com/zavudev/sdk-python/compare/v0.27.0...v0.28.0)
