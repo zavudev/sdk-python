@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, Iterable
 
 import httpx
 
@@ -185,6 +185,7 @@ class MessagesResource(SyncAPIResource):
         self,
         *,
         to: str,
+        attachments: Iterable[message_send_params.Attachment] | Omit = omit,
         channel: Channel | Omit = omit,
         content: MessageContentParam | Omit = omit,
         fallback_enabled: bool | Omit = omit,
@@ -227,6 +228,9 @@ class MessagesResource(SyncAPIResource):
           to: Recipient phone number in E.164 format, email address, or numeric chat ID (for
               Telegram/Instagram).
 
+          attachments: Email attachments. Only supported when channel is 'email'. Maximum 40MB total
+              size.
+
           channel: Delivery channel. Use 'auto' for intelligent routing. If omitted with non-text
               messageType, WhatsApp is used. For email recipients, defaults to 'email'.
 
@@ -267,6 +271,7 @@ class MessagesResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "to": to,
+                    "attachments": attachments,
                     "channel": channel,
                     "content": content,
                     "fallback_enabled": fallback_enabled,
@@ -437,6 +442,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         self,
         *,
         to: str,
+        attachments: Iterable[message_send_params.Attachment] | Omit = omit,
         channel: Channel | Omit = omit,
         content: MessageContentParam | Omit = omit,
         fallback_enabled: bool | Omit = omit,
@@ -479,6 +485,9 @@ class AsyncMessagesResource(AsyncAPIResource):
           to: Recipient phone number in E.164 format, email address, or numeric chat ID (for
               Telegram/Instagram).
 
+          attachments: Email attachments. Only supported when channel is 'email'. Maximum 40MB total
+              size.
+
           channel: Delivery channel. Use 'auto' for intelligent routing. If omitted with non-text
               messageType, WhatsApp is used. For email recipients, defaults to 'email'.
 
@@ -519,6 +528,7 @@ class AsyncMessagesResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "to": to,
+                    "attachments": attachments,
                     "channel": channel,
                     "content": content,
                     "fallback_enabled": fallback_enabled,
