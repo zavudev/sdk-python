@@ -2,49 +2,24 @@
 
 from __future__ import annotations
 
-from typing import Dict, Iterable, Optional
-from typing_extensions import Literal, Required, Annotated, TypedDict
+from typing import Iterable
+from typing_extensions import Required, TypedDict
 
-from ...._types import SequenceNotStr
-from ...._utils import PropertyInfo
+from .flow_step_param import FlowStepParam
+from .flow_trigger_param import FlowTriggerParam
 
-__all__ = ["FlowCreateParams", "Step", "Trigger"]
+__all__ = ["FlowCreateParams"]
 
 
 class FlowCreateParams(TypedDict, total=False):
     name: Required[str]
 
-    steps: Required[Iterable[Step]]
+    steps: Required[Iterable[FlowStepParam]]
 
-    trigger: Required[Trigger]
+    trigger: Required[FlowTriggerParam]
 
     description: str
 
     enabled: bool
 
     priority: int
-
-
-class Step(TypedDict, total=False):
-    id: Required[str]
-    """Unique step identifier."""
-
-    config: Required[Dict[str, object]]
-    """Step configuration (varies by type)."""
-
-    type: Required[Literal["message", "collect", "condition", "tool", "llm", "transfer"]]
-    """Type of flow step."""
-
-    next_step_id: Annotated[Optional[str], PropertyInfo(alias="nextStepId")]
-    """ID of the next step to execute."""
-
-
-class Trigger(TypedDict, total=False):
-    type: Required[Literal["keyword", "intent", "always", "manual"]]
-    """Type of trigger for a flow."""
-
-    intent: str
-    """Intent that triggers the flow (for intent type)."""
-
-    keywords: SequenceNotStr[str]
-    """Keywords that trigger the flow (for keyword type)."""

@@ -102,6 +102,8 @@ Types:
 ```python
 from zavudev.types.senders.agent import (
     AgentFlow,
+    FlowStep,
+    FlowTrigger,
     FlowCreateResponse,
     FlowRetrieveResponse,
     FlowUpdateResponse,
@@ -125,6 +127,7 @@ Types:
 ```python
 from zavudev.types.senders.agent import (
     AgentTool,
+    ToolParameters,
     ToolCreateResponse,
     ToolRetrieveResponse,
     ToolUpdateResponse,
@@ -182,7 +185,7 @@ Methods:
 Types:
 
 ```python
-from zavudev.types import Contact
+from zavudev.types import Contact, ContactChannel
 ```
 
 Methods:
