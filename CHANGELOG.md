@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.31.0 (2026-04-12)
+
+Full Changelog: [v0.30.0...v0.31.0](https://github.com/zavudev/sdk-python/compare/v0.30.0...v0.31.0)
+
+### Features
+
+* **api:** api update ([184bdb4](https://github.com/zavudev/sdk-python/commit/184bdb487d466e1368e362d037a64a3251267693))
+
+
+### Bug Fixes
+
+* **client:** preserve hardcoded query params when merging with user params ([5d58677](https://github.com/zavudev/sdk-python/commit/5d58677964d80c8b39f639a9d48397fbba88023b))
+* ensure file data are only sent as 1 parameter ([0095bf2](https://github.com/zavudev/sdk-python/commit/0095bf264767a3dcb9a3f177dcef11f11f8a44af))
+
 ## 0.30.0 (2026-04-03)
 
 Full Changelog: [v0.29.0...v0.30.0](https://github.com/zavudev/sdk-python/compare/v0.29.0...v0.30.0)

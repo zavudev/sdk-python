@@ -29,8 +29,9 @@ class MessageSendParams(TypedDict, total=False):
     channel: Channel
     """Delivery channel.
 
-    Use 'auto' for intelligent routing. If omitted with non-text messageType,
-    WhatsApp is used. For email recipients, defaults to 'email'.
+    Use 'auto' for intelligent routing. If omitted, channel is auto-selected based
+    on sender capabilities and recipient type. For email recipients, defaults to
+    'email'.
     """
 
     content: MessageContentParam

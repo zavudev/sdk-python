@@ -54,6 +54,9 @@ class TemplatesResource(SyncAPIResource):
         add_security_recommendation: bool | Omit = omit,
         buttons: Iterable[template_create_params.Button] | Omit = omit,
         code_expiration_minutes: int | Omit = omit,
+        instagram_body: str | Omit = omit,
+        sms_body: str | Omit = omit,
+        telegram_body: str | Omit = omit,
         variables: SequenceNotStr[str] | Omit = omit,
         whatsapp_category: WhatsappCategory | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -69,11 +72,19 @@ class TemplatesResource(SyncAPIResource):
         before use.
 
         Args:
+          body: Default template body. Used when no channel-specific body is set.
+
           add_security_recommendation: Add 'Do not share this code' disclaimer. Only for AUTHENTICATION templates.
 
           buttons: Template buttons (max 3).
 
           code_expiration_minutes: Code expiration time in minutes. Only for AUTHENTICATION templates.
+
+          instagram_body: Channel-specific body for Instagram. Falls back to `body` if not set.
+
+          sms_body: Channel-specific body for SMS. Falls back to `body` if not set.
+
+          telegram_body: Channel-specific body for Telegram. Falls back to `body` if not set.
 
           whatsapp_category: WhatsApp template category.
 
@@ -95,6 +106,9 @@ class TemplatesResource(SyncAPIResource):
                     "add_security_recommendation": add_security_recommendation,
                     "buttons": buttons,
                     "code_expiration_minutes": code_expiration_minutes,
+                    "instagram_body": instagram_body,
+                    "sms_body": sms_body,
+                    "telegram_body": telegram_body,
                     "variables": variables,
                     "whatsapp_category": whatsapp_category,
                 },
@@ -295,6 +309,9 @@ class AsyncTemplatesResource(AsyncAPIResource):
         add_security_recommendation: bool | Omit = omit,
         buttons: Iterable[template_create_params.Button] | Omit = omit,
         code_expiration_minutes: int | Omit = omit,
+        instagram_body: str | Omit = omit,
+        sms_body: str | Omit = omit,
+        telegram_body: str | Omit = omit,
         variables: SequenceNotStr[str] | Omit = omit,
         whatsapp_category: WhatsappCategory | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -310,11 +327,19 @@ class AsyncTemplatesResource(AsyncAPIResource):
         before use.
 
         Args:
+          body: Default template body. Used when no channel-specific body is set.
+
           add_security_recommendation: Add 'Do not share this code' disclaimer. Only for AUTHENTICATION templates.
 
           buttons: Template buttons (max 3).
 
           code_expiration_minutes: Code expiration time in minutes. Only for AUTHENTICATION templates.
+
+          instagram_body: Channel-specific body for Instagram. Falls back to `body` if not set.
+
+          sms_body: Channel-specific body for SMS. Falls back to `body` if not set.
+
+          telegram_body: Channel-specific body for Telegram. Falls back to `body` if not set.
 
           whatsapp_category: WhatsApp template category.
 
@@ -336,6 +361,9 @@ class AsyncTemplatesResource(AsyncAPIResource):
                     "add_security_recommendation": add_security_recommendation,
                     "buttons": buttons,
                     "code_expiration_minutes": code_expiration_minutes,
+                    "instagram_body": instagram_body,
+                    "sms_body": sms_body,
+                    "telegram_body": telegram_body,
                     "variables": variables,
                     "whatsapp_category": whatsapp_category,
                 },

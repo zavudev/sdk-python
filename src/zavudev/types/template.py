@@ -48,7 +48,10 @@ class Template(BaseModel):
     id: str
 
     body: str
-    """Template body with variables: {{1}}, {{2}}, etc."""
+    """
+    Default template body with variables: {{1}}, {{2}}, or named variables like
+    {{contact.first_name}}. Used when no channel-specific body is set.
+    """
 
     category: WhatsappCategory
     """WhatsApp template category."""
@@ -57,7 +60,7 @@ class Template(BaseModel):
     """Language code."""
 
     name: str
-    """Template name (must match WhatsApp template name)."""
+    """Template name. For WhatsApp, must match the approved template name in Meta."""
 
     add_security_recommendation: Optional[bool] = FieldInfo(alias="addSecurityRecommendation", default=None)
     """Add 'Do not share this code' disclaimer. Only for AUTHENTICATION templates."""
@@ -79,7 +82,16 @@ class Template(BaseModel):
     header_type: Optional[str] = FieldInfo(alias="headerType", default=None)
     """Type of header (text, image, video, document)."""
 
+    instagram_body: Optional[str] = FieldInfo(alias="instagramBody", default=None)
+    """Channel-specific body for Instagram messages. Falls back to `body` if not set."""
+
+    sms_body: Optional[str] = FieldInfo(alias="smsBody", default=None)
+    """Channel-specific body for SMS messages. Falls back to `body` if not set."""
+
     status: Optional[Literal["draft", "pending", "approved", "rejected"]] = None
+
+    telegram_body: Optional[str] = FieldInfo(alias="telegramBody", default=None)
+    """Channel-specific body for Telegram messages. Falls back to `body` if not set."""
 
     updated_at: Optional[datetime] = FieldInfo(alias="updatedAt", default=None)
 

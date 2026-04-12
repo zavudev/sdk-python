@@ -14,6 +14,7 @@ __all__ = ["TemplateCreateParams", "Button"]
 
 class TemplateCreateParams(TypedDict, total=False):
     body: Required[str]
+    """Default template body. Used when no channel-specific body is set."""
 
     language: Required[str]
 
@@ -27,6 +28,15 @@ class TemplateCreateParams(TypedDict, total=False):
 
     code_expiration_minutes: Annotated[int, PropertyInfo(alias="codeExpirationMinutes")]
     """Code expiration time in minutes. Only for AUTHENTICATION templates."""
+
+    instagram_body: Annotated[str, PropertyInfo(alias="instagramBody")]
+    """Channel-specific body for Instagram. Falls back to `body` if not set."""
+
+    sms_body: Annotated[str, PropertyInfo(alias="smsBody")]
+    """Channel-specific body for SMS. Falls back to `body` if not set."""
+
+    telegram_body: Annotated[str, PropertyInfo(alias="telegramBody")]
+    """Channel-specific body for Telegram. Falls back to `body` if not set."""
 
     variables: SequenceNotStr[str]
 

@@ -50,6 +50,9 @@ class TestTemplates:
                 }
             ],
             code_expiration_minutes=1,
+            instagram_body="instagramBody",
+            sms_body="smsBody",
+            telegram_body="telegramBody",
             variables=["customer_name", "order_id"],
             whatsapp_category="UTILITY",
         )
@@ -298,6 +301,9 @@ class TestAsyncTemplates:
                 }
             ],
             code_expiration_minutes=1,
+            instagram_body="instagramBody",
+            sms_body="smsBody",
+            telegram_body="telegramBody",
             variables=["customer_name", "order_id"],
             whatsapp_category="UTILITY",
         )
