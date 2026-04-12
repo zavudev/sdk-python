@@ -231,8 +231,9 @@ class MessagesResource(SyncAPIResource):
           attachments: Email attachments. Only supported when channel is 'email'. Maximum 40MB total
               size.
 
-          channel: Delivery channel. Use 'auto' for intelligent routing. If omitted with non-text
-              messageType, WhatsApp is used. For email recipients, defaults to 'email'.
+          channel: Delivery channel. Use 'auto' for intelligent routing. If omitted, channel is
+              auto-selected based on sender capabilities and recipient type. For email
+              recipients, defaults to 'email'.
 
           content: Additional content for non-text message types.
 
@@ -488,8 +489,9 @@ class AsyncMessagesResource(AsyncAPIResource):
           attachments: Email attachments. Only supported when channel is 'email'. Maximum 40MB total
               size.
 
-          channel: Delivery channel. Use 'auto' for intelligent routing. If omitted with non-text
-              messageType, WhatsApp is used. For email recipients, defaults to 'email'.
+          channel: Delivery channel. Use 'auto' for intelligent routing. If omitted, channel is
+              auto-selected based on sender capabilities and recipient type. For email
+              recipients, defaults to 'email'.
 
           content: Additional content for non-text message types.
 
