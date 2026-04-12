@@ -16,6 +16,7 @@ from .webhook_event import WebhookEvent as WebhookEvent
 from .address_status import AddressStatus as AddressStatus
 from .message_status import MessageStatus as MessageStatus
 from .sender_webhook import SenderWebhook as SenderWebhook
+from .contact_channel import ContactChannel as ContactChannel
 from .message_content import MessageContent as MessageContent
 from .broadcast_status import BroadcastStatus as BroadcastStatus
 from .message_response import MessageResponse as MessageResponse
