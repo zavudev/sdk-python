@@ -18,6 +18,8 @@ from zavudev.types import (
     BroadcastUpdateResponse,
     BroadcastRetrieveResponse,
     BroadcastRescheduleResponse,
+    BroadcastRetryReviewResponse,
+    BroadcastEscalateReviewResponse,
 )
 from zavudev._utils import parse_datetime
 from zavudev.pagination import SyncCursor, AsyncCursor
@@ -319,6 +321,48 @@ class TestBroadcasts:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_escalate_review(self, client: Zavudev) -> None:
+        broadcast = client.broadcasts.escalate_review(
+            "broadcastId",
+        )
+        assert_matches_type(BroadcastEscalateReviewResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_escalate_review(self, client: Zavudev) -> None:
+        response = client.broadcasts.with_raw_response.escalate_review(
+            "broadcastId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        broadcast = response.parse()
+        assert_matches_type(BroadcastEscalateReviewResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_escalate_review(self, client: Zavudev) -> None:
+        with client.broadcasts.with_streaming_response.escalate_review(
+            "broadcastId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            broadcast = response.parse()
+            assert_matches_type(BroadcastEscalateReviewResponse, broadcast, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_escalate_review(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `broadcast_id` but received ''"):
+            client.broadcasts.with_raw_response.escalate_review(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_method_progress(self, client: Zavudev) -> None:
         broadcast = client.broadcasts.progress(
             "broadcastId",
@@ -403,6 +447,48 @@ class TestBroadcasts:
             client.broadcasts.with_raw_response.reschedule(
                 broadcast_id="",
                 scheduled_at=parse_datetime("2024-01-15T14:00:00Z"),
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retry_review(self, client: Zavudev) -> None:
+        broadcast = client.broadcasts.retry_review(
+            "broadcastId",
+        )
+        assert_matches_type(BroadcastRetryReviewResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_retry_review(self, client: Zavudev) -> None:
+        response = client.broadcasts.with_raw_response.retry_review(
+            "broadcastId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        broadcast = response.parse()
+        assert_matches_type(BroadcastRetryReviewResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_retry_review(self, client: Zavudev) -> None:
+        with client.broadcasts.with_streaming_response.retry_review(
+            "broadcastId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            broadcast = response.parse()
+            assert_matches_type(BroadcastRetryReviewResponse, broadcast, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_retry_review(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `broadcast_id` but received ''"):
+            client.broadcasts.with_raw_response.retry_review(
+                "",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -753,6 +839,48 @@ class TestAsyncBroadcasts:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    async def test_method_escalate_review(self, async_client: AsyncZavudev) -> None:
+        broadcast = await async_client.broadcasts.escalate_review(
+            "broadcastId",
+        )
+        assert_matches_type(BroadcastEscalateReviewResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_escalate_review(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.broadcasts.with_raw_response.escalate_review(
+            "broadcastId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        broadcast = await response.parse()
+        assert_matches_type(BroadcastEscalateReviewResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_escalate_review(self, async_client: AsyncZavudev) -> None:
+        async with async_client.broadcasts.with_streaming_response.escalate_review(
+            "broadcastId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            broadcast = await response.parse()
+            assert_matches_type(BroadcastEscalateReviewResponse, broadcast, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_escalate_review(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `broadcast_id` but received ''"):
+            await async_client.broadcasts.with_raw_response.escalate_review(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     async def test_method_progress(self, async_client: AsyncZavudev) -> None:
         broadcast = await async_client.broadcasts.progress(
             "broadcastId",
@@ -837,6 +965,48 @@ class TestAsyncBroadcasts:
             await async_client.broadcasts.with_raw_response.reschedule(
                 broadcast_id="",
                 scheduled_at=parse_datetime("2024-01-15T14:00:00Z"),
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retry_review(self, async_client: AsyncZavudev) -> None:
+        broadcast = await async_client.broadcasts.retry_review(
+            "broadcastId",
+        )
+        assert_matches_type(BroadcastRetryReviewResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_retry_review(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.broadcasts.with_raw_response.retry_review(
+            "broadcastId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        broadcast = await response.parse()
+        assert_matches_type(BroadcastRetryReviewResponse, broadcast, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_retry_review(self, async_client: AsyncZavudev) -> None:
+        async with async_client.broadcasts.with_streaming_response.retry_review(
+            "broadcastId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            broadcast = await response.parse()
+            assert_matches_type(BroadcastRetryReviewResponse, broadcast, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_retry_review(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `broadcast_id` but received ''"):
+            await async_client.broadcasts.with_raw_response.retry_review(
+                "",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")

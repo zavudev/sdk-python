@@ -32,6 +32,11 @@ from ._base_client import (
 
 if TYPE_CHECKING:
     from .resources import (
+        plan,
+        urls,
+        usage,
+        balance,
+        exports,
         senders,
         contacts,
         messages,
@@ -39,18 +44,29 @@ if TYPE_CHECKING:
         templates,
         broadcasts,
         introspect,
+        invitations,
+        number_10dlc,
+        sub_accounts,
         phone_numbers,
         regulatory_documents,
     )
-    from .resources.contacts import ContactsResource, AsyncContactsResource
+    from .resources.plan import PlanResource, AsyncPlanResource
+    from .resources.urls import URLsResource, AsyncURLsResource
+    from .resources.usage import UsageResource, AsyncUsageResource
+    from .resources.balance import BalanceResource, AsyncBalanceResource
+    from .resources.exports import ExportsResource, AsyncExportsResource
     from .resources.messages import MessagesResource, AsyncMessagesResource
     from .resources.addresses import AddressesResource, AsyncAddressesResource
     from .resources.templates import TemplatesResource, AsyncTemplatesResource
     from .resources.introspect import IntrospectResource, AsyncIntrospectResource
+    from .resources.invitations import InvitationsResource, AsyncInvitationsResource
     from .resources.phone_numbers import PhoneNumbersResource, AsyncPhoneNumbersResource
     from .resources.senders.senders import SendersResource, AsyncSendersResource
+    from .resources.contacts.contacts import ContactsResource, AsyncContactsResource
     from .resources.regulatory_documents import RegulatoryDocumentsResource, AsyncRegulatoryDocumentsResource
     from .resources.broadcasts.broadcasts import BroadcastsResource, AsyncBroadcastsResource
+    from .resources.number_10dlc.number_10dlc import Number10dlcResource, AsyncNumber10dlcResource
+    from .resources.sub_accounts.sub_accounts import SubAccountsResource, AsyncSubAccountsResource
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Zavudev", "AsyncZavudev", "Client", "AsyncClient"]
 
@@ -163,6 +179,54 @@ class Zavudev(SyncAPIClient):
         from .resources.regulatory_documents import RegulatoryDocumentsResource
 
         return RegulatoryDocumentsResource(self)
+
+    @cached_property
+    def invitations(self) -> InvitationsResource:
+        from .resources.invitations import InvitationsResource
+
+        return InvitationsResource(self)
+
+    @cached_property
+    def exports(self) -> ExportsResource:
+        from .resources.exports import ExportsResource
+
+        return ExportsResource(self)
+
+    @cached_property
+    def urls(self) -> URLsResource:
+        from .resources.urls import URLsResource
+
+        return URLsResource(self)
+
+    @cached_property
+    def balance(self) -> BalanceResource:
+        from .resources.balance import BalanceResource
+
+        return BalanceResource(self)
+
+    @cached_property
+    def plan(self) -> PlanResource:
+        from .resources.plan import PlanResource
+
+        return PlanResource(self)
+
+    @cached_property
+    def usage(self) -> UsageResource:
+        from .resources.usage import UsageResource
+
+        return UsageResource(self)
+
+    @cached_property
+    def sub_accounts(self) -> SubAccountsResource:
+        from .resources.sub_accounts import SubAccountsResource
+
+        return SubAccountsResource(self)
+
+    @cached_property
+    def number_10dlc(self) -> Number10dlcResource:
+        from .resources.number_10dlc import Number10dlcResource
+
+        return Number10dlcResource(self)
 
     @cached_property
     def with_raw_response(self) -> ZavudevWithRawResponse:
@@ -387,6 +451,54 @@ class AsyncZavudev(AsyncAPIClient):
         return AsyncRegulatoryDocumentsResource(self)
 
     @cached_property
+    def invitations(self) -> AsyncInvitationsResource:
+        from .resources.invitations import AsyncInvitationsResource
+
+        return AsyncInvitationsResource(self)
+
+    @cached_property
+    def exports(self) -> AsyncExportsResource:
+        from .resources.exports import AsyncExportsResource
+
+        return AsyncExportsResource(self)
+
+    @cached_property
+    def urls(self) -> AsyncURLsResource:
+        from .resources.urls import AsyncURLsResource
+
+        return AsyncURLsResource(self)
+
+    @cached_property
+    def balance(self) -> AsyncBalanceResource:
+        from .resources.balance import AsyncBalanceResource
+
+        return AsyncBalanceResource(self)
+
+    @cached_property
+    def plan(self) -> AsyncPlanResource:
+        from .resources.plan import AsyncPlanResource
+
+        return AsyncPlanResource(self)
+
+    @cached_property
+    def usage(self) -> AsyncUsageResource:
+        from .resources.usage import AsyncUsageResource
+
+        return AsyncUsageResource(self)
+
+    @cached_property
+    def sub_accounts(self) -> AsyncSubAccountsResource:
+        from .resources.sub_accounts import AsyncSubAccountsResource
+
+        return AsyncSubAccountsResource(self)
+
+    @cached_property
+    def number_10dlc(self) -> AsyncNumber10dlcResource:
+        from .resources.number_10dlc import AsyncNumber10dlcResource
+
+        return AsyncNumber10dlcResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncZavudevWithRawResponse:
         return AsyncZavudevWithRawResponse(self)
 
@@ -559,6 +671,54 @@ class ZavudevWithRawResponse:
 
         return RegulatoryDocumentsResourceWithRawResponse(self._client.regulatory_documents)
 
+    @cached_property
+    def invitations(self) -> invitations.InvitationsResourceWithRawResponse:
+        from .resources.invitations import InvitationsResourceWithRawResponse
+
+        return InvitationsResourceWithRawResponse(self._client.invitations)
+
+    @cached_property
+    def exports(self) -> exports.ExportsResourceWithRawResponse:
+        from .resources.exports import ExportsResourceWithRawResponse
+
+        return ExportsResourceWithRawResponse(self._client.exports)
+
+    @cached_property
+    def urls(self) -> urls.URLsResourceWithRawResponse:
+        from .resources.urls import URLsResourceWithRawResponse
+
+        return URLsResourceWithRawResponse(self._client.urls)
+
+    @cached_property
+    def balance(self) -> balance.BalanceResourceWithRawResponse:
+        from .resources.balance import BalanceResourceWithRawResponse
+
+        return BalanceResourceWithRawResponse(self._client.balance)
+
+    @cached_property
+    def plan(self) -> plan.PlanResourceWithRawResponse:
+        from .resources.plan import PlanResourceWithRawResponse
+
+        return PlanResourceWithRawResponse(self._client.plan)
+
+    @cached_property
+    def usage(self) -> usage.UsageResourceWithRawResponse:
+        from .resources.usage import UsageResourceWithRawResponse
+
+        return UsageResourceWithRawResponse(self._client.usage)
+
+    @cached_property
+    def sub_accounts(self) -> sub_accounts.SubAccountsResourceWithRawResponse:
+        from .resources.sub_accounts import SubAccountsResourceWithRawResponse
+
+        return SubAccountsResourceWithRawResponse(self._client.sub_accounts)
+
+    @cached_property
+    def number_10dlc(self) -> number_10dlc.Number10dlcResourceWithRawResponse:
+        from .resources.number_10dlc import Number10dlcResourceWithRawResponse
+
+        return Number10dlcResourceWithRawResponse(self._client.number_10dlc)
+
 
 class AsyncZavudevWithRawResponse:
     _client: AsyncZavudev
@@ -619,6 +779,54 @@ class AsyncZavudevWithRawResponse:
         from .resources.regulatory_documents import AsyncRegulatoryDocumentsResourceWithRawResponse
 
         return AsyncRegulatoryDocumentsResourceWithRawResponse(self._client.regulatory_documents)
+
+    @cached_property
+    def invitations(self) -> invitations.AsyncInvitationsResourceWithRawResponse:
+        from .resources.invitations import AsyncInvitationsResourceWithRawResponse
+
+        return AsyncInvitationsResourceWithRawResponse(self._client.invitations)
+
+    @cached_property
+    def exports(self) -> exports.AsyncExportsResourceWithRawResponse:
+        from .resources.exports import AsyncExportsResourceWithRawResponse
+
+        return AsyncExportsResourceWithRawResponse(self._client.exports)
+
+    @cached_property
+    def urls(self) -> urls.AsyncURLsResourceWithRawResponse:
+        from .resources.urls import AsyncURLsResourceWithRawResponse
+
+        return AsyncURLsResourceWithRawResponse(self._client.urls)
+
+    @cached_property
+    def balance(self) -> balance.AsyncBalanceResourceWithRawResponse:
+        from .resources.balance import AsyncBalanceResourceWithRawResponse
+
+        return AsyncBalanceResourceWithRawResponse(self._client.balance)
+
+    @cached_property
+    def plan(self) -> plan.AsyncPlanResourceWithRawResponse:
+        from .resources.plan import AsyncPlanResourceWithRawResponse
+
+        return AsyncPlanResourceWithRawResponse(self._client.plan)
+
+    @cached_property
+    def usage(self) -> usage.AsyncUsageResourceWithRawResponse:
+        from .resources.usage import AsyncUsageResourceWithRawResponse
+
+        return AsyncUsageResourceWithRawResponse(self._client.usage)
+
+    @cached_property
+    def sub_accounts(self) -> sub_accounts.AsyncSubAccountsResourceWithRawResponse:
+        from .resources.sub_accounts import AsyncSubAccountsResourceWithRawResponse
+
+        return AsyncSubAccountsResourceWithRawResponse(self._client.sub_accounts)
+
+    @cached_property
+    def number_10dlc(self) -> number_10dlc.AsyncNumber10dlcResourceWithRawResponse:
+        from .resources.number_10dlc import AsyncNumber10dlcResourceWithRawResponse
+
+        return AsyncNumber10dlcResourceWithRawResponse(self._client.number_10dlc)
 
 
 class ZavudevWithStreamedResponse:
@@ -681,6 +889,54 @@ class ZavudevWithStreamedResponse:
 
         return RegulatoryDocumentsResourceWithStreamingResponse(self._client.regulatory_documents)
 
+    @cached_property
+    def invitations(self) -> invitations.InvitationsResourceWithStreamingResponse:
+        from .resources.invitations import InvitationsResourceWithStreamingResponse
+
+        return InvitationsResourceWithStreamingResponse(self._client.invitations)
+
+    @cached_property
+    def exports(self) -> exports.ExportsResourceWithStreamingResponse:
+        from .resources.exports import ExportsResourceWithStreamingResponse
+
+        return ExportsResourceWithStreamingResponse(self._client.exports)
+
+    @cached_property
+    def urls(self) -> urls.URLsResourceWithStreamingResponse:
+        from .resources.urls import URLsResourceWithStreamingResponse
+
+        return URLsResourceWithStreamingResponse(self._client.urls)
+
+    @cached_property
+    def balance(self) -> balance.BalanceResourceWithStreamingResponse:
+        from .resources.balance import BalanceResourceWithStreamingResponse
+
+        return BalanceResourceWithStreamingResponse(self._client.balance)
+
+    @cached_property
+    def plan(self) -> plan.PlanResourceWithStreamingResponse:
+        from .resources.plan import PlanResourceWithStreamingResponse
+
+        return PlanResourceWithStreamingResponse(self._client.plan)
+
+    @cached_property
+    def usage(self) -> usage.UsageResourceWithStreamingResponse:
+        from .resources.usage import UsageResourceWithStreamingResponse
+
+        return UsageResourceWithStreamingResponse(self._client.usage)
+
+    @cached_property
+    def sub_accounts(self) -> sub_accounts.SubAccountsResourceWithStreamingResponse:
+        from .resources.sub_accounts import SubAccountsResourceWithStreamingResponse
+
+        return SubAccountsResourceWithStreamingResponse(self._client.sub_accounts)
+
+    @cached_property
+    def number_10dlc(self) -> number_10dlc.Number10dlcResourceWithStreamingResponse:
+        from .resources.number_10dlc import Number10dlcResourceWithStreamingResponse
+
+        return Number10dlcResourceWithStreamingResponse(self._client.number_10dlc)
+
 
 class AsyncZavudevWithStreamedResponse:
     _client: AsyncZavudev
@@ -741,6 +997,54 @@ class AsyncZavudevWithStreamedResponse:
         from .resources.regulatory_documents import AsyncRegulatoryDocumentsResourceWithStreamingResponse
 
         return AsyncRegulatoryDocumentsResourceWithStreamingResponse(self._client.regulatory_documents)
+
+    @cached_property
+    def invitations(self) -> invitations.AsyncInvitationsResourceWithStreamingResponse:
+        from .resources.invitations import AsyncInvitationsResourceWithStreamingResponse
+
+        return AsyncInvitationsResourceWithStreamingResponse(self._client.invitations)
+
+    @cached_property
+    def exports(self) -> exports.AsyncExportsResourceWithStreamingResponse:
+        from .resources.exports import AsyncExportsResourceWithStreamingResponse
+
+        return AsyncExportsResourceWithStreamingResponse(self._client.exports)
+
+    @cached_property
+    def urls(self) -> urls.AsyncURLsResourceWithStreamingResponse:
+        from .resources.urls import AsyncURLsResourceWithStreamingResponse
+
+        return AsyncURLsResourceWithStreamingResponse(self._client.urls)
+
+    @cached_property
+    def balance(self) -> balance.AsyncBalanceResourceWithStreamingResponse:
+        from .resources.balance import AsyncBalanceResourceWithStreamingResponse
+
+        return AsyncBalanceResourceWithStreamingResponse(self._client.balance)
+
+    @cached_property
+    def plan(self) -> plan.AsyncPlanResourceWithStreamingResponse:
+        from .resources.plan import AsyncPlanResourceWithStreamingResponse
+
+        return AsyncPlanResourceWithStreamingResponse(self._client.plan)
+
+    @cached_property
+    def usage(self) -> usage.AsyncUsageResourceWithStreamingResponse:
+        from .resources.usage import AsyncUsageResourceWithStreamingResponse
+
+        return AsyncUsageResourceWithStreamingResponse(self._client.usage)
+
+    @cached_property
+    def sub_accounts(self) -> sub_accounts.AsyncSubAccountsResourceWithStreamingResponse:
+        from .resources.sub_accounts import AsyncSubAccountsResourceWithStreamingResponse
+
+        return AsyncSubAccountsResourceWithStreamingResponse(self._client.sub_accounts)
+
+    @cached_property
+    def number_10dlc(self) -> number_10dlc.AsyncNumber10dlcResourceWithStreamingResponse:
+        from .resources.number_10dlc import AsyncNumber10dlcResourceWithStreamingResponse
+
+        return AsyncNumber10dlcResourceWithStreamingResponse(self._client.number_10dlc)
 
 
 Client = Zavudev
