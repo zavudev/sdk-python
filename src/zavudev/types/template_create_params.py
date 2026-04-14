@@ -29,6 +29,15 @@ class TemplateCreateParams(TypedDict, total=False):
     code_expiration_minutes: Annotated[int, PropertyInfo(alias="codeExpirationMinutes")]
     """Code expiration time in minutes. Only for AUTHENTICATION templates."""
 
+    footer: str
+    """Footer text for the template."""
+
+    header_content: Annotated[str, PropertyInfo(alias="headerContent")]
+    """Header content (text string or media URL)."""
+
+    header_type: Annotated[Literal["text", "image", "video", "document"], PropertyInfo(alias="headerType")]
+    """Type of header for the template."""
+
     instagram_body: Annotated[str, PropertyInfo(alias="instagramBody")]
     """Channel-specific body for Instagram. Falls back to `body` if not set."""
 

@@ -1,39 +1,15 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Optional
+from typing import List, Optional
 from datetime import datetime
-from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
+from .flow_step import FlowStep
 from ...._models import BaseModel
+from .flow_trigger import FlowTrigger
 
-__all__ = ["AgentFlow", "Step", "Trigger"]
-
-
-class Step(BaseModel):
-    id: str
-    """Unique step identifier."""
-
-    config: Dict[str, object]
-    """Step configuration (varies by type)."""
-
-    type: Literal["message", "collect", "condition", "tool", "llm", "transfer"]
-    """Type of flow step."""
-
-    next_step_id: Optional[str] = FieldInfo(alias="nextStepId", default=None)
-    """ID of the next step to execute."""
-
-
-class Trigger(BaseModel):
-    type: Literal["keyword", "intent", "always", "manual"]
-    """Type of trigger for a flow."""
-
-    intent: Optional[str] = None
-    """Intent that triggers the flow (for intent type)."""
-
-    keywords: Optional[List[str]] = None
-    """Keywords that trigger the flow (for keyword type)."""
+__all__ = ["AgentFlow"]
 
 
 class AgentFlow(BaseModel):
@@ -50,9 +26,9 @@ class AgentFlow(BaseModel):
     priority: int
     """Priority when multiple flows match (higher = more priority)."""
 
-    steps: List[Step]
+    steps: List[FlowStep]
 
-    trigger: Trigger
+    trigger: FlowTrigger
 
     updated_at: datetime = FieldInfo(alias="updatedAt")
 

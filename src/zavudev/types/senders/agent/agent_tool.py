@@ -1,28 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Optional
 from datetime import datetime
-from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
 from ...._models import BaseModel
+from .tool_parameters import ToolParameters
 
-__all__ = ["AgentTool", "Parameters", "ParametersProperties"]
-
-
-class ParametersProperties(BaseModel):
-    description: Optional[str] = None
-
-    type: Optional[str] = None
-
-
-class Parameters(BaseModel):
-    properties: Dict[str, ParametersProperties]
-
-    required: List[str]
-
-    type: Literal["object"]
+__all__ = ["AgentTool"]
 
 
 class AgentTool(BaseModel):
@@ -39,7 +24,7 @@ class AgentTool(BaseModel):
 
     name: str
 
-    parameters: Parameters
+    parameters: ToolParameters
 
     updated_at: datetime = FieldInfo(alias="updatedAt")
 

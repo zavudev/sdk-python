@@ -18,11 +18,17 @@ from ...._response import (
 )
 from ....pagination import SyncCursor, AsyncCursor
 from ...._base_client import AsyncPaginator, make_request_options
-from ....types.senders.agent import tool_list_params, tool_test_params, tool_create_params, tool_update_params
+from ....types.senders.agent import (
+    tool_list_params,
+    tool_test_params,
+    tool_create_params,
+    tool_update_params,
+)
 from ....types.senders.agent.agent_tool import AgentTool
 from ....types.senders.agent.tool_test_response import ToolTestResponse
 from ....types.senders.agent.tool_create_response import ToolCreateResponse
 from ....types.senders.agent.tool_update_response import ToolUpdateResponse
+from ....types.senders.agent.tool_parameters_param import ToolParametersParam
 from ....types.senders.agent.tool_retrieve_response import ToolRetrieveResponse
 
 __all__ = ["ToolsResource", "AsyncToolsResource"]
@@ -54,7 +60,7 @@ class ToolsResource(SyncAPIResource):
         *,
         description: str,
         name: str,
-        parameters: tool_create_params.Parameters,
+        parameters: ToolParametersParam,
         webhook_url: str,
         enabled: bool | Omit = omit,
         webhook_secret: str | Omit = omit,
@@ -147,7 +153,7 @@ class ToolsResource(SyncAPIResource):
         description: str | Omit = omit,
         enabled: bool | Omit = omit,
         name: str | Omit = omit,
-        parameters: tool_update_params.Parameters | Omit = omit,
+        parameters: ToolParametersParam | Omit = omit,
         webhook_secret: Optional[str] | Omit = omit,
         webhook_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -344,7 +350,7 @@ class AsyncToolsResource(AsyncAPIResource):
         *,
         description: str,
         name: str,
-        parameters: tool_create_params.Parameters,
+        parameters: ToolParametersParam,
         webhook_url: str,
         enabled: bool | Omit = omit,
         webhook_secret: str | Omit = omit,
@@ -437,7 +443,7 @@ class AsyncToolsResource(AsyncAPIResource):
         description: str | Omit = omit,
         enabled: bool | Omit = omit,
         name: str | Omit = omit,
-        parameters: tool_update_params.Parameters | Omit = omit,
+        parameters: ToolParametersParam | Omit = omit,
         webhook_secret: Optional[str] | Omit = omit,
         webhook_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.

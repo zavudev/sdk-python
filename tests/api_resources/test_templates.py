@@ -50,6 +50,9 @@ class TestTemplates:
                 }
             ],
             code_expiration_minutes=1,
+            footer="footer",
+            header_content="headerContent",
+            header_type="text",
             instagram_body="instagramBody",
             sms_body="smsBody",
             telegram_body="telegramBody",
@@ -301,6 +304,9 @@ class TestAsyncTemplates:
                 }
             ],
             code_expiration_minutes=1,
+            footer="footer",
+            header_content="headerContent",
+            header_type="text",
             instagram_body="instagramBody",
             sms_body="smsBody",
             telegram_body="telegramBody",

@@ -18,8 +18,15 @@ from ...._response import (
 )
 from ....pagination import SyncCursor, AsyncCursor
 from ...._base_client import AsyncPaginator, make_request_options
-from ....types.senders.agent import flow_list_params, flow_create_params, flow_update_params, flow_duplicate_params
+from ....types.senders.agent import (
+    flow_list_params,
+    flow_create_params,
+    flow_update_params,
+    flow_duplicate_params,
+)
 from ....types.senders.agent.agent_flow import AgentFlow
+from ....types.senders.agent.flow_step_param import FlowStepParam
+from ....types.senders.agent.flow_trigger_param import FlowTriggerParam
 from ....types.senders.agent.flow_create_response import FlowCreateResponse
 from ....types.senders.agent.flow_update_response import FlowUpdateResponse
 from ....types.senders.agent.flow_retrieve_response import FlowRetrieveResponse
@@ -53,8 +60,8 @@ class FlowsResource(SyncAPIResource):
         sender_id: str,
         *,
         name: str,
-        steps: Iterable[flow_create_params.Step],
-        trigger: flow_create_params.Trigger,
+        steps: Iterable[FlowStepParam],
+        trigger: FlowTriggerParam,
         description: str | Omit = omit,
         enabled: bool | Omit = omit,
         priority: int | Omit = omit,
@@ -143,8 +150,8 @@ class FlowsResource(SyncAPIResource):
         enabled: bool | Omit = omit,
         name: str | Omit = omit,
         priority: int | Omit = omit,
-        steps: Iterable[flow_update_params.Step] | Omit = omit,
-        trigger: flow_update_params.Trigger | Omit = omit,
+        steps: Iterable[FlowStepParam] | Omit = omit,
+        trigger: FlowTriggerParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -339,8 +346,8 @@ class AsyncFlowsResource(AsyncAPIResource):
         sender_id: str,
         *,
         name: str,
-        steps: Iterable[flow_create_params.Step],
-        trigger: flow_create_params.Trigger,
+        steps: Iterable[FlowStepParam],
+        trigger: FlowTriggerParam,
         description: str | Omit = omit,
         enabled: bool | Omit = omit,
         priority: int | Omit = omit,
@@ -429,8 +436,8 @@ class AsyncFlowsResource(AsyncAPIResource):
         enabled: bool | Omit = omit,
         name: str | Omit = omit,
         priority: int | Omit = omit,
-        steps: Iterable[flow_update_params.Step] | Omit = omit,
-        trigger: flow_update_params.Trigger | Omit = omit,
+        steps: Iterable[FlowStepParam] | Omit = omit,
+        trigger: FlowTriggerParam | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
