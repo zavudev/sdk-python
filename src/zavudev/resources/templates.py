@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Iterable
+from typing_extensions import Literal
 
 import httpx
 
@@ -54,6 +55,9 @@ class TemplatesResource(SyncAPIResource):
         add_security_recommendation: bool | Omit = omit,
         buttons: Iterable[template_create_params.Button] | Omit = omit,
         code_expiration_minutes: int | Omit = omit,
+        footer: str | Omit = omit,
+        header_content: str | Omit = omit,
+        header_type: Literal["text", "image", "video", "document"] | Omit = omit,
         instagram_body: str | Omit = omit,
         sms_body: str | Omit = omit,
         telegram_body: str | Omit = omit,
@@ -79,6 +83,12 @@ class TemplatesResource(SyncAPIResource):
           buttons: Template buttons (max 3).
 
           code_expiration_minutes: Code expiration time in minutes. Only for AUTHENTICATION templates.
+
+          footer: Footer text for the template.
+
+          header_content: Header content (text string or media URL).
+
+          header_type: Type of header for the template.
 
           instagram_body: Channel-specific body for Instagram. Falls back to `body` if not set.
 
@@ -106,6 +116,9 @@ class TemplatesResource(SyncAPIResource):
                     "add_security_recommendation": add_security_recommendation,
                     "buttons": buttons,
                     "code_expiration_minutes": code_expiration_minutes,
+                    "footer": footer,
+                    "header_content": header_content,
+                    "header_type": header_type,
                     "instagram_body": instagram_body,
                     "sms_body": sms_body,
                     "telegram_body": telegram_body,
@@ -309,6 +322,9 @@ class AsyncTemplatesResource(AsyncAPIResource):
         add_security_recommendation: bool | Omit = omit,
         buttons: Iterable[template_create_params.Button] | Omit = omit,
         code_expiration_minutes: int | Omit = omit,
+        footer: str | Omit = omit,
+        header_content: str | Omit = omit,
+        header_type: Literal["text", "image", "video", "document"] | Omit = omit,
         instagram_body: str | Omit = omit,
         sms_body: str | Omit = omit,
         telegram_body: str | Omit = omit,
@@ -334,6 +350,12 @@ class AsyncTemplatesResource(AsyncAPIResource):
           buttons: Template buttons (max 3).
 
           code_expiration_minutes: Code expiration time in minutes. Only for AUTHENTICATION templates.
+
+          footer: Footer text for the template.
+
+          header_content: Header content (text string or media URL).
+
+          header_type: Type of header for the template.
 
           instagram_body: Channel-specific body for Instagram. Falls back to `body` if not set.
 
@@ -361,6 +383,9 @@ class AsyncTemplatesResource(AsyncAPIResource):
                     "add_security_recommendation": add_security_recommendation,
                     "buttons": buttons,
                     "code_expiration_minutes": code_expiration_minutes,
+                    "footer": footer,
+                    "header_content": header_content,
+                    "header_type": header_type,
                     "instagram_body": instagram_body,
                     "sms_body": sms_body,
                     "telegram_body": telegram_body,
