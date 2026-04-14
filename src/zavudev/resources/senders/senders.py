@@ -34,6 +34,14 @@ from .agent.agent import (
     AsyncAgentResourceWithStreamingResponse,
 )
 from ...pagination import SyncCursor, AsyncCursor
+from .whatsapp_sync import (
+    WhatsappSyncResource,
+    AsyncWhatsappSyncResource,
+    WhatsappSyncResourceWithRawResponse,
+    AsyncWhatsappSyncResourceWithRawResponse,
+    WhatsappSyncResourceWithStreamingResponse,
+    AsyncWhatsappSyncResourceWithStreamingResponse,
+)
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.sender import Sender
 from ...types.webhook_event import WebhookEvent
@@ -50,6 +58,10 @@ class SendersResource(SyncAPIResource):
     @cached_property
     def agent(self) -> AgentResource:
         return AgentResource(self._client)
+
+    @cached_property
+    def whatsapp_sync(self) -> WhatsappSyncResource:
+        return WhatsappSyncResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> SendersResourceWithRawResponse:
@@ -474,6 +486,10 @@ class AsyncSendersResource(AsyncAPIResource):
     @cached_property
     def agent(self) -> AsyncAgentResource:
         return AsyncAgentResource(self._client)
+
+    @cached_property
+    def whatsapp_sync(self) -> AsyncWhatsappSyncResource:
+        return AsyncWhatsappSyncResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncSendersResourceWithRawResponse:
@@ -930,6 +946,10 @@ class SendersResourceWithRawResponse:
     def agent(self) -> AgentResourceWithRawResponse:
         return AgentResourceWithRawResponse(self._senders.agent)
 
+    @cached_property
+    def whatsapp_sync(self) -> WhatsappSyncResourceWithRawResponse:
+        return WhatsappSyncResourceWithRawResponse(self._senders.whatsapp_sync)
+
 
 class AsyncSendersResourceWithRawResponse:
     def __init__(self, senders: AsyncSendersResource) -> None:
@@ -966,6 +986,10 @@ class AsyncSendersResourceWithRawResponse:
     @cached_property
     def agent(self) -> AsyncAgentResourceWithRawResponse:
         return AsyncAgentResourceWithRawResponse(self._senders.agent)
+
+    @cached_property
+    def whatsapp_sync(self) -> AsyncWhatsappSyncResourceWithRawResponse:
+        return AsyncWhatsappSyncResourceWithRawResponse(self._senders.whatsapp_sync)
 
 
 class SendersResourceWithStreamingResponse:
@@ -1004,6 +1028,10 @@ class SendersResourceWithStreamingResponse:
     def agent(self) -> AgentResourceWithStreamingResponse:
         return AgentResourceWithStreamingResponse(self._senders.agent)
 
+    @cached_property
+    def whatsapp_sync(self) -> WhatsappSyncResourceWithStreamingResponse:
+        return WhatsappSyncResourceWithStreamingResponse(self._senders.whatsapp_sync)
+
 
 class AsyncSendersResourceWithStreamingResponse:
     def __init__(self, senders: AsyncSendersResource) -> None:
@@ -1040,3 +1068,7 @@ class AsyncSendersResourceWithStreamingResponse:
     @cached_property
     def agent(self) -> AsyncAgentResourceWithStreamingResponse:
         return AsyncAgentResourceWithStreamingResponse(self._senders.agent)
+
+    @cached_property
+    def whatsapp_sync(self) -> AsyncWhatsappSyncResourceWithStreamingResponse:
+        return AsyncWhatsappSyncResourceWithStreamingResponse(self._senders.whatsapp_sync)

@@ -9,7 +9,9 @@ import pytest
 
 from zavudev import Zavudev, AsyncZavudev
 from tests.utils import assert_matches_type
-from zavudev.types import Contact
+from zavudev.types import (
+    Contact,
+)
 from zavudev.pagination import SyncCursor, AsyncCursor
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -17,6 +19,73 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 class TestContacts:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_create(self, client: Zavudev) -> None:
+        contact = client.contacts.create(
+            channels=[
+                {
+                    "channel": "sms",
+                    "identifier": "+14155551234",
+                }
+            ],
+        )
+        assert_matches_type(Contact, contact, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_create_with_all_params(self, client: Zavudev) -> None:
+        contact = client.contacts.create(
+            channels=[
+                {
+                    "channel": "sms",
+                    "identifier": "+14155551234",
+                    "country_code": "US",
+                    "is_primary": True,
+                    "label": "work",
+                }
+            ],
+            display_name="John Doe",
+            metadata={"foo": "string"},
+        )
+        assert_matches_type(Contact, contact, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_create(self, client: Zavudev) -> None:
+        response = client.contacts.with_raw_response.create(
+            channels=[
+                {
+                    "channel": "sms",
+                    "identifier": "+14155551234",
+                }
+            ],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        contact = response.parse()
+        assert_matches_type(Contact, contact, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_create(self, client: Zavudev) -> None:
+        with client.contacts.with_streaming_response.create(
+            channels=[
+                {
+                    "channel": "sms",
+                    "identifier": "+14155551234",
+                }
+            ],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            contact = response.parse()
+            assert_matches_type(Contact, contact, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -152,6 +221,94 @@ class TestContacts:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_dismiss_merge_suggestion(self, client: Zavudev) -> None:
+        contact = client.contacts.dismiss_merge_suggestion(
+            "contactId",
+        )
+        assert contact is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_dismiss_merge_suggestion(self, client: Zavudev) -> None:
+        response = client.contacts.with_raw_response.dismiss_merge_suggestion(
+            "contactId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        contact = response.parse()
+        assert contact is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_dismiss_merge_suggestion(self, client: Zavudev) -> None:
+        with client.contacts.with_streaming_response.dismiss_merge_suggestion(
+            "contactId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            contact = response.parse()
+            assert contact is None
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_dismiss_merge_suggestion(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
+            client.contacts.with_raw_response.dismiss_merge_suggestion(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_merge(self, client: Zavudev) -> None:
+        contact = client.contacts.merge(
+            contact_id="contactId",
+            source_contact_id="jx7xyz789",
+        )
+        assert_matches_type(Contact, contact, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_merge(self, client: Zavudev) -> None:
+        response = client.contacts.with_raw_response.merge(
+            contact_id="contactId",
+            source_contact_id="jx7xyz789",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        contact = response.parse()
+        assert_matches_type(Contact, contact, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_merge(self, client: Zavudev) -> None:
+        with client.contacts.with_streaming_response.merge(
+            contact_id="contactId",
+            source_contact_id="jx7xyz789",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            contact = response.parse()
+            assert_matches_type(Contact, contact, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_merge(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
+            client.contacts.with_raw_response.merge(
+                contact_id="",
+                source_contact_id="jx7xyz789",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_method_retrieve_by_phone(self, client: Zavudev) -> None:
         contact = client.contacts.retrieve_by_phone(
             "phoneNumber",
@@ -197,6 +354,73 @@ class TestAsyncContacts:
     parametrize = pytest.mark.parametrize(
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_create(self, async_client: AsyncZavudev) -> None:
+        contact = await async_client.contacts.create(
+            channels=[
+                {
+                    "channel": "sms",
+                    "identifier": "+14155551234",
+                }
+            ],
+        )
+        assert_matches_type(Contact, contact, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_create_with_all_params(self, async_client: AsyncZavudev) -> None:
+        contact = await async_client.contacts.create(
+            channels=[
+                {
+                    "channel": "sms",
+                    "identifier": "+14155551234",
+                    "country_code": "US",
+                    "is_primary": True,
+                    "label": "work",
+                }
+            ],
+            display_name="John Doe",
+            metadata={"foo": "string"},
+        )
+        assert_matches_type(Contact, contact, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_create(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.contacts.with_raw_response.create(
+            channels=[
+                {
+                    "channel": "sms",
+                    "identifier": "+14155551234",
+                }
+            ],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        contact = await response.parse()
+        assert_matches_type(Contact, contact, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_create(self, async_client: AsyncZavudev) -> None:
+        async with async_client.contacts.with_streaming_response.create(
+            channels=[
+                {
+                    "channel": "sms",
+                    "identifier": "+14155551234",
+                }
+            ],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            contact = await response.parse()
+            assert_matches_type(Contact, contact, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -329,6 +553,94 @@ class TestAsyncContacts:
             assert_matches_type(AsyncCursor[Contact], contact, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_dismiss_merge_suggestion(self, async_client: AsyncZavudev) -> None:
+        contact = await async_client.contacts.dismiss_merge_suggestion(
+            "contactId",
+        )
+        assert contact is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_dismiss_merge_suggestion(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.contacts.with_raw_response.dismiss_merge_suggestion(
+            "contactId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        contact = await response.parse()
+        assert contact is None
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_dismiss_merge_suggestion(self, async_client: AsyncZavudev) -> None:
+        async with async_client.contacts.with_streaming_response.dismiss_merge_suggestion(
+            "contactId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            contact = await response.parse()
+            assert contact is None
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_dismiss_merge_suggestion(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
+            await async_client.contacts.with_raw_response.dismiss_merge_suggestion(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_merge(self, async_client: AsyncZavudev) -> None:
+        contact = await async_client.contacts.merge(
+            contact_id="contactId",
+            source_contact_id="jx7xyz789",
+        )
+        assert_matches_type(Contact, contact, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_merge(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.contacts.with_raw_response.merge(
+            contact_id="contactId",
+            source_contact_id="jx7xyz789",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        contact = await response.parse()
+        assert_matches_type(Contact, contact, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_merge(self, async_client: AsyncZavudev) -> None:
+        async with async_client.contacts.with_streaming_response.merge(
+            contact_id="contactId",
+            source_contact_id="jx7xyz789",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            contact = await response.parse()
+            assert_matches_type(Contact, contact, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_merge(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
+            await async_client.contacts.with_raw_response.merge(
+                contact_id="",
+                source_contact_id="jx7xyz789",
+            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
