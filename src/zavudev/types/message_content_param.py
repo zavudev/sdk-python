@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Iterable
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
@@ -46,11 +46,36 @@ class MessageContentParam(TypedDict, total=False):
     contacts: Iterable[Contact]
     """Contact cards for contact messages."""
 
+    cta_display_text: Annotated[str, PropertyInfo(alias="ctaDisplayText")]
+    """Button label for cta_url messages."""
+
+    cta_header_media_url: Annotated[str, PropertyInfo(alias="ctaHeaderMediaUrl")]
+    """
+    Public URL of the header media when ctaHeaderType is 'image', 'video', or
+    'document'.
+    """
+
+    cta_header_text: Annotated[str, PropertyInfo(alias="ctaHeaderText")]
+    """Header text when ctaHeaderType is 'text'."""
+
+    cta_header_type: Annotated[Literal["text", "image", "video", "document"], PropertyInfo(alias="ctaHeaderType")]
+    """Optional header type for cta_url messages."""
+
+    cta_url: Annotated[str, PropertyInfo(alias="ctaUrl")]
+    """Destination URL opened in the device's default browser when the button is
+    tapped.
+
+    Used with messageType=cta_url.
+    """
+
     emoji: str
     """Emoji for reaction messages."""
 
     filename: str
     """Filename for documents."""
+
+    footer_text: Annotated[str, PropertyInfo(alias="footerText")]
+    """Optional footer text for cta_url messages."""
 
     latitude: float
     """Latitude for location messages."""
