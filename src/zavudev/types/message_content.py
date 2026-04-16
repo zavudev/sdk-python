@@ -50,8 +50,9 @@ class MessageContent(BaseModel):
 
     cta_header_media_url: Optional[str] = FieldInfo(alias="ctaHeaderMediaUrl", default=None)
     """
-    Public URL of the header media when ctaHeaderType is 'image', 'video', or
-    'document'.
+    Public HTTPS URL of the header media when ctaHeaderType is 'image', 'video', or
+    'document'. WhatsApp fetches this URL — it must be publicly reachable and return
+    the declared content type.
     """
 
     cta_header_text: Optional[str] = FieldInfo(alias="ctaHeaderText", default=None)
@@ -66,7 +67,7 @@ class MessageContent(BaseModel):
     """Destination URL opened in the device's default browser when the button is
     tapped.
 
-    Used with messageType=cta_url.
+    Used with messageType=cta_url. WhatsApp requires HTTPS in production.
     """
 
     emoji: Optional[str] = None
