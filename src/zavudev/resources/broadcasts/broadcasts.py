@@ -49,6 +49,8 @@ from ...types.broadcast_create_response import BroadcastCreateResponse
 from ...types.broadcast_update_response import BroadcastUpdateResponse
 from ...types.broadcast_retrieve_response import BroadcastRetrieveResponse
 from ...types.broadcast_reschedule_response import BroadcastRescheduleResponse
+from ...types.broadcast_retry_review_response import BroadcastRetryReviewResponse
+from ...types.broadcast_escalate_review_response import BroadcastEscalateReviewResponse
 
 __all__ = ["BroadcastsResource", "AsyncBroadcastsResource"]
 
@@ -356,6 +358,41 @@ class BroadcastsResource(SyncAPIResource):
             cast_to=BroadcastCancelResponse,
         )
 
+    def escalate_review(
+        self,
+        broadcast_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BroadcastEscalateReviewResponse:
+        """Request manual review by the Zavu team for a rejected broadcast.
+
+        Use this after
+        automated review rejection if you believe the content is legitimate.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not broadcast_id:
+            raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
+        return self._post(
+            path_template("/v1/broadcasts/{broadcast_id}/escalate", broadcast_id=broadcast_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=BroadcastEscalateReviewResponse,
+        )
+
     def progress(
         self,
         broadcast_id: str,
@@ -427,6 +464,41 @@ class BroadcastsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=BroadcastRescheduleResponse,
+        )
+
+    def retry_review(
+        self,
+        broadcast_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BroadcastRetryReviewResponse:
+        """Resubmit a rejected broadcast for AI review after editing content.
+
+        Maximum 3
+        review attempts allowed per broadcast.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not broadcast_id:
+            raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
+        return self._post(
+            path_template("/v1/broadcasts/{broadcast_id}/retry-review", broadcast_id=broadcast_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=BroadcastRetryReviewResponse,
         )
 
     def send(
@@ -774,6 +846,41 @@ class AsyncBroadcastsResource(AsyncAPIResource):
             cast_to=BroadcastCancelResponse,
         )
 
+    async def escalate_review(
+        self,
+        broadcast_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BroadcastEscalateReviewResponse:
+        """Request manual review by the Zavu team for a rejected broadcast.
+
+        Use this after
+        automated review rejection if you believe the content is legitimate.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not broadcast_id:
+            raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
+        return await self._post(
+            path_template("/v1/broadcasts/{broadcast_id}/escalate", broadcast_id=broadcast_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=BroadcastEscalateReviewResponse,
+        )
+
     async def progress(
         self,
         broadcast_id: str,
@@ -849,6 +956,41 @@ class AsyncBroadcastsResource(AsyncAPIResource):
             cast_to=BroadcastRescheduleResponse,
         )
 
+    async def retry_review(
+        self,
+        broadcast_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> BroadcastRetryReviewResponse:
+        """Resubmit a rejected broadcast for AI review after editing content.
+
+        Maximum 3
+        review attempts allowed per broadcast.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not broadcast_id:
+            raise ValueError(f"Expected a non-empty value for `broadcast_id` but received {broadcast_id!r}")
+        return await self._post(
+            path_template("/v1/broadcasts/{broadcast_id}/retry-review", broadcast_id=broadcast_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=BroadcastRetryReviewResponse,
+        )
+
     async def send(
         self,
         broadcast_id: str,
@@ -913,11 +1055,17 @@ class BroadcastsResourceWithRawResponse:
         self.cancel = to_raw_response_wrapper(
             broadcasts.cancel,
         )
+        self.escalate_review = to_raw_response_wrapper(
+            broadcasts.escalate_review,
+        )
         self.progress = to_raw_response_wrapper(
             broadcasts.progress,
         )
         self.reschedule = to_raw_response_wrapper(
             broadcasts.reschedule,
+        )
+        self.retry_review = to_raw_response_wrapper(
+            broadcasts.retry_review,
         )
         self.send = to_raw_response_wrapper(
             broadcasts.send,
@@ -950,11 +1098,17 @@ class AsyncBroadcastsResourceWithRawResponse:
         self.cancel = async_to_raw_response_wrapper(
             broadcasts.cancel,
         )
+        self.escalate_review = async_to_raw_response_wrapper(
+            broadcasts.escalate_review,
+        )
         self.progress = async_to_raw_response_wrapper(
             broadcasts.progress,
         )
         self.reschedule = async_to_raw_response_wrapper(
             broadcasts.reschedule,
+        )
+        self.retry_review = async_to_raw_response_wrapper(
+            broadcasts.retry_review,
         )
         self.send = async_to_raw_response_wrapper(
             broadcasts.send,
@@ -987,11 +1141,17 @@ class BroadcastsResourceWithStreamingResponse:
         self.cancel = to_streamed_response_wrapper(
             broadcasts.cancel,
         )
+        self.escalate_review = to_streamed_response_wrapper(
+            broadcasts.escalate_review,
+        )
         self.progress = to_streamed_response_wrapper(
             broadcasts.progress,
         )
         self.reschedule = to_streamed_response_wrapper(
             broadcasts.reschedule,
+        )
+        self.retry_review = to_streamed_response_wrapper(
+            broadcasts.retry_review,
         )
         self.send = to_streamed_response_wrapper(
             broadcasts.send,
@@ -1024,11 +1184,17 @@ class AsyncBroadcastsResourceWithStreamingResponse:
         self.cancel = async_to_streamed_response_wrapper(
             broadcasts.cancel,
         )
+        self.escalate_review = async_to_streamed_response_wrapper(
+            broadcasts.escalate_review,
+        )
         self.progress = async_to_streamed_response_wrapper(
             broadcasts.progress,
         )
         self.reschedule = async_to_streamed_response_wrapper(
             broadcasts.reschedule,
+        )
+        self.retry_review = async_to_streamed_response_wrapper(
+            broadcasts.retry_review,
         )
         self.send = async_to_streamed_response_wrapper(
             broadcasts.send,

@@ -15,6 +15,7 @@ MessageType: TypeAlias = Literal[
     "contact",
     "buttons",
     "list",
+    "cta_url",
     "reaction",
     "template",
 ]

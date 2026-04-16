@@ -16,6 +16,14 @@ from .senders import (
     SendersResourceWithStreamingResponse,
     AsyncSendersResourceWithStreamingResponse,
 )
+from .whatsapp_sync import (
+    WhatsappSyncResource,
+    AsyncWhatsappSyncResource,
+    WhatsappSyncResourceWithRawResponse,
+    AsyncWhatsappSyncResourceWithRawResponse,
+    WhatsappSyncResourceWithStreamingResponse,
+    AsyncWhatsappSyncResourceWithStreamingResponse,
+)
 
 __all__ = [
     "AgentResource",
@@ -24,6 +32,12 @@ __all__ = [
     "AsyncAgentResourceWithRawResponse",
     "AgentResourceWithStreamingResponse",
     "AsyncAgentResourceWithStreamingResponse",
+    "WhatsappSyncResource",
+    "AsyncWhatsappSyncResource",
+    "WhatsappSyncResourceWithRawResponse",
+    "AsyncWhatsappSyncResourceWithRawResponse",
+    "WhatsappSyncResourceWithStreamingResponse",
+    "AsyncWhatsappSyncResourceWithStreamingResponse",
     "SendersResource",
     "AsyncSendersResource",
     "SendersResourceWithRawResponse",
