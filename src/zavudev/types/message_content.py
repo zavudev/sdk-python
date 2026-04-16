@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import Dict, List, Optional
+from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
@@ -44,11 +45,38 @@ class MessageContent(BaseModel):
     contacts: Optional[List[Contact]] = None
     """Contact cards for contact messages."""
 
+    cta_display_text: Optional[str] = FieldInfo(alias="ctaDisplayText", default=None)
+    """Button label for cta_url messages."""
+
+    cta_header_media_url: Optional[str] = FieldInfo(alias="ctaHeaderMediaUrl", default=None)
+    """
+    Public URL of the header media when ctaHeaderType is 'image', 'video', or
+    'document'.
+    """
+
+    cta_header_text: Optional[str] = FieldInfo(alias="ctaHeaderText", default=None)
+    """Header text when ctaHeaderType is 'text'."""
+
+    cta_header_type: Optional[Literal["text", "image", "video", "document"]] = FieldInfo(
+        alias="ctaHeaderType", default=None
+    )
+    """Optional header type for cta_url messages."""
+
+    cta_url: Optional[str] = FieldInfo(alias="ctaUrl", default=None)
+    """Destination URL opened in the device's default browser when the button is
+    tapped.
+
+    Used with messageType=cta_url.
+    """
+
     emoji: Optional[str] = None
     """Emoji for reaction messages."""
 
     filename: Optional[str] = None
     """Filename for documents."""
+
+    footer_text: Optional[str] = FieldInfo(alias="footerText", default=None)
+    """Optional footer text for cta_url messages."""
 
     latitude: Optional[float] = None
     """Latitude for location messages."""
