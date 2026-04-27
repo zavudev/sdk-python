@@ -42,6 +42,7 @@ class TestTemplates:
                 {
                     "text": "text",
                     "type": "quick_reply",
+                    "example": "ORD-12345",
                     "otp_type": "COPY_CODE",
                     "package_name": "packageName",
                     "phone_number": "phoneNumber",
@@ -296,6 +297,7 @@ class TestAsyncTemplates:
                 {
                     "text": "text",
                     "type": "quick_reply",
+                    "example": "ORD-12345",
                     "otp_type": "COPY_CODE",
                     "package_name": "packageName",
                     "phone_number": "phoneNumber",
