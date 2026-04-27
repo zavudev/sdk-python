@@ -35,4 +35,6 @@ class BroadcastContact(BaseModel):
 
     processed_at: Optional[datetime] = FieldInfo(alias="processedAt", default=None)
 
+    template_button_variables: Optional[Dict[str, str]] = FieldInfo(alias="templateButtonVariables", default=None)
+
     template_variables: Optional[Dict[str, str]] = FieldInfo(alias="templateVariables", default=None)

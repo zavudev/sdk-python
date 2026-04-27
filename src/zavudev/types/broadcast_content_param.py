@@ -25,8 +25,17 @@ class BroadcastContentParam(TypedDict, total=False):
     mime_type: Annotated[str, PropertyInfo(alias="mimeType")]
     """MIME type of the media."""
 
+    template_button_variables: Annotated[Dict[str, str], PropertyInfo(alias="templateButtonVariables")]
+    """Default button variables for dynamic URL/OTP buttons.
+
+    Keys are the button index (0, 1, 2). Per-contact values override these.
+    """
+
     template_id: Annotated[str, PropertyInfo(alias="templateId")]
     """Template ID for template messages."""
 
     template_variables: Annotated[Dict[str, str], PropertyInfo(alias="templateVariables")]
-    """Default template variables (can be overridden per contact)."""
+    """Default body variables (can be overridden per contact).
+
+    Keys are positions (1, 2, ...).
+    """
