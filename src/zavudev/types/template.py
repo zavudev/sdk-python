@@ -13,6 +13,12 @@ __all__ = ["Template", "Button", "Whatsapp"]
 
 
 class Button(BaseModel):
+    example: Optional[str] = None
+    """
+    Sample value used to substitute `{{1}}` in the URL when submitting the template
+    to Meta for review. Only present for dynamic URL buttons.
+    """
+
     otp_type: Optional[Literal["COPY_CODE", "ONE_TAP"]] = FieldInfo(alias="otpType", default=None)
     """OTP button type. Required when type is 'otp'."""
 

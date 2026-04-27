@@ -224,6 +224,7 @@ class TestMessages:
                         "title": "title",
                     }
                 ],
+                "template_button_variables": {"0": "abc-report-token"},
                 "template_id": "templateId",
                 "template_variables": {
                     "1": "John",
@@ -478,6 +479,7 @@ class TestAsyncMessages:
                         "title": "title",
                     }
                 ],
+                "template_button_variables": {"0": "abc-report-token"},
                 "template_id": "templateId",
                 "template_variables": {
                     "1": "John",
