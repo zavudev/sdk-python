@@ -24,8 +24,17 @@ class BroadcastContent(BaseModel):
     mime_type: Optional[str] = FieldInfo(alias="mimeType", default=None)
     """MIME type of the media."""
 
+    template_button_variables: Optional[Dict[str, str]] = FieldInfo(alias="templateButtonVariables", default=None)
+    """Default button variables for dynamic URL/OTP buttons.
+
+    Keys are the button index (0, 1, 2). Per-contact values override these.
+    """
+
     template_id: Optional[str] = FieldInfo(alias="templateId", default=None)
     """Template ID for template messages."""
 
     template_variables: Optional[Dict[str, str]] = FieldInfo(alias="templateVariables", default=None)
-    """Default template variables (can be overridden per contact)."""
+    """Default body variables (can be overridden per contact).
+
+    Keys are positions (1, 2, ...).
+    """

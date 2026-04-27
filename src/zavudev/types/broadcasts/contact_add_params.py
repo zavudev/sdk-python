@@ -19,5 +19,15 @@ class Contact(TypedDict, total=False):
     recipient: Required[str]
     """Phone number (E.164) or email address."""
 
+    template_button_variables: Annotated[Dict[str, str], PropertyInfo(alias="templateButtonVariables")]
+    """Per-contact button variables for dynamic URL/OTP buttons.
+
+    Keys are the button index (0, 1, 2).
+    """
+
     template_variables: Annotated[Dict[str, str], PropertyInfo(alias="templateVariables")]
-    """Per-contact template variables to personalize the message."""
+    """Per-contact body variables.
+
+    Keys are positions (1, 2, ...) matching the order placeholders appear in the
+    template body.
+    """

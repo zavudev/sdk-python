@@ -108,8 +108,26 @@ class MessageContentParam(TypedDict, total=False):
     sections: Iterable[Section]
     """Sections for list messages."""
 
+    template_button_variables: Annotated[Dict[str, str], PropertyInfo(alias="templateButtonVariables")]
+    """Variables for dynamic button placeholders (URL buttons and OTP buttons).
+
+    Keys are the button index (0, 1, 2) in the template's `buttons` array. Values
+    substitute the single placeholder allowed inside that button's URL.
+
+    **WhatsApp constraints:**
+
+    - Each URL button supports at most one placeholder, numeric (`{{1}}`) or named
+      (`{{order_id}}`).
+    - A template may have at most three buttons.
+    - Static URL buttons (no placeholder) are not included here.
+    """
+
     template_id: Annotated[str, PropertyInfo(alias="templateId")]
     """Template ID for template messages."""
 
     template_variables: Annotated[Dict[str, str], PropertyInfo(alias="templateVariables")]
-    """Variables for template rendering. Keys are variable positions (1, 2, 3...)."""
+    """Variables for body placeholders.
+
+    Keys are positions (1, 2, 3, ...) matching the order placeholders appear in the
+    template body.
+    """
