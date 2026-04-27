@@ -111,15 +111,19 @@ class MessageContentParam(TypedDict, total=False):
     template_button_variables: Annotated[Dict[str, str], PropertyInfo(alias="templateButtonVariables")]
     """Variables for dynamic button placeholders (URL buttons and OTP buttons).
 
-    Keys are the button index (0, 1, 2) in the template's `buttons` array. Values
-    substitute the single placeholder allowed inside that button's URL.
+    Keys are the button index (0, 1, 2) in the template's `buttons` array — not the
+    placeholder name. Values substitute the `{{1}}` placeholder inside that button's
+    URL.
 
     **WhatsApp constraints:**
 
-    - Each URL button supports at most one placeholder, numeric (`{{1}}`) or named
-      (`{{order_id}}`).
+    - URL buttons only accept `{{1}}` — positional, numeric, no whitespace, no name.
+      Named placeholders like `{{token}}` are stored as literal URL text by Meta and
+      cannot be substituted.
+    - At most one placeholder per URL button.
     - A template may have at most three buttons.
-    - Static URL buttons (no placeholder) are not included here.
+    - Static URL buttons (no placeholder) and `quick_reply` buttons are not included
+      here.
     """
 
     template_id: Annotated[str, PropertyInfo(alias="templateId")]
