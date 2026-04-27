@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.34.0 (2026-04-27)
+
+Full Changelog: [v0.33.0...v0.34.0](https://github.com/zavudev/sdk-python/compare/v0.33.0...v0.34.0)
+
+### Features
+
+* **api:** api update ([c9782e6](https://github.com/zavudev/sdk-python/commit/c9782e6b6e3ea612a6cf42abe433f8f7bd6ba1eb))
+* **api:** api update ([c38e224](https://github.com/zavudev/sdk-python/commit/c38e2246489d867ec382661458e37b19bffcce3f))
+* **api:** api update ([15886b1](https://github.com/zavudev/sdk-python/commit/15886b1370f8502faccfa7441efac74470cf38d8))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([ca04185](https://github.com/zavudev/sdk-python/commit/ca0418564c67e43c4b792c507449c6f90c0a1230))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([65a28db](https://github.com/zavudev/sdk-python/commit/65a28db7213f74fa63d3404a5c9e46b84d8a8959))
+
 ## 0.33.0 (2026-04-16)
 
 Full Changelog: [v0.32.0...v0.33.0](https://github.com/zavudev/sdk-python/compare/v0.32.0...v0.33.0)
