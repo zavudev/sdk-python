@@ -58,6 +58,13 @@ class Button(TypedDict, total=False):
 
     type: Required[Literal["quick_reply", "url", "phone", "otp"]]
 
+    example: str
+    """Sample value Meta uses to review templates with a dynamic URL button.
+
+    Substituted into `{{1}}` of the URL when the template is submitted to Meta. Only
+    meaningful when `url` contains `{{1}}`; ignored for static URLs.
+    """
+
     otp_type: Annotated[Literal["COPY_CODE", "ONE_TAP"], PropertyInfo(alias="otpType")]
     """Required when type is 'otp'.
 
@@ -73,3 +80,9 @@ class Button(TypedDict, total=False):
     """Android app signature hash. Required for ONE_TAP buttons."""
 
     url: str
+    """Button destination.
+
+    Use `{{1}}` exactly once for a dynamic URL (e.g.
+    `https://example.com/orders/{{1}}`); WhatsApp only accepts the strict `{{1}}`
+    form. Static URLs must not contain any `{{...}}` placeholder.
+    """
