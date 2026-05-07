@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.35.0 (2026-05-01)
+
+Full Changelog: [v0.34.0...v0.35.0](https://github.com/zavudev/sdk-python/compare/v0.34.0...v0.35.0)
+
+### Features
+
+* **api:** api update ([bd920b6](https://github.com/zavudev/sdk-python/commit/bd920b61c7a393f7b9a2a49efa0c272b449260be))
+* support setting headers via env ([69f9b7c](https://github.com/zavudev/sdk-python/commit/69f9b7c1c9a9465ea1ea57e5fcab3957741a3519))
+
+
+### Bug Fixes
+
+* use correct field name format for multipart file arrays ([49befde](https://github.com/zavudev/sdk-python/commit/49befded710a611882347a6fe7109b91e124d4ba))
+
+
+### Chores
+
+* **internal:** reformat pyproject.toml ([5559cf4](https://github.com/zavudev/sdk-python/commit/5559cf43b9a9c05b01e18aa99905e0d586b02da2))
+
 ## 0.34.0 (2026-04-27)
 
 Full Changelog: [v0.33.0...v0.34.0](https://github.com/zavudev/sdk-python/compare/v0.33.0...v0.34.0)

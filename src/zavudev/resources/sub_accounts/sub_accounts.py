@@ -80,7 +80,8 @@ class SubAccountsResource(SyncAPIResource):
 
         All charges are billed
         to the parent team's balance. Use creditLimit to set a spending cap. The
-        sub-account's API key is returned only in the creation response.
+        sub-account's API key is returned only in the creation response. Requires a
+        parent project API key; sub-account API keys receive HTTP 403.
 
         Args:
           name: Name of the sub-account.
@@ -126,8 +127,10 @@ class SubAccountsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SubAccountRetrieveResponse:
-        """
-        Get sub-account
+        """Get sub-account.
+
+        Requires a parent project API key; sub-account API keys receive
+        HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -164,8 +167,10 @@ class SubAccountsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SubAccountUpdateResponse:
-        """
-        Update sub-account
+        """Update sub-account.
+
+        Requires a parent project API key; sub-account API keys
+        receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -208,8 +213,10 @@ class SubAccountsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncCursor[SubAccount]:
-        """
-        List sub-accounts for this team.
+        """List sub-accounts for this team.
+
+        Requires a parent project API key; sub-account
+        API keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -253,7 +260,8 @@ class SubAccountsResource(SyncAPIResource):
         """Deactivate a sub-account.
 
         Remaining balance is returned to the parent team and
-        all API keys are revoked.
+        all API keys are revoked. Requires a parent project API key; sub-account API
+        keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -288,7 +296,8 @@ class SubAccountsResource(SyncAPIResource):
         """Get spending information for a sub-account.
 
         Returns the parent team's balance,
-        the sub-account's total spending, and its credit limit (spending cap).
+        the sub-account's total spending, and its credit limit (spending cap). Requires
+        a parent project API key; sub-account API keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -352,7 +361,8 @@ class AsyncSubAccountsResource(AsyncAPIResource):
 
         All charges are billed
         to the parent team's balance. Use creditLimit to set a spending cap. The
-        sub-account's API key is returned only in the creation response.
+        sub-account's API key is returned only in the creation response. Requires a
+        parent project API key; sub-account API keys receive HTTP 403.
 
         Args:
           name: Name of the sub-account.
@@ -398,8 +408,10 @@ class AsyncSubAccountsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SubAccountRetrieveResponse:
-        """
-        Get sub-account
+        """Get sub-account.
+
+        Requires a parent project API key; sub-account API keys receive
+        HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -436,8 +448,10 @@ class AsyncSubAccountsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SubAccountUpdateResponse:
-        """
-        Update sub-account
+        """Update sub-account.
+
+        Requires a parent project API key; sub-account API keys
+        receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -480,8 +494,10 @@ class AsyncSubAccountsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[SubAccount, AsyncCursor[SubAccount]]:
-        """
-        List sub-accounts for this team.
+        """List sub-accounts for this team.
+
+        Requires a parent project API key; sub-account
+        API keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -525,7 +541,8 @@ class AsyncSubAccountsResource(AsyncAPIResource):
         """Deactivate a sub-account.
 
         Remaining balance is returned to the parent team and
-        all API keys are revoked.
+        all API keys are revoked. Requires a parent project API key; sub-account API
+        keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -560,7 +577,8 @@ class AsyncSubAccountsResource(AsyncAPIResource):
         """Get spending information for a sub-account.
 
         Returns the parent team's balance,
-        the sub-account's total spending, and its credit limit (spending cap).
+        the sub-account's total spending, and its credit limit (spending cap). Requires
+        a parent project API key; sub-account API keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers

@@ -58,8 +58,10 @@ class APIKeysResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> APIKeyCreateResponse:
-        """
-        Create sub-account API key
+        """Create sub-account API key.
+
+        Requires a parent project API key; sub-account API
+        keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -99,8 +101,10 @@ class APIKeysResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> APIKeyListResponse:
-        """
-        List sub-account API keys
+        """List sub-account API keys.
+
+        Requires a parent project API key; sub-account API
+        keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -133,8 +137,10 @@ class APIKeysResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
-        """
-        Revoke sub-account API key
+        """Revoke sub-account API key.
+
+        Requires a parent project API key; sub-account API
+        keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -193,8 +199,10 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> APIKeyCreateResponse:
-        """
-        Create sub-account API key
+        """Create sub-account API key.
+
+        Requires a parent project API key; sub-account API
+        keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -234,8 +242,10 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> APIKeyListResponse:
-        """
-        List sub-account API keys
+        """List sub-account API keys.
+
+        Requires a parent project API key; sub-account API
+        keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
@@ -268,8 +278,10 @@ class AsyncAPIKeysResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
-        """
-        Revoke sub-account API key
+        """Revoke sub-account API key.
+
+        Requires a parent project API key; sub-account API
+        keys receive HTTP 403.
 
         Args:
           extra_headers: Send extra headers
