@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.36.0 (2026-05-13)
+
+Full Changelog: [v0.35.0...v0.36.0](https://github.com/zavudev/sdk-python/compare/v0.35.0...v0.36.0)
+
+### Features
+
+* **internal/types:** support eagerly validating pydantic iterators ([b4d1920](https://github.com/zavudev/sdk-python/commit/b4d19205aed4c54a4fba064469a789901c2765cb))
+
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([c8f74f2](https://github.com/zavudev/sdk-python/commit/c8f74f2b24c81d1f037d155f511ad8efb3b15d6a))
+
 ## 0.35.0 (2026-05-01)
 
 Full Changelog: [v0.34.0...v0.35.0](https://github.com/zavudev/sdk-python/compare/v0.34.0...v0.35.0)
