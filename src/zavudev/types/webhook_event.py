@@ -16,4 +16,6 @@ WebhookEvent: TypeAlias = Literal[
     "conversation.new",
     "template.status_changed",
     "invitation.status_changed",
+    "domain.verified",
+    "domain.failed",
 ]
