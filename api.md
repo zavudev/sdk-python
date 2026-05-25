@@ -10,6 +10,7 @@ from zavudev.types import (
     MessageResponse,
     MessageStatus,
     MessageType,
+    MessageShowTypingResponse,
 )
 ```
 
@@ -19,6 +20,7 @@ Methods:
 - <code title="get /v1/messages">client.messages.<a href="./src/zavudev/resources/messages.py">list</a>(\*\*<a href="src/zavudev/types/message_list_params.py">params</a>) -> <a href="./src/zavudev/types/message.py">SyncCursor[Message]</a></code>
 - <code title="post /v1/messages/{messageId}/reactions">client.messages.<a href="./src/zavudev/resources/messages.py">react</a>(message_id, \*\*<a href="src/zavudev/types/message_react_params.py">params</a>) -> <a href="./src/zavudev/types/message_response.py">MessageResponse</a></code>
 - <code title="post /v1/messages">client.messages.<a href="./src/zavudev/resources/messages.py">send</a>(\*\*<a href="src/zavudev/types/message_send_params.py">params</a>) -> <a href="./src/zavudev/types/message_response.py">MessageResponse</a></code>
+- <code title="post /v1/messages/{messageId}/typing">client.messages.<a href="./src/zavudev/resources/messages.py">show_typing</a>(message_id) -> <a href="./src/zavudev/types/message_show_typing_response.py">MessageShowTypingResponse</a></code>
 
 # Templates
 
@@ -91,8 +93,15 @@ Methods:
 
 ### Executions
 
+Types:
+
+```python
+from zavudev.types.senders.agent import ExecutionRetrieveResponse
+```
+
 Methods:
 
+- <code title="get /v1/senders/{senderId}/agent/executions/{executionId}">client.senders.agent.executions.<a href="./src/zavudev/resources/senders/agent/executions.py">retrieve</a>(execution_id, \*, sender_id) -> <a href="./src/zavudev/types/senders/agent/execution_retrieve_response.py">ExecutionRetrieveResponse</a></code>
 - <code title="get /v1/senders/{senderId}/agent/executions">client.senders.agent.executions.<a href="./src/zavudev/resources/senders/agent/executions.py">list</a>(sender_id, \*\*<a href="src/zavudev/types/senders/agent/execution_list_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent_execution.py">SyncCursor[AgentExecution]</a></code>
 
 ### Flows
@@ -215,6 +224,7 @@ Methods:
 - <code title="get /v1/contacts/{contactId}">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">retrieve</a>(contact_id) -> <a href="./src/zavudev/types/contact.py">Contact</a></code>
 - <code title="patch /v1/contacts/{contactId}">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">update</a>(contact_id, \*\*<a href="src/zavudev/types/contact_update_params.py">params</a>) -> <a href="./src/zavudev/types/contact.py">Contact</a></code>
 - <code title="get /v1/contacts">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">list</a>(\*\*<a href="src/zavudev/types/contact_list_params.py">params</a>) -> <a href="./src/zavudev/types/contact.py">SyncCursor[Contact]</a></code>
+- <code title="delete /v1/contacts/{contactId}">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">delete</a>(contact_id) -> None</code>
 - <code title="delete /v1/contacts/{contactId}/merge-suggestion">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">dismiss_merge_suggestion</a>(contact_id) -> None</code>
 - <code title="post /v1/contacts/{contactId}/merge">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">merge</a>(contact_id, \*\*<a href="src/zavudev/types/contact_merge_params.py">params</a>) -> <a href="./src/zavudev/types/contact.py">Contact</a></code>
 - <code title="get /v1/contacts/phone/{phoneNumber}">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">retrieve_by_phone</a>(phone_number) -> <a href="./src/zavudev/types/contact.py">Contact</a></code>
@@ -567,3 +577,55 @@ Methods:
 - <code title="get /v1/10dlc/campaigns/{campaignId}/phone-numbers">client.number_10dlc.campaigns.phone_numbers.<a href="./src/zavudev/resources/number_10dlc/campaigns/phone_numbers.py">list</a>(campaign_id) -> <a href="./src/zavudev/types/number_10dlc/campaigns/phone_number_list_response.py">PhoneNumberListResponse</a></code>
 - <code title="post /v1/10dlc/campaigns/{campaignId}/phone-numbers">client.number_10dlc.campaigns.phone_numbers.<a href="./src/zavudev/resources/number_10dlc/campaigns/phone_numbers.py">assign</a>(campaign_id, \*\*<a href="src/zavudev/types/number_10dlc/campaigns/phone_number_assign_params.py">params</a>) -> <a href="./src/zavudev/types/number_10dlc/campaigns/phone_number_assign_response.py">PhoneNumberAssignResponse</a></code>
 - <code title="delete /v1/10dlc/campaigns/{campaignId}/phone-numbers/{assignmentId}">client.number_10dlc.campaigns.phone_numbers.<a href="./src/zavudev/resources/number_10dlc/campaigns/phone_numbers.py">unassign</a>(assignment_id, \*, campaign_id) -> None</code>
+
+# Me
+
+Types:
+
+```python
+from zavudev.types import MeRetrieveResponse
+```
+
+Methods:
+
+- <code title="get /v1/me">client.me.<a href="./src/zavudev/resources/me.py">retrieve</a>() -> <a href="./src/zavudev/types/me_retrieve_response.py">MeRetrieveResponse</a></code>
+
+# Functions
+
+Types:
+
+```python
+from zavudev.types import (
+    FunctionCreateResponse,
+    FunctionRetrieveResponse,
+    FunctionUpdateResponse,
+    FunctionDeleteResponse,
+    FunctionDeployResponse,
+    FunctionGetDeploymentResponse,
+    FunctionTailLogsResponse,
+)
+```
+
+Methods:
+
+- <code title="post /v1/functions">client.functions.<a href="./src/zavudev/resources/functions/functions.py">create</a>(\*\*<a href="src/zavudev/types/function_create_params.py">params</a>) -> <a href="./src/zavudev/types/function_create_response.py">FunctionCreateResponse</a></code>
+- <code title="get /v1/functions/{functionId}">client.functions.<a href="./src/zavudev/resources/functions/functions.py">retrieve</a>(function_id) -> <a href="./src/zavudev/types/function_retrieve_response.py">FunctionRetrieveResponse</a></code>
+- <code title="patch /v1/functions/{functionId}">client.functions.<a href="./src/zavudev/resources/functions/functions.py">update</a>(function_id, \*\*<a href="src/zavudev/types/function_update_params.py">params</a>) -> <a href="./src/zavudev/types/function_update_response.py">FunctionUpdateResponse</a></code>
+- <code title="delete /v1/functions/{functionId}">client.functions.<a href="./src/zavudev/resources/functions/functions.py">delete</a>(function_id) -> <a href="./src/zavudev/types/function_delete_response.py">FunctionDeleteResponse</a></code>
+- <code title="post /v1/functions/{functionId}/deploy">client.functions.<a href="./src/zavudev/resources/functions/functions.py">deploy</a>(function_id, \*\*<a href="src/zavudev/types/function_deploy_params.py">params</a>) -> <a href="./src/zavudev/types/function_deploy_response.py">FunctionDeployResponse</a></code>
+- <code title="get /v1/functions/deployments/{deploymentId}">client.functions.<a href="./src/zavudev/resources/functions/functions.py">get_deployment</a>(deployment_id) -> <a href="./src/zavudev/types/function_get_deployment_response.py">FunctionGetDeploymentResponse</a></code>
+- <code title="get /v1/functions/{functionId}/logs">client.functions.<a href="./src/zavudev/resources/functions/functions.py">tail_logs</a>(function_id, \*\*<a href="src/zavudev/types/function_tail_logs_params.py">params</a>) -> <a href="./src/zavudev/types/function_tail_logs_response.py">FunctionTailLogsResponse</a></code>
+
+## Secrets
+
+Types:
+
+```python
+from zavudev.types.functions import SecretListResponse
+```
+
+Methods:
+
+- <code title="get /v1/functions/{functionId}/secrets">client.functions.secrets.<a href="./src/zavudev/resources/functions/secrets.py">list</a>(function_id) -> <a href="./src/zavudev/types/functions/secret_list_response.py">SecretListResponse</a></code>
+- <code title="put /v1/functions/{functionId}/secrets/{key}">client.functions.secrets.<a href="./src/zavudev/resources/functions/secrets.py">set</a>(key, \*, function_id, \*\*<a href="src/zavudev/types/functions/secret_set_params.py">params</a>) -> object</code>
+- <code title="delete /v1/functions/{functionId}/secrets/{key}">client.functions.secrets.<a href="./src/zavudev/resources/functions/secrets.py">unset</a>(key, \*, function_id) -> None</code>

@@ -12,6 +12,7 @@ from tests.utils import assert_matches_type
 from zavudev.types import (
     Message,
     MessageResponse,
+    MessageShowTypingResponse,
 )
 from zavudev.pagination import SyncCursor, AsyncCursor
 
@@ -270,6 +271,57 @@ class TestMessages:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_show_typing(self, client: Zavudev) -> None:
+        message = client.messages.show_typing(
+            message_id="messageId",
+        )
+        assert_matches_type(MessageShowTypingResponse, message, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_show_typing_with_all_params(self, client: Zavudev) -> None:
+        message = client.messages.show_typing(
+            message_id="messageId",
+            zavu_sender="sender_12345",
+        )
+        assert_matches_type(MessageShowTypingResponse, message, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_show_typing(self, client: Zavudev) -> None:
+        response = client.messages.with_raw_response.show_typing(
+            message_id="messageId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        message = response.parse()
+        assert_matches_type(MessageShowTypingResponse, message, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_show_typing(self, client: Zavudev) -> None:
+        with client.messages.with_streaming_response.show_typing(
+            message_id="messageId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            message = response.parse()
+            assert_matches_type(MessageShowTypingResponse, message, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_show_typing(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_id` but received ''"):
+            client.messages.with_raw_response.show_typing(
+                message_id="",
+            )
+
 
 class TestAsyncMessages:
     parametrize = pytest.mark.parametrize(
@@ -524,3 +576,54 @@ class TestAsyncMessages:
             assert_matches_type(MessageResponse, message, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_show_typing(self, async_client: AsyncZavudev) -> None:
+        message = await async_client.messages.show_typing(
+            message_id="messageId",
+        )
+        assert_matches_type(MessageShowTypingResponse, message, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_show_typing_with_all_params(self, async_client: AsyncZavudev) -> None:
+        message = await async_client.messages.show_typing(
+            message_id="messageId",
+            zavu_sender="sender_12345",
+        )
+        assert_matches_type(MessageShowTypingResponse, message, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_show_typing(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.messages.with_raw_response.show_typing(
+            message_id="messageId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        message = await response.parse()
+        assert_matches_type(MessageShowTypingResponse, message, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_show_typing(self, async_client: AsyncZavudev) -> None:
+        async with async_client.messages.with_streaming_response.show_typing(
+            message_id="messageId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            message = await response.parse()
+            assert_matches_type(MessageShowTypingResponse, message, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_show_typing(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_id` but received ''"):
+            await async_client.messages.with_raw_response.show_typing(
+                message_id="",
+            )
