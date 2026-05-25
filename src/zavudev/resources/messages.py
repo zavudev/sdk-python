@@ -32,6 +32,7 @@ from ..types.message_type import MessageType
 from ..types.message_status import MessageStatus
 from ..types.message_response import MessageResponse
 from ..types.message_content_param import MessageContentParam
+from ..types.message_show_typing_response import MessageShowTypingResponse
 
 __all__ = ["MessagesResource", "AsyncMessagesResource"]
 
@@ -293,6 +294,45 @@ class MessagesResource(SyncAPIResource):
             cast_to=MessageResponse,
         )
 
+    def show_typing(
+        self,
+        message_id: str,
+        *,
+        zavu_sender: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MessageShowTypingResponse:
+        """
+        Mark an inbound WhatsApp message as read and display a typing indicator to the
+        user while you prepare a response. The indicator is automatically dismissed when
+        you send a reply, or after 25 seconds — whichever comes first. Only valid for
+        inbound WhatsApp messages. Use this when a reply will take more than a couple of
+        seconds (LLM agent, tool call, lookup) to improve the recipient's experience.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not message_id:
+            raise ValueError(f"Expected a non-empty value for `message_id` but received {message_id!r}")
+        extra_headers = {**strip_not_given({"Zavu-Sender": zavu_sender}), **(extra_headers or {})}
+        return self._post(
+            path_template("/v1/messages/{message_id}/typing", message_id=message_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MessageShowTypingResponse,
+        )
+
 
 class AsyncMessagesResource(AsyncAPIResource):
     @cached_property
@@ -551,6 +591,45 @@ class AsyncMessagesResource(AsyncAPIResource):
             cast_to=MessageResponse,
         )
 
+    async def show_typing(
+        self,
+        message_id: str,
+        *,
+        zavu_sender: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MessageShowTypingResponse:
+        """
+        Mark an inbound WhatsApp message as read and display a typing indicator to the
+        user while you prepare a response. The indicator is automatically dismissed when
+        you send a reply, or after 25 seconds — whichever comes first. Only valid for
+        inbound WhatsApp messages. Use this when a reply will take more than a couple of
+        seconds (LLM agent, tool call, lookup) to improve the recipient's experience.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not message_id:
+            raise ValueError(f"Expected a non-empty value for `message_id` but received {message_id!r}")
+        extra_headers = {**strip_not_given({"Zavu-Sender": zavu_sender}), **(extra_headers or {})}
+        return await self._post(
+            path_template("/v1/messages/{message_id}/typing", message_id=message_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MessageShowTypingResponse,
+        )
+
 
 class MessagesResourceWithRawResponse:
     def __init__(self, messages: MessagesResource) -> None:
@@ -567,6 +646,9 @@ class MessagesResourceWithRawResponse:
         )
         self.send = to_raw_response_wrapper(
             messages.send,
+        )
+        self.show_typing = to_raw_response_wrapper(
+            messages.show_typing,
         )
 
 
@@ -586,6 +668,9 @@ class AsyncMessagesResourceWithRawResponse:
         self.send = async_to_raw_response_wrapper(
             messages.send,
         )
+        self.show_typing = async_to_raw_response_wrapper(
+            messages.show_typing,
+        )
 
 
 class MessagesResourceWithStreamingResponse:
@@ -604,6 +689,9 @@ class MessagesResourceWithStreamingResponse:
         self.send = to_streamed_response_wrapper(
             messages.send,
         )
+        self.show_typing = to_streamed_response_wrapper(
+            messages.show_typing,
+        )
 
 
 class AsyncMessagesResourceWithStreamingResponse:
@@ -621,4 +709,7 @@ class AsyncMessagesResourceWithStreamingResponse:
         )
         self.send = async_to_streamed_response_wrapper(
             messages.send,
+        )
+        self.show_typing = async_to_streamed_response_wrapper(
+            messages.show_typing,
         )

@@ -20,6 +20,7 @@ from ....types.senders import AgentExecutionStatus
 from ....types.senders.agent import execution_list_params
 from ....types.senders.agent_execution import AgentExecution
 from ....types.senders.agent_execution_status import AgentExecutionStatus
+from ....types.senders.agent.execution_retrieve_response import ExecutionRetrieveResponse
 
 __all__ = ["ExecutionsResource", "AsyncExecutionsResource"]
 
@@ -43,6 +44,47 @@ class ExecutionsResource(SyncAPIResource):
         For more information, see https://www.github.com/zavudev/sdk-python#with_streaming_response
         """
         return ExecutionsResourceWithStreamingResponse(self)
+
+    def retrieve(
+        self,
+        execution_id: str,
+        *,
+        sender_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExecutionRetrieveResponse:
+        """
+        Fetch full details for one execution — including `errorMessage`, `errorCode`,
+        and `responseText`. Use this to debug failures surfaced by the list endpoint.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        if not execution_id:
+            raise ValueError(f"Expected a non-empty value for `execution_id` but received {execution_id!r}")
+        return self._get(
+            path_template(
+                "/v1/senders/{sender_id}/agent/executions/{execution_id}",
+                sender_id=sender_id,
+                execution_id=execution_id,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ExecutionRetrieveResponse,
+        )
 
     def list(
         self,
@@ -115,6 +157,47 @@ class AsyncExecutionsResource(AsyncAPIResource):
         """
         return AsyncExecutionsResourceWithStreamingResponse(self)
 
+    async def retrieve(
+        self,
+        execution_id: str,
+        *,
+        sender_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ExecutionRetrieveResponse:
+        """
+        Fetch full details for one execution — including `errorMessage`, `errorCode`,
+        and `responseText`. Use this to debug failures surfaced by the list endpoint.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        if not execution_id:
+            raise ValueError(f"Expected a non-empty value for `execution_id` but received {execution_id!r}")
+        return await self._get(
+            path_template(
+                "/v1/senders/{sender_id}/agent/executions/{execution_id}",
+                sender_id=sender_id,
+                execution_id=execution_id,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ExecutionRetrieveResponse,
+        )
+
     def list(
         self,
         sender_id: str,
@@ -170,6 +253,9 @@ class ExecutionsResourceWithRawResponse:
     def __init__(self, executions: ExecutionsResource) -> None:
         self._executions = executions
 
+        self.retrieve = to_raw_response_wrapper(
+            executions.retrieve,
+        )
         self.list = to_raw_response_wrapper(
             executions.list,
         )
@@ -179,6 +265,9 @@ class AsyncExecutionsResourceWithRawResponse:
     def __init__(self, executions: AsyncExecutionsResource) -> None:
         self._executions = executions
 
+        self.retrieve = async_to_raw_response_wrapper(
+            executions.retrieve,
+        )
         self.list = async_to_raw_response_wrapper(
             executions.list,
         )
@@ -188,6 +277,9 @@ class ExecutionsResourceWithStreamingResponse:
     def __init__(self, executions: ExecutionsResource) -> None:
         self._executions = executions
 
+        self.retrieve = to_streamed_response_wrapper(
+            executions.retrieve,
+        )
         self.list = to_streamed_response_wrapper(
             executions.list,
         )
@@ -197,6 +289,9 @@ class AsyncExecutionsResourceWithStreamingResponse:
     def __init__(self, executions: AsyncExecutionsResource) -> None:
         self._executions = executions
 
+        self.retrieve = async_to_streamed_response_wrapper(
+            executions.retrieve,
+        )
         self.list = async_to_streamed_response_wrapper(
             executions.list,
         )

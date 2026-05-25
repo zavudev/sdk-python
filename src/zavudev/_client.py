@@ -36,6 +36,7 @@ from ._base_client import (
 
 if TYPE_CHECKING:
     from .resources import (
+        me,
         plan,
         urls,
         usage,
@@ -45,6 +46,7 @@ if TYPE_CHECKING:
         contacts,
         messages,
         addresses,
+        functions,
         templates,
         broadcasts,
         introspect,
@@ -54,6 +56,7 @@ if TYPE_CHECKING:
         phone_numbers,
         regulatory_documents,
     )
+    from .resources.me import MeResource, AsyncMeResource
     from .resources.plan import PlanResource, AsyncPlanResource
     from .resources.urls import URLsResource, AsyncURLsResource
     from .resources.usage import UsageResource, AsyncUsageResource
@@ -67,6 +70,7 @@ if TYPE_CHECKING:
     from .resources.phone_numbers import PhoneNumbersResource, AsyncPhoneNumbersResource
     from .resources.senders.senders import SendersResource, AsyncSendersResource
     from .resources.contacts.contacts import ContactsResource, AsyncContactsResource
+    from .resources.functions.functions import FunctionsResource, AsyncFunctionsResource
     from .resources.regulatory_documents import RegulatoryDocumentsResource, AsyncRegulatoryDocumentsResource
     from .resources.broadcasts.broadcasts import BroadcastsResource, AsyncBroadcastsResource
     from .resources.number_10dlc.number_10dlc import Number10dlcResource, AsyncNumber10dlcResource
@@ -240,6 +244,18 @@ class Zavudev(SyncAPIClient):
         from .resources.number_10dlc import Number10dlcResource
 
         return Number10dlcResource(self)
+
+    @cached_property
+    def me(self) -> MeResource:
+        from .resources.me import MeResource
+
+        return MeResource(self)
+
+    @cached_property
+    def functions(self) -> FunctionsResource:
+        from .resources.functions import FunctionsResource
+
+        return FunctionsResource(self)
 
     @cached_property
     def with_raw_response(self) -> ZavudevWithRawResponse:
@@ -521,6 +537,18 @@ class AsyncZavudev(AsyncAPIClient):
         return AsyncNumber10dlcResource(self)
 
     @cached_property
+    def me(self) -> AsyncMeResource:
+        from .resources.me import AsyncMeResource
+
+        return AsyncMeResource(self)
+
+    @cached_property
+    def functions(self) -> AsyncFunctionsResource:
+        from .resources.functions import AsyncFunctionsResource
+
+        return AsyncFunctionsResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncZavudevWithRawResponse:
         return AsyncZavudevWithRawResponse(self)
 
@@ -741,6 +769,18 @@ class ZavudevWithRawResponse:
 
         return Number10dlcResourceWithRawResponse(self._client.number_10dlc)
 
+    @cached_property
+    def me(self) -> me.MeResourceWithRawResponse:
+        from .resources.me import MeResourceWithRawResponse
+
+        return MeResourceWithRawResponse(self._client.me)
+
+    @cached_property
+    def functions(self) -> functions.FunctionsResourceWithRawResponse:
+        from .resources.functions import FunctionsResourceWithRawResponse
+
+        return FunctionsResourceWithRawResponse(self._client.functions)
+
 
 class AsyncZavudevWithRawResponse:
     _client: AsyncZavudev
@@ -849,6 +889,18 @@ class AsyncZavudevWithRawResponse:
         from .resources.number_10dlc import AsyncNumber10dlcResourceWithRawResponse
 
         return AsyncNumber10dlcResourceWithRawResponse(self._client.number_10dlc)
+
+    @cached_property
+    def me(self) -> me.AsyncMeResourceWithRawResponse:
+        from .resources.me import AsyncMeResourceWithRawResponse
+
+        return AsyncMeResourceWithRawResponse(self._client.me)
+
+    @cached_property
+    def functions(self) -> functions.AsyncFunctionsResourceWithRawResponse:
+        from .resources.functions import AsyncFunctionsResourceWithRawResponse
+
+        return AsyncFunctionsResourceWithRawResponse(self._client.functions)
 
 
 class ZavudevWithStreamedResponse:
@@ -959,6 +1011,18 @@ class ZavudevWithStreamedResponse:
 
         return Number10dlcResourceWithStreamingResponse(self._client.number_10dlc)
 
+    @cached_property
+    def me(self) -> me.MeResourceWithStreamingResponse:
+        from .resources.me import MeResourceWithStreamingResponse
+
+        return MeResourceWithStreamingResponse(self._client.me)
+
+    @cached_property
+    def functions(self) -> functions.FunctionsResourceWithStreamingResponse:
+        from .resources.functions import FunctionsResourceWithStreamingResponse
+
+        return FunctionsResourceWithStreamingResponse(self._client.functions)
+
 
 class AsyncZavudevWithStreamedResponse:
     _client: AsyncZavudev
@@ -1067,6 +1131,18 @@ class AsyncZavudevWithStreamedResponse:
         from .resources.number_10dlc import AsyncNumber10dlcResourceWithStreamingResponse
 
         return AsyncNumber10dlcResourceWithStreamingResponse(self._client.number_10dlc)
+
+    @cached_property
+    def me(self) -> me.AsyncMeResourceWithStreamingResponse:
+        from .resources.me import AsyncMeResourceWithStreamingResponse
+
+        return AsyncMeResourceWithStreamingResponse(self._client.me)
+
+    @cached_property
+    def functions(self) -> functions.AsyncFunctionsResourceWithStreamingResponse:
+        from .resources.functions import AsyncFunctionsResourceWithStreamingResponse
+
+        return AsyncFunctionsResourceWithStreamingResponse(self._client.functions)
 
 
 Client = Zavudev

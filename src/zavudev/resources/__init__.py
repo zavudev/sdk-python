@@ -1,5 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from .me import (
+    MeResource,
+    AsyncMeResource,
+    MeResourceWithRawResponse,
+    AsyncMeResourceWithRawResponse,
+    MeResourceWithStreamingResponse,
+    AsyncMeResourceWithStreamingResponse,
+)
 from .plan import (
     PlanResource,
     AsyncPlanResource,
@@ -71,6 +79,14 @@ from .addresses import (
     AsyncAddressesResourceWithRawResponse,
     AddressesResourceWithStreamingResponse,
     AsyncAddressesResourceWithStreamingResponse,
+)
+from .functions import (
+    FunctionsResource,
+    AsyncFunctionsResource,
+    FunctionsResourceWithRawResponse,
+    AsyncFunctionsResourceWithRawResponse,
+    FunctionsResourceWithStreamingResponse,
+    AsyncFunctionsResourceWithStreamingResponse,
 )
 from .templates import (
     TemplatesResource,
@@ -240,4 +256,16 @@ __all__ = [
     "AsyncNumber10dlcResourceWithRawResponse",
     "Number10dlcResourceWithStreamingResponse",
     "AsyncNumber10dlcResourceWithStreamingResponse",
+    "MeResource",
+    "AsyncMeResource",
+    "MeResourceWithRawResponse",
+    "AsyncMeResourceWithRawResponse",
+    "MeResourceWithStreamingResponse",
+    "AsyncMeResourceWithStreamingResponse",
+    "FunctionsResource",
+    "AsyncFunctionsResource",
+    "FunctionsResourceWithRawResponse",
+    "AsyncFunctionsResourceWithRawResponse",
+    "FunctionsResourceWithStreamingResponse",
+    "AsyncFunctionsResourceWithStreamingResponse",
 ]
