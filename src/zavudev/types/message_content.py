@@ -133,6 +133,8 @@ class MessageContent(BaseModel):
     template_variables: Optional[Dict[str, str]] = FieldInfo(alias="templateVariables", default=None)
     """Variables for body placeholders.
 
-    Keys are positions (1, 2, 3, ...) matching the order placeholders appear in the
-    template body.
+    Keys are either positions (`1`, `2`, ...) or the template's named variables
+    (e.g. `customer_name`). Named keys are matched to placeholders by their order of
+    first appearance in the template body and normalized to positional
+    automatically. Do not mix positional and named keys in the same request.
     """
