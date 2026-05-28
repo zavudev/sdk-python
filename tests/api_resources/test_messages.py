@@ -226,6 +226,7 @@ class TestMessages:
                     }
                 ],
                 "template_button_variables": {"0": "abc-report-token"},
+                "template_header_variables": {"1": "Jorge y Laura"},
                 "template_id": "templateId",
                 "template_variables": {
                     "1": "John",
@@ -532,6 +533,7 @@ class TestAsyncMessages:
                     }
                 ],
                 "template_button_variables": {"0": "abc-report-token"},
+                "template_header_variables": {"1": "Jorge y Laura"},
                 "template_id": "templateId",
                 "template_variables": {
                     "1": "John",
