@@ -37,4 +37,6 @@ class BroadcastContact(BaseModel):
 
     template_button_variables: Optional[Dict[str, str]] = FieldInfo(alias="templateButtonVariables", default=None)
 
+    template_header_variables: Optional[Dict[str, str]] = FieldInfo(alias="templateHeaderVariables", default=None)
+
     template_variables: Optional[Dict[str, str]] = FieldInfo(alias="templateVariables", default=None)

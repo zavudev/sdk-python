@@ -126,14 +126,23 @@ class MessageContentParam(TypedDict, total=False):
       here.
     """
 
+    template_header_variables: Annotated[Dict[str, str], PropertyInfo(alias="templateHeaderVariables")]
+    """
+    Value for a text-header variable, keyed by `1` (WhatsApp text headers allow at
+    most one variable). Optional override. If omitted, Zavu resolves the header from
+    `templateVariables` using the header placeholder's name (e.g. `novios`). Static
+    text headers need no value.
+    """
+
     template_id: Annotated[str, PropertyInfo(alias="templateId")]
     """Template ID for template messages."""
 
     template_variables: Annotated[Dict[str, str], PropertyInfo(alias="templateVariables")]
     """Variables for body placeholders.
 
-    Keys are either positions (`1`, `2`, ...) or the template's named variables
-    (e.g. `customer_name`). Named keys are matched to placeholders by their order of
-    first appearance in the template body and normalized to positional
-    automatically. Do not mix positional and named keys in the same request.
+    Key them to match the template body: by position (`1`, `2`, ...) for positional
+    templates, or by name (e.g. `customer_name`) for named templates. Zavu detects
+    the template's format and sends the correct payload to Meta. Named keys also
+    resolve a named text-header variable. Do not mix positional and named keys in
+    the same request.
     """
