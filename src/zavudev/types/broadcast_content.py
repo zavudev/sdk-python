@@ -30,11 +30,21 @@ class BroadcastContent(BaseModel):
     Keys are the button index (0, 1, 2). Per-contact values override these.
     """
 
+    template_header_variables: Optional[Dict[str, str]] = FieldInfo(alias="templateHeaderVariables", default=None)
+    """
+    Default value for a text-header variable, keyed by `1` (can be overridden per
+    contact). If omitted, Zavu resolves the header from `templateVariables` by the
+    header placeholder's name.
+    """
+
     template_id: Optional[str] = FieldInfo(alias="templateId", default=None)
     """Template ID for template messages."""
 
     template_variables: Optional[Dict[str, str]] = FieldInfo(alias="templateVariables", default=None)
     """Default body variables (can be overridden per contact).
 
-    Keys are positions (1, 2, ...).
+    Key them to match the template body: by position (`1`, `2`, ...) for positional
+    templates, or by name (e.g. `customer_name`) for named templates. Zavu detects
+    the template's format and sends the correct payload to Meta. Do not mix
+    positional and named keys.
     """
