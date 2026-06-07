@@ -105,6 +105,33 @@ class MessageContentParam(TypedDict, total=False):
     react_to_message_id: Annotated[str, PropertyInfo(alias="reactToMessageId")]
     """Message ID to react to."""
 
+    reply_to_from: Annotated[str, PropertyInfo(alias="replyToFrom")]
+    """Sender of the quoted message (phone number in E.164 format)."""
+
+    reply_to_message_id: Annotated[str, PropertyInfo(alias="replyToMessageId")]
+    """Zavu message ID of the quoted message this message replies to.
+
+    Present on inbound messages that quote an earlier message. Omitted when the
+    quoted message is not found in Zavu (e.g. an old or unknown message) — use
+    replyToProviderMessageId in that case.
+    """
+
+    reply_to_message_type: Annotated[str, PropertyInfo(alias="replyToMessageType")]
+    """Type of the quoted message (text, image, video, etc.)."""
+
+    reply_to_provider_message_id: Annotated[str, PropertyInfo(alias="replyToProviderMessageId")]
+    """Provider message ID (WhatsApp WAMID) of the quoted message.
+
+    Present whenever an inbound message is a reply, even if the quoted message is
+    not stored in Zavu.
+    """
+
+    reply_to_text: Annotated[str, PropertyInfo(alias="replyToText")]
+    """Truncated snippet of the quoted message's text, for display.
+
+    Empty when the quoted message has no text (e.g. media).
+    """
+
     sections: Iterable[Section]
     """Sections for list messages."""
 
