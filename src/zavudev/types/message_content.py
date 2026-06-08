@@ -106,6 +106,33 @@ class MessageContent(BaseModel):
     react_to_message_id: Optional[str] = FieldInfo(alias="reactToMessageId", default=None)
     """Message ID to react to."""
 
+    reply_to_from: Optional[str] = FieldInfo(alias="replyToFrom", default=None)
+    """Sender of the quoted message (phone number in E.164 format)."""
+
+    reply_to_message_id: Optional[str] = FieldInfo(alias="replyToMessageId", default=None)
+    """Zavu message ID of the quoted message this message replies to.
+
+    Present on inbound messages that quote an earlier message. Omitted when the
+    quoted message is not found in Zavu (e.g. an old or unknown message) — use
+    replyToProviderMessageId in that case.
+    """
+
+    reply_to_message_type: Optional[str] = FieldInfo(alias="replyToMessageType", default=None)
+    """Type of the quoted message (text, image, video, etc.)."""
+
+    reply_to_provider_message_id: Optional[str] = FieldInfo(alias="replyToProviderMessageId", default=None)
+    """Provider message ID (WhatsApp WAMID) of the quoted message.
+
+    Present whenever an inbound message is a reply, even if the quoted message is
+    not stored in Zavu.
+    """
+
+    reply_to_text: Optional[str] = FieldInfo(alias="replyToText", default=None)
+    """Truncated snippet of the quoted message's text, for display.
+
+    Empty when the quoted message has no text (e.g. media).
+    """
+
     sections: Optional[List[Section]] = None
     """Sections for list messages."""
 

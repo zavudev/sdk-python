@@ -213,6 +213,11 @@ class TestMessages:
                 "media_url": "https://example.com/image.jpg",
                 "mime_type": "image/jpeg",
                 "react_to_message_id": "reactToMessageId",
+                "reply_to_from": "replyToFrom",
+                "reply_to_message_id": "replyToMessageId",
+                "reply_to_message_type": "replyToMessageType",
+                "reply_to_provider_message_id": "replyToProviderMessageId",
+                "reply_to_text": "replyToText",
                 "sections": [
                     {
                         "rows": [
@@ -520,6 +525,11 @@ class TestAsyncMessages:
                 "media_url": "https://example.com/image.jpg",
                 "mime_type": "image/jpeg",
                 "react_to_message_id": "reactToMessageId",
+                "reply_to_from": "replyToFrom",
+                "reply_to_message_id": "replyToMessageId",
+                "reply_to_message_type": "replyToMessageType",
+                "reply_to_provider_message_id": "replyToProviderMessageId",
+                "reply_to_text": "replyToText",
                 "sections": [
                     {
                         "rows": [
