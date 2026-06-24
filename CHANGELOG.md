@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.41.0 (2026-06-24)
+
+Full Changelog: [v0.40.0...v0.41.0](https://github.com/zavudev/sdk-python/compare/v0.40.0...v0.41.0)
+
+### Features
+
+* **api:** api update ([160fcb5](https://github.com/zavudev/sdk-python/commit/160fcb56514ea3d0795bccd1b0e5a3c772b08b85))
+
 ## 0.40.0 (2026-06-07)
 
 Full Changelog: [v0.39.0...v0.40.0](https://github.com/zavudev/sdk-python/compare/v0.39.0...v0.40.0)
