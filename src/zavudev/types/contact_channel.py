@@ -30,7 +30,7 @@ class ContactChannel(BaseModel):
 
     id: str
 
-    channel: Literal["sms", "whatsapp", "email", "telegram", "voice"]
+    channel: Literal["sms", "whatsapp", "email", "telegram", "messenger", "voice"]
     """Channel type."""
 
     created_at: datetime = FieldInfo(alias="createdAt")

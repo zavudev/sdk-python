@@ -141,7 +141,8 @@ class ContactsResource(SyncAPIResource):
         self,
         contact_id: str,
         *,
-        default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email", "instagram", "voice"]] | Omit = omit,
+        default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email", "instagram", "messenger", "voice"]]
+        | Omit = omit,
         metadata: Dict[str, str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -484,7 +485,8 @@ class AsyncContactsResource(AsyncAPIResource):
         self,
         contact_id: str,
         *,
-        default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email", "instagram", "voice"]] | Omit = omit,
+        default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email", "instagram", "messenger", "voice"]]
+        | Omit = omit,
         metadata: Dict[str, str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

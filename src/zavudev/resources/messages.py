@@ -227,7 +227,7 @@ class MessagesResource(SyncAPIResource):
 
         Args:
           to: Recipient phone number in E.164 format, email address, or numeric chat ID (for
-              Telegram/Instagram).
+              Telegram/Instagram/Messenger).
 
           attachments: Email attachments. Only supported when channel is 'email'. Maximum 40MB total
               size.
@@ -524,7 +524,7 @@ class AsyncMessagesResource(AsyncAPIResource):
 
         Args:
           to: Recipient phone number in E.164 format, email address, or numeric chat ID (for
-              Telegram/Instagram).
+              Telegram/Instagram/Messenger).
 
           attachments: Email attachments. Only supported when channel is 'email'. Maximum 40MB total
               size.

@@ -30,8 +30,8 @@ class Contact(BaseModel):
 
     country_code: Optional[str] = FieldInfo(alias="countryCode", default=None)
 
-    default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email", "instagram", "voice"]] = FieldInfo(
-        alias="defaultChannel", default=None
+    default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email", "instagram", "messenger", "voice"]] = (
+        FieldInfo(alias="defaultChannel", default=None)
     )
     """Preferred channel for this contact."""
 
