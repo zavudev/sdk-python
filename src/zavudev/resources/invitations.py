@@ -54,6 +54,7 @@ class InvitationsResource(SyncAPIResource):
         client_email: str | Omit = omit,
         client_name: str | Omit = omit,
         client_phone: str | Omit = omit,
+        connection_type: Literal["whatsapp_waba", "whatsapp_alt"] | Omit = omit,
         expires_in_days: int | Omit = omit,
         phone_number_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -63,10 +64,20 @@ class InvitationsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> InvitationCreateResponse:
-        """
-        Create a partner invitation link for a client to connect their WhatsApp Business
-        account. The client will complete Meta's embedded signup flow and the resulting
-        sender will be created in your project.
+        """Create a partner invitation link for a client to connect WhatsApp.
+
+        The client
+        opens the returned `url` and connects. Set `connectionType` to choose how they
+        connect:
+
+        - `whatsapp_waba` (default): the client completes Meta's embedded signup,
+          linking an official WhatsApp Business Account.
+        - `whatsapp_alt`: the client links their number by scanning a QR code. Requires
+          the WhatsApp Alternative feature to be enabled for your team (otherwise
+          returns 400).
+
+        Either way, the resulting sender is created in your project when the client
+        completes the flow, and the invitation transitions to `completed`.
 
         Args:
           allowed_phone_countries: ISO country codes for allowed phone numbers.
@@ -76,6 +87,11 @@ class InvitationsResource(SyncAPIResource):
           client_name: Name of the client being invited.
 
           client_phone: Phone number of the client in E.164 format.
+
+          connection_type: How the client connects WhatsApp. `whatsapp_waba` (default) runs Meta's embedded
+              signup to link an official WhatsApp Business Account. `whatsapp_alt` links the
+              number by scanning a QR code — available only to teams with the WhatsApp
+              Alternative feature enabled.
 
           expires_in_days: Number of days until the invitation expires.
 
@@ -98,6 +114,7 @@ class InvitationsResource(SyncAPIResource):
                     "client_email": client_email,
                     "client_name": client_name,
                     "client_phone": client_phone,
+                    "connection_type": connection_type,
                     "expires_in_days": expires_in_days,
                     "phone_number_id": phone_number_id,
                 },
@@ -252,6 +269,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
         client_email: str | Omit = omit,
         client_name: str | Omit = omit,
         client_phone: str | Omit = omit,
+        connection_type: Literal["whatsapp_waba", "whatsapp_alt"] | Omit = omit,
         expires_in_days: int | Omit = omit,
         phone_number_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -261,10 +279,20 @@ class AsyncInvitationsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> InvitationCreateResponse:
-        """
-        Create a partner invitation link for a client to connect their WhatsApp Business
-        account. The client will complete Meta's embedded signup flow and the resulting
-        sender will be created in your project.
+        """Create a partner invitation link for a client to connect WhatsApp.
+
+        The client
+        opens the returned `url` and connects. Set `connectionType` to choose how they
+        connect:
+
+        - `whatsapp_waba` (default): the client completes Meta's embedded signup,
+          linking an official WhatsApp Business Account.
+        - `whatsapp_alt`: the client links their number by scanning a QR code. Requires
+          the WhatsApp Alternative feature to be enabled for your team (otherwise
+          returns 400).
+
+        Either way, the resulting sender is created in your project when the client
+        completes the flow, and the invitation transitions to `completed`.
 
         Args:
           allowed_phone_countries: ISO country codes for allowed phone numbers.
@@ -274,6 +302,11 @@ class AsyncInvitationsResource(AsyncAPIResource):
           client_name: Name of the client being invited.
 
           client_phone: Phone number of the client in E.164 format.
+
+          connection_type: How the client connects WhatsApp. `whatsapp_waba` (default) runs Meta's embedded
+              signup to link an official WhatsApp Business Account. `whatsapp_alt` links the
+              number by scanning a QR code — available only to teams with the WhatsApp
+              Alternative feature enabled.
 
           expires_in_days: Number of days until the invitation expires.
 
@@ -296,6 +329,7 @@ class AsyncInvitationsResource(AsyncAPIResource):
                     "client_email": client_email,
                     "client_name": client_name,
                     "client_phone": client_phone,
+                    "connection_type": connection_type,
                     "expires_in_days": expires_in_days,
                     "phone_number_id": phone_number_id,
                 },

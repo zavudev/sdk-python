@@ -37,6 +37,7 @@ class TestInvitations:
             client_email="contact@acme.com",
             client_name="Acme Corp",
             client_phone="+14155551234",
+            connection_type="whatsapp_waba",
             expires_in_days=1,
             phone_number_id="pn_abc123",
         )
@@ -206,6 +207,7 @@ class TestAsyncInvitations:
             client_email="contact@acme.com",
             client_name="Acme Corp",
             client_phone="+14155551234",
+            connection_type="whatsapp_waba",
             expires_in_days=1,
             phone_number_id="pn_abc123",
         )
