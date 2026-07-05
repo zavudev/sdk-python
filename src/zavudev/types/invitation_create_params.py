@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import Literal, Annotated, TypedDict
 
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
@@ -22,6 +22,14 @@ class InvitationCreateParams(TypedDict, total=False):
 
     client_phone: Annotated[str, PropertyInfo(alias="clientPhone")]
     """Phone number of the client in E.164 format."""
+
+    connection_type: Annotated[Literal["whatsapp_waba", "whatsapp_alt"], PropertyInfo(alias="connectionType")]
+    """How the client connects WhatsApp.
+
+    `whatsapp_waba` (default) runs Meta's embedded signup to link an official
+    WhatsApp Business Account. `whatsapp_alt` links the number by scanning a QR code
+    — available only to teams with the WhatsApp Alternative feature enabled.
+    """
 
     expires_in_days: Annotated[int, PropertyInfo(alias="expiresInDays")]
     """Number of days until the invitation expires."""
