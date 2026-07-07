@@ -12,5 +12,5 @@ class URLListVerifiedParams(TypedDict, total=False):
 
     limit: int
 
-    status: Literal["pending", "approved", "rejected", "malicious"]
+    status: Literal["pending", "approved", "rejected", "escalated", "malicious"]
     """Filter by verification status."""

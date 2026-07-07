@@ -41,13 +41,16 @@ class Message(BaseModel):
     """Content for non-text message types (WhatsApp and Telegram)."""
 
     cost: Optional[float] = None
-    """MAU cost in USD (charged for first contact of the month)."""
+    """Zavu platform charge in USD for this message.
+
+    Messaging is billed against your plan's monthly limits plus usage-based overage.
+    """
 
     cost_provider: Optional[float] = FieldInfo(alias="costProvider", default=None)
-    """Provider cost in USD (Telnyx, SES, etc.)."""
+    """Carrier and delivery cost in USD."""
 
     cost_total: Optional[float] = FieldInfo(alias="costTotal", default=None)
-    """Total cost in USD (MAU + provider cost)."""
+    """Total cost in USD (platform charge + delivery cost)."""
 
     error_code: Optional[str] = FieldInfo(alias="errorCode", default=None)
 

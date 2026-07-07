@@ -3,17 +3,11 @@
 from __future__ import annotations
 
 from typing import Dict, Iterable
+from typing_extensions import Literal
 
 import httpx
 
-from ..types import (
-    Channel,
-    MessageType,
-    MessageStatus,
-    message_list_params,
-    message_send_params,
-    message_react_params,
-)
+from ..types import Channel, MessageType, message_list_params, message_send_params, message_react_params
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from .._compat import cached_property
@@ -29,7 +23,6 @@ from .._base_client import AsyncPaginator, make_request_options
 from ..types.channel import Channel
 from ..types.message import Message
 from ..types.message_type import MessageType
-from ..types.message_status import MessageStatus
 from ..types.message_response import MessageResponse
 from ..types.message_content_param import MessageContentParam
 from ..types.message_show_typing_response import MessageShowTypingResponse
@@ -93,10 +86,11 @@ class MessagesResource(SyncAPIResource):
     def list(
         self,
         *,
-        channel: Channel | Omit = omit,
+        channel: Literal["sms", "sms_oneway", "whatsapp", "email", "telegram", "instagram", "messenger", "voice"]
+        | Omit = omit,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
-        status: MessageStatus | Omit = omit,
+        status: Literal["queued", "sending", "sent", "delivered", "failed", "received"] | Omit = omit,
         to: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -109,10 +103,9 @@ class MessagesResource(SyncAPIResource):
         List messages previously sent by this project.
 
         Args:
-          channel: Delivery channel. Use 'auto' for intelligent routing. `whatsapp_alt` is the
-              QR-linked WhatsApp channel and is only accepted for teams with the WhatsApp
-              Alternative feature enabled; the sender must have a connected whatsapp_alt
-              session.
+          channel: Filter by delivery channel.
+
+          status: Filter by status. Not all stored statuses are filterable.
 
           extra_headers: Send extra headers
 
@@ -396,10 +389,11 @@ class AsyncMessagesResource(AsyncAPIResource):
     def list(
         self,
         *,
-        channel: Channel | Omit = omit,
+        channel: Literal["sms", "sms_oneway", "whatsapp", "email", "telegram", "instagram", "messenger", "voice"]
+        | Omit = omit,
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
-        status: MessageStatus | Omit = omit,
+        status: Literal["queued", "sending", "sent", "delivered", "failed", "received"] | Omit = omit,
         to: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -412,10 +406,9 @@ class AsyncMessagesResource(AsyncAPIResource):
         List messages previously sent by this project.
 
         Args:
-          channel: Delivery channel. Use 'auto' for intelligent routing. `whatsapp_alt` is the
-              QR-linked WhatsApp channel and is only accepted for teams with the WhatsApp
-              Alternative feature enabled; the sender must have a connected whatsapp_alt
-              session.
+          channel: Filter by delivery channel.
+
+          status: Filter by status. Not all stored statuses are filterable.
 
           extra_headers: Send extra headers
 

@@ -24,7 +24,7 @@ class ContactCreateParams(TypedDict, total=False):
 class Channel(TypedDict, total=False):
     """Input for creating a contact channel."""
 
-    channel: Required[Literal["sms", "whatsapp", "email", "telegram", "messenger", "voice"]]
+    channel: Required[Literal["sms", "whatsapp", "email", "telegram", "instagram", "messenger", "voice"]]
     """Channel type."""
 
     identifier: Required[str]

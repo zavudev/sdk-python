@@ -37,11 +37,8 @@ from ._base_client import (
 if TYPE_CHECKING:
     from .resources import (
         me,
-        plan,
         urls,
-        usage,
         balance,
-        exports,
         senders,
         contacts,
         messages,
@@ -57,11 +54,8 @@ if TYPE_CHECKING:
         regulatory_documents,
     )
     from .resources.me import MeResource, AsyncMeResource
-    from .resources.plan import PlanResource, AsyncPlanResource
     from .resources.urls import URLsResource, AsyncURLsResource
-    from .resources.usage import UsageResource, AsyncUsageResource
     from .resources.balance import BalanceResource, AsyncBalanceResource
-    from .resources.exports import ExportsResource, AsyncExportsResource
     from .resources.messages import MessagesResource, AsyncMessagesResource
     from .resources.addresses import AddressesResource, AsyncAddressesResource
     from .resources.templates import TemplatesResource, AsyncTemplatesResource
@@ -204,12 +198,6 @@ class Zavudev(SyncAPIClient):
         return InvitationsResource(self)
 
     @cached_property
-    def exports(self) -> ExportsResource:
-        from .resources.exports import ExportsResource
-
-        return ExportsResource(self)
-
-    @cached_property
     def urls(self) -> URLsResource:
         from .resources.urls import URLsResource
 
@@ -220,18 +208,6 @@ class Zavudev(SyncAPIClient):
         from .resources.balance import BalanceResource
 
         return BalanceResource(self)
-
-    @cached_property
-    def plan(self) -> PlanResource:
-        from .resources.plan import PlanResource
-
-        return PlanResource(self)
-
-    @cached_property
-    def usage(self) -> UsageResource:
-        from .resources.usage import UsageResource
-
-        return UsageResource(self)
 
     @cached_property
     def sub_accounts(self) -> SubAccountsResource:
@@ -495,12 +471,6 @@ class AsyncZavudev(AsyncAPIClient):
         return AsyncInvitationsResource(self)
 
     @cached_property
-    def exports(self) -> AsyncExportsResource:
-        from .resources.exports import AsyncExportsResource
-
-        return AsyncExportsResource(self)
-
-    @cached_property
     def urls(self) -> AsyncURLsResource:
         from .resources.urls import AsyncURLsResource
 
@@ -511,18 +481,6 @@ class AsyncZavudev(AsyncAPIClient):
         from .resources.balance import AsyncBalanceResource
 
         return AsyncBalanceResource(self)
-
-    @cached_property
-    def plan(self) -> AsyncPlanResource:
-        from .resources.plan import AsyncPlanResource
-
-        return AsyncPlanResource(self)
-
-    @cached_property
-    def usage(self) -> AsyncUsageResource:
-        from .resources.usage import AsyncUsageResource
-
-        return AsyncUsageResource(self)
 
     @cached_property
     def sub_accounts(self) -> AsyncSubAccountsResource:
@@ -728,12 +686,6 @@ class ZavudevWithRawResponse:
         return InvitationsResourceWithRawResponse(self._client.invitations)
 
     @cached_property
-    def exports(self) -> exports.ExportsResourceWithRawResponse:
-        from .resources.exports import ExportsResourceWithRawResponse
-
-        return ExportsResourceWithRawResponse(self._client.exports)
-
-    @cached_property
     def urls(self) -> urls.URLsResourceWithRawResponse:
         from .resources.urls import URLsResourceWithRawResponse
 
@@ -744,18 +696,6 @@ class ZavudevWithRawResponse:
         from .resources.balance import BalanceResourceWithRawResponse
 
         return BalanceResourceWithRawResponse(self._client.balance)
-
-    @cached_property
-    def plan(self) -> plan.PlanResourceWithRawResponse:
-        from .resources.plan import PlanResourceWithRawResponse
-
-        return PlanResourceWithRawResponse(self._client.plan)
-
-    @cached_property
-    def usage(self) -> usage.UsageResourceWithRawResponse:
-        from .resources.usage import UsageResourceWithRawResponse
-
-        return UsageResourceWithRawResponse(self._client.usage)
 
     @cached_property
     def sub_accounts(self) -> sub_accounts.SubAccountsResourceWithRawResponse:
@@ -849,12 +789,6 @@ class AsyncZavudevWithRawResponse:
         return AsyncInvitationsResourceWithRawResponse(self._client.invitations)
 
     @cached_property
-    def exports(self) -> exports.AsyncExportsResourceWithRawResponse:
-        from .resources.exports import AsyncExportsResourceWithRawResponse
-
-        return AsyncExportsResourceWithRawResponse(self._client.exports)
-
-    @cached_property
     def urls(self) -> urls.AsyncURLsResourceWithRawResponse:
         from .resources.urls import AsyncURLsResourceWithRawResponse
 
@@ -865,18 +799,6 @@ class AsyncZavudevWithRawResponse:
         from .resources.balance import AsyncBalanceResourceWithRawResponse
 
         return AsyncBalanceResourceWithRawResponse(self._client.balance)
-
-    @cached_property
-    def plan(self) -> plan.AsyncPlanResourceWithRawResponse:
-        from .resources.plan import AsyncPlanResourceWithRawResponse
-
-        return AsyncPlanResourceWithRawResponse(self._client.plan)
-
-    @cached_property
-    def usage(self) -> usage.AsyncUsageResourceWithRawResponse:
-        from .resources.usage import AsyncUsageResourceWithRawResponse
-
-        return AsyncUsageResourceWithRawResponse(self._client.usage)
 
     @cached_property
     def sub_accounts(self) -> sub_accounts.AsyncSubAccountsResourceWithRawResponse:
@@ -970,12 +892,6 @@ class ZavudevWithStreamedResponse:
         return InvitationsResourceWithStreamingResponse(self._client.invitations)
 
     @cached_property
-    def exports(self) -> exports.ExportsResourceWithStreamingResponse:
-        from .resources.exports import ExportsResourceWithStreamingResponse
-
-        return ExportsResourceWithStreamingResponse(self._client.exports)
-
-    @cached_property
     def urls(self) -> urls.URLsResourceWithStreamingResponse:
         from .resources.urls import URLsResourceWithStreamingResponse
 
@@ -986,18 +902,6 @@ class ZavudevWithStreamedResponse:
         from .resources.balance import BalanceResourceWithStreamingResponse
 
         return BalanceResourceWithStreamingResponse(self._client.balance)
-
-    @cached_property
-    def plan(self) -> plan.PlanResourceWithStreamingResponse:
-        from .resources.plan import PlanResourceWithStreamingResponse
-
-        return PlanResourceWithStreamingResponse(self._client.plan)
-
-    @cached_property
-    def usage(self) -> usage.UsageResourceWithStreamingResponse:
-        from .resources.usage import UsageResourceWithStreamingResponse
-
-        return UsageResourceWithStreamingResponse(self._client.usage)
 
     @cached_property
     def sub_accounts(self) -> sub_accounts.SubAccountsResourceWithStreamingResponse:
@@ -1091,12 +995,6 @@ class AsyncZavudevWithStreamedResponse:
         return AsyncInvitationsResourceWithStreamingResponse(self._client.invitations)
 
     @cached_property
-    def exports(self) -> exports.AsyncExportsResourceWithStreamingResponse:
-        from .resources.exports import AsyncExportsResourceWithStreamingResponse
-
-        return AsyncExportsResourceWithStreamingResponse(self._client.exports)
-
-    @cached_property
     def urls(self) -> urls.AsyncURLsResourceWithStreamingResponse:
         from .resources.urls import AsyncURLsResourceWithStreamingResponse
 
@@ -1107,18 +1005,6 @@ class AsyncZavudevWithStreamedResponse:
         from .resources.balance import AsyncBalanceResourceWithStreamingResponse
 
         return AsyncBalanceResourceWithStreamingResponse(self._client.balance)
-
-    @cached_property
-    def plan(self) -> plan.AsyncPlanResourceWithStreamingResponse:
-        from .resources.plan import AsyncPlanResourceWithStreamingResponse
-
-        return AsyncPlanResourceWithStreamingResponse(self._client.plan)
-
-    @cached_property
-    def usage(self) -> usage.AsyncUsageResourceWithStreamingResponse:
-        from .resources.usage import AsyncUsageResourceWithStreamingResponse
-
-        return AsyncUsageResourceWithStreamingResponse(self._client.usage)
 
     @cached_property
     def sub_accounts(self) -> sub_accounts.AsyncSubAccountsResourceWithStreamingResponse:
