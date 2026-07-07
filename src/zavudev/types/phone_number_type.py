@@ -4,4 +4,4 @@ from typing_extensions import Literal, TypeAlias
 
 __all__ = ["PhoneNumberType"]
 
-PhoneNumberType: TypeAlias = Literal["local", "mobile", "tollFree"]
+PhoneNumberType: TypeAlias = Literal["local", "national", "tollFree"]

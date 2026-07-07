@@ -19,7 +19,7 @@ class VerifiedURL(BaseModel):
     domain: str
     """Domain extracted from the URL."""
 
-    status: Literal["pending", "approved", "rejected", "malicious"]
+    status: Literal["pending", "approved", "rejected", "escalated", "malicious"]
     """Status of a verified URL."""
 
     url: str

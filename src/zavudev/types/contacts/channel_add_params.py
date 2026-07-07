@@ -10,7 +10,7 @@ __all__ = ["ChannelAddParams"]
 
 
 class ChannelAddParams(TypedDict, total=False):
-    channel: Required[Literal["sms", "whatsapp", "email", "telegram", "messenger", "voice"]]
+    channel: Required[Literal["sms", "whatsapp", "email", "telegram", "instagram", "messenger", "voice"]]
     """Channel type."""
 
     identifier: Required[str]

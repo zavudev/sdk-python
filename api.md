@@ -404,20 +404,6 @@ Methods:
 - <code title="get /v1/invitations">client.invitations.<a href="./src/zavudev/resources/invitations.py">list</a>(\*\*<a href="src/zavudev/types/invitation_list_params.py">params</a>) -> <a href="./src/zavudev/types/invitation.py">SyncCursor[Invitation]</a></code>
 - <code title="post /v1/invitations/{invitationId}/cancel">client.invitations.<a href="./src/zavudev/resources/invitations.py">cancel</a>(invitation_id) -> <a href="./src/zavudev/types/invitation_cancel_response.py">InvitationCancelResponse</a></code>
 
-# Exports
-
-Types:
-
-```python
-from zavudev.types import DataExport, ExportCreateResponse, ExportRetrieveResponse
-```
-
-Methods:
-
-- <code title="post /v1/exports">client.exports.<a href="./src/zavudev/resources/exports.py">create</a>(\*\*<a href="src/zavudev/types/export_create_params.py">params</a>) -> <a href="./src/zavudev/types/export_create_response.py">ExportCreateResponse</a></code>
-- <code title="get /v1/exports/{exportId}">client.exports.<a href="./src/zavudev/resources/exports.py">retrieve</a>(export_id) -> <a href="./src/zavudev/types/export_retrieve_response.py">ExportRetrieveResponse</a></code>
-- <code title="get /v1/exports">client.exports.<a href="./src/zavudev/resources/exports.py">list</a>(\*\*<a href="src/zavudev/types/export_list_params.py">params</a>) -> <a href="./src/zavudev/types/data_export.py">SyncCursor[DataExport]</a></code>
-
 # URLs
 
 Types:
@@ -443,30 +429,6 @@ from zavudev.types import BalanceRetrieveResponse
 Methods:
 
 - <code title="get /v1/balance">client.balance.<a href="./src/zavudev/resources/balance.py">retrieve</a>() -> <a href="./src/zavudev/types/balance_retrieve_response.py">BalanceRetrieveResponse</a></code>
-
-# Plan
-
-Types:
-
-```python
-from zavudev.types import PlanRetrieveResponse
-```
-
-Methods:
-
-- <code title="get /v1/plan">client.plan.<a href="./src/zavudev/resources/plan.py">retrieve</a>() -> <a href="./src/zavudev/types/plan_retrieve_response.py">PlanRetrieveResponse</a></code>
-
-# Usage
-
-Types:
-
-```python
-from zavudev.types import UsageRetrieveResponse
-```
-
-Methods:
-
-- <code title="get /v1/usage">client.usage.<a href="./src/zavudev/resources/usage.py">retrieve</a>() -> <a href="./src/zavudev/types/usage_retrieve_response.py">UsageRetrieveResponse</a></code>
 
 # SubAccounts
 

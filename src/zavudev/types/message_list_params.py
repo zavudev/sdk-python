@@ -2,22 +2,20 @@
 
 from __future__ import annotations
 
-from typing_extensions import TypedDict
-
-from .channel import Channel
-from .message_status import MessageStatus
+from typing_extensions import Literal, TypedDict
 
 __all__ = ["MessageListParams"]
 
 
 class MessageListParams(TypedDict, total=False):
-    channel: Channel
-    """Delivery channel. Use 'auto' for intelligent routing."""
+    channel: Literal["sms", "sms_oneway", "whatsapp", "email", "telegram", "instagram", "messenger", "voice"]
+    """Filter by delivery channel."""
 
     cursor: str
 
     limit: int
 
-    status: MessageStatus
+    status: Literal["queued", "sending", "sent", "delivered", "failed", "received"]
+    """Filter by status. Not all stored statuses are filterable."""
 
     to: str
