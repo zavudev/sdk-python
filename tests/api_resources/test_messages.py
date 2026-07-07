@@ -74,7 +74,7 @@ class TestMessages:
     @parametrize
     def test_method_list_with_all_params(self, client: Zavudev) -> None:
         message = client.messages.list(
-            channel="auto",
+            channel="sms",
             cursor="cursor",
             limit=100,
             status="queued",
@@ -386,7 +386,7 @@ class TestAsyncMessages:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncZavudev) -> None:
         message = await async_client.messages.list(
-            channel="auto",
+            channel="sms",
             cursor="cursor",
             limit=100,
             status="queued",
