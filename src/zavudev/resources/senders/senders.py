@@ -86,7 +86,11 @@ class SendersResource(SyncAPIResource):
         self,
         *,
         name: str,
-        phone_number: str,
+        email_address: str | Omit = omit,
+        email_domain_id: str | Omit = omit,
+        email_from_name: str | Omit = omit,
+        email_receiving_enabled: bool | Omit = omit,
+        phone_number: str | Omit = omit,
         set_as_default: bool | Omit = omit,
         webhook_events: List[WebhookEvent] | Omit = omit,
         webhook_url: str | Omit = omit,
@@ -97,10 +101,26 @@ class SendersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Sender:
-        """
-        Create sender
+        """Create sender
 
         Args:
+          email_address: From-address for the email channel (e.g.
+
+        noreply@yourdomain.com). The address's
+              domain must be a verified email domain in your project. Setting this attaches
+              the email channel to the sender.
+
+          email_domain_id: ID of the verified email domain to attach. Optional — resolved from
+              `emailAddress`'s domain when omitted.
+
+          email_from_name: Display name shown in the recipient's inbox for the email channel.
+
+          email_receiving_enabled: Enable inbound email receiving on this sender. Requires a verified MX record on
+              the domain; ignored otherwise.
+
+          phone_number: Phone number in E.164 format. Required for phone-based channels (SMS, WhatsApp).
+              Omit for an email-only sender.
+
           webhook_events: Events to subscribe to.
 
           webhook_url: HTTPS URL for webhook events.
@@ -118,6 +138,10 @@ class SendersResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "name": name,
+                    "email_address": email_address,
+                    "email_domain_id": email_domain_id,
+                    "email_from_name": email_from_name,
+                    "email_receiving_enabled": email_receiving_enabled,
                     "phone_number": phone_number,
                     "set_as_default": set_as_default,
                     "webhook_events": webhook_events,
@@ -168,6 +192,10 @@ class SendersResource(SyncAPIResource):
         self,
         sender_id: str,
         *,
+        email_address: str | Omit = omit,
+        email_catch_all_enabled: bool | Omit = omit,
+        email_domain_id: str | Omit = omit,
+        email_from_name: str | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
@@ -185,6 +213,18 @@ class SendersResource(SyncAPIResource):
         Update sender
 
         Args:
+          email_address: Attach or change the sender's email from-address (e.g. noreply@yourdomain.com).
+              The domain must be a verified email domain in your project.
+
+          email_catch_all_enabled: Enable or disable domain catch-all. When enabled (with emailReceivingEnabled
+              true), this sender receives email for any address at its domain. Ignored
+              (treated as false) if receiving is not enabled.
+
+          email_domain_id: ID of the verified email domain to attach. Optional — resolved from
+              `emailAddress`'s domain when omitted.
+
+          email_from_name: Display name shown in the recipient's inbox for the email channel.
+
           email_receiving_enabled: Enable or disable inbound email receiving for this sender.
 
           webhook_active: Whether the webhook is active.
@@ -207,6 +247,10 @@ class SendersResource(SyncAPIResource):
             path_template("/v1/senders/{sender_id}", sender_id=sender_id),
             body=maybe_transform(
                 {
+                    "email_address": email_address,
+                    "email_catch_all_enabled": email_catch_all_enabled,
+                    "email_domain_id": email_domain_id,
+                    "email_from_name": email_from_name,
                     "email_receiving_enabled": email_receiving_enabled,
                     "name": name,
                     "set_as_default": set_as_default,
@@ -514,7 +558,11 @@ class AsyncSendersResource(AsyncAPIResource):
         self,
         *,
         name: str,
-        phone_number: str,
+        email_address: str | Omit = omit,
+        email_domain_id: str | Omit = omit,
+        email_from_name: str | Omit = omit,
+        email_receiving_enabled: bool | Omit = omit,
+        phone_number: str | Omit = omit,
         set_as_default: bool | Omit = omit,
         webhook_events: List[WebhookEvent] | Omit = omit,
         webhook_url: str | Omit = omit,
@@ -525,10 +573,26 @@ class AsyncSendersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Sender:
-        """
-        Create sender
+        """Create sender
 
         Args:
+          email_address: From-address for the email channel (e.g.
+
+        noreply@yourdomain.com). The address's
+              domain must be a verified email domain in your project. Setting this attaches
+              the email channel to the sender.
+
+          email_domain_id: ID of the verified email domain to attach. Optional — resolved from
+              `emailAddress`'s domain when omitted.
+
+          email_from_name: Display name shown in the recipient's inbox for the email channel.
+
+          email_receiving_enabled: Enable inbound email receiving on this sender. Requires a verified MX record on
+              the domain; ignored otherwise.
+
+          phone_number: Phone number in E.164 format. Required for phone-based channels (SMS, WhatsApp).
+              Omit for an email-only sender.
+
           webhook_events: Events to subscribe to.
 
           webhook_url: HTTPS URL for webhook events.
@@ -546,6 +610,10 @@ class AsyncSendersResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "name": name,
+                    "email_address": email_address,
+                    "email_domain_id": email_domain_id,
+                    "email_from_name": email_from_name,
+                    "email_receiving_enabled": email_receiving_enabled,
                     "phone_number": phone_number,
                     "set_as_default": set_as_default,
                     "webhook_events": webhook_events,
@@ -596,6 +664,10 @@ class AsyncSendersResource(AsyncAPIResource):
         self,
         sender_id: str,
         *,
+        email_address: str | Omit = omit,
+        email_catch_all_enabled: bool | Omit = omit,
+        email_domain_id: str | Omit = omit,
+        email_from_name: str | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
@@ -613,6 +685,18 @@ class AsyncSendersResource(AsyncAPIResource):
         Update sender
 
         Args:
+          email_address: Attach or change the sender's email from-address (e.g. noreply@yourdomain.com).
+              The domain must be a verified email domain in your project.
+
+          email_catch_all_enabled: Enable or disable domain catch-all. When enabled (with emailReceivingEnabled
+              true), this sender receives email for any address at its domain. Ignored
+              (treated as false) if receiving is not enabled.
+
+          email_domain_id: ID of the verified email domain to attach. Optional — resolved from
+              `emailAddress`'s domain when omitted.
+
+          email_from_name: Display name shown in the recipient's inbox for the email channel.
+
           email_receiving_enabled: Enable or disable inbound email receiving for this sender.
 
           webhook_active: Whether the webhook is active.
@@ -635,6 +719,10 @@ class AsyncSendersResource(AsyncAPIResource):
             path_template("/v1/senders/{sender_id}", sender_id=sender_id),
             body=await async_maybe_transform(
                 {
+                    "email_address": email_address,
+                    "email_catch_all_enabled": email_catch_all_enabled,
+                    "email_domain_id": email_domain_id,
+                    "email_from_name": email_from_name,
                     "email_receiving_enabled": email_receiving_enabled,
                     "name": name,
                     "set_as_default": set_as_default,

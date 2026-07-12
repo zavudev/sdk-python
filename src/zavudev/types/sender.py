@@ -50,6 +50,17 @@ class Sender(BaseModel):
 
     created_at: Optional[datetime] = FieldInfo(alias="createdAt", default=None)
 
+    email_address: Optional[str] = FieldInfo(alias="emailAddress", default=None)
+    """From-address for the email channel, if configured."""
+
+    email_catch_all_enabled: Optional[bool] = FieldInfo(alias="emailCatchAllEnabled", default=None)
+    """Whether catch-all receiving is enabled.
+
+    When true (and emailReceivingEnabled is true), this sender receives email
+    addressed to any local part at its domain, not just its own address. The
+    original recipient is delivered in the message.inbound webhook's data.to.
+    """
+
     email_receiving_enabled: Optional[bool] = FieldInfo(alias="emailReceivingEnabled", default=None)
     """Whether inbound email receiving is enabled for this sender."""
 
