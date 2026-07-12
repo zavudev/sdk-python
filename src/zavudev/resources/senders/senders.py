@@ -168,6 +168,7 @@ class SendersResource(SyncAPIResource):
         self,
         sender_id: str,
         *,
+        email_catch_all_enabled: bool | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
@@ -185,6 +186,10 @@ class SendersResource(SyncAPIResource):
         Update sender
 
         Args:
+          email_catch_all_enabled: Enable or disable domain catch-all. When enabled (with emailReceivingEnabled
+              true), this sender receives email for any address at its domain. Ignored
+              (treated as false) if receiving is not enabled.
+
           email_receiving_enabled: Enable or disable inbound email receiving for this sender.
 
           webhook_active: Whether the webhook is active.
@@ -207,6 +212,7 @@ class SendersResource(SyncAPIResource):
             path_template("/v1/senders/{sender_id}", sender_id=sender_id),
             body=maybe_transform(
                 {
+                    "email_catch_all_enabled": email_catch_all_enabled,
                     "email_receiving_enabled": email_receiving_enabled,
                     "name": name,
                     "set_as_default": set_as_default,
@@ -596,6 +602,7 @@ class AsyncSendersResource(AsyncAPIResource):
         self,
         sender_id: str,
         *,
+        email_catch_all_enabled: bool | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
@@ -613,6 +620,10 @@ class AsyncSendersResource(AsyncAPIResource):
         Update sender
 
         Args:
+          email_catch_all_enabled: Enable or disable domain catch-all. When enabled (with emailReceivingEnabled
+              true), this sender receives email for any address at its domain. Ignored
+              (treated as false) if receiving is not enabled.
+
           email_receiving_enabled: Enable or disable inbound email receiving for this sender.
 
           webhook_active: Whether the webhook is active.
@@ -635,6 +646,7 @@ class AsyncSendersResource(AsyncAPIResource):
             path_template("/v1/senders/{sender_id}", sender_id=sender_id),
             body=await async_maybe_transform(
                 {
+                    "email_catch_all_enabled": email_catch_all_enabled,
                     "email_receiving_enabled": email_receiving_enabled,
                     "name": name,
                     "set_as_default": set_as_default,

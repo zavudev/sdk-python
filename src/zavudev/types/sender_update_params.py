@@ -12,6 +12,14 @@ __all__ = ["SenderUpdateParams"]
 
 
 class SenderUpdateParams(TypedDict, total=False):
+    email_catch_all_enabled: Annotated[bool, PropertyInfo(alias="emailCatchAllEnabled")]
+    """Enable or disable domain catch-all.
+
+    When enabled (with emailReceivingEnabled true), this sender receives email for
+    any address at its domain. Ignored (treated as false) if receiving is not
+    enabled.
+    """
+
     email_receiving_enabled: Annotated[bool, PropertyInfo(alias="emailReceivingEnabled")]
     """Enable or disable inbound email receiving for this sender."""
 
