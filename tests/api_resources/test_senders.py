@@ -29,7 +29,6 @@ class TestSenders:
     def test_method_create(self, client: Zavudev) -> None:
         sender = client.senders.create(
             name="name",
-            phone_number="phoneNumber",
         )
         assert_matches_type(Sender, sender, path=["response"])
 
@@ -38,6 +37,10 @@ class TestSenders:
     def test_method_create_with_all_params(self, client: Zavudev) -> None:
         sender = client.senders.create(
             name="name",
+            email_address="noreply@yourdomain.com",
+            email_domain_id="emailDomainId",
+            email_from_name="emailFromName",
+            email_receiving_enabled=True,
             phone_number="phoneNumber",
             set_as_default=True,
             webhook_events=["message.queued"],
@@ -50,7 +53,6 @@ class TestSenders:
     def test_raw_response_create(self, client: Zavudev) -> None:
         response = client.senders.with_raw_response.create(
             name="name",
-            phone_number="phoneNumber",
         )
 
         assert response.is_closed is True
@@ -63,7 +65,6 @@ class TestSenders:
     def test_streaming_response_create(self, client: Zavudev) -> None:
         with client.senders.with_streaming_response.create(
             name="name",
-            phone_number="phoneNumber",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -128,7 +129,10 @@ class TestSenders:
     def test_method_update_with_all_params(self, client: Zavudev) -> None:
         sender = client.senders.update(
             sender_id="senderId",
+            email_address="noreply@yourdomain.com",
             email_catch_all_enabled=True,
+            email_domain_id="emailDomainId",
+            email_from_name="emailFromName",
             email_receiving_enabled=True,
             name="name",
             set_as_default=True,
@@ -452,7 +456,6 @@ class TestAsyncSenders:
     async def test_method_create(self, async_client: AsyncZavudev) -> None:
         sender = await async_client.senders.create(
             name="name",
-            phone_number="phoneNumber",
         )
         assert_matches_type(Sender, sender, path=["response"])
 
@@ -461,6 +464,10 @@ class TestAsyncSenders:
     async def test_method_create_with_all_params(self, async_client: AsyncZavudev) -> None:
         sender = await async_client.senders.create(
             name="name",
+            email_address="noreply@yourdomain.com",
+            email_domain_id="emailDomainId",
+            email_from_name="emailFromName",
+            email_receiving_enabled=True,
             phone_number="phoneNumber",
             set_as_default=True,
             webhook_events=["message.queued"],
@@ -473,7 +480,6 @@ class TestAsyncSenders:
     async def test_raw_response_create(self, async_client: AsyncZavudev) -> None:
         response = await async_client.senders.with_raw_response.create(
             name="name",
-            phone_number="phoneNumber",
         )
 
         assert response.is_closed is True
@@ -486,7 +492,6 @@ class TestAsyncSenders:
     async def test_streaming_response_create(self, async_client: AsyncZavudev) -> None:
         async with async_client.senders.with_streaming_response.create(
             name="name",
-            phone_number="phoneNumber",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -551,7 +556,10 @@ class TestAsyncSenders:
     async def test_method_update_with_all_params(self, async_client: AsyncZavudev) -> None:
         sender = await async_client.senders.update(
             sender_id="senderId",
+            email_address="noreply@yourdomain.com",
             email_catch_all_enabled=True,
+            email_domain_id="emailDomainId",
+            email_from_name="emailFromName",
             email_receiving_enabled=True,
             name="name",
             set_as_default=True,

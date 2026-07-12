@@ -50,6 +50,9 @@ class Sender(BaseModel):
 
     created_at: Optional[datetime] = FieldInfo(alias="createdAt", default=None)
 
+    email_address: Optional[str] = FieldInfo(alias="emailAddress", default=None)
+    """From-address for the email channel, if configured."""
+
     email_catch_all_enabled: Optional[bool] = FieldInfo(alias="emailCatchAllEnabled", default=None)
     """Whether catch-all receiving is enabled.
 
