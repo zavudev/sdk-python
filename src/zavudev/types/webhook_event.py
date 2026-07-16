@@ -11,6 +11,7 @@ WebhookEvent: TypeAlias = Literal[
     "message.read",
     "message.failed",
     "message.inbound",
+    "message.status",
     "message.unsupported",
     "broadcast.status_changed",
     "conversation.new",
