@@ -40,6 +40,14 @@ class Message(BaseModel):
     content: Optional[MessageContent] = None
     """Content for non-text message types (WhatsApp and Telegram)."""
 
+    conversation_id: Optional[str] = FieldInfo(alias="conversationId", default=None)
+    """ID of the conversation (inbox thread) this message belongs to.
+
+    Use it to build a direct dashboard link:
+    `https://dashboard.zavu.dev/{locale}/inbox?conv={conversationId}`. Omitted only
+    on legacy messages created before conversation threading.
+    """
+
     cost: Optional[float] = None
     """Zavu platform charge in USD for this message.
 
