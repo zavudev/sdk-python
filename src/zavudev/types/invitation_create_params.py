@@ -23,12 +23,11 @@ class InvitationCreateParams(TypedDict, total=False):
     client_phone: Annotated[str, PropertyInfo(alias="clientPhone")]
     """Phone number of the client in E.164 format."""
 
-    connection_type: Annotated[Literal["whatsapp_waba", "whatsapp_alt"], PropertyInfo(alias="connectionType")]
+    connection_type: Annotated[Literal["whatsapp_waba"], PropertyInfo(alias="connectionType")]
     """How the client connects WhatsApp.
 
     `whatsapp_waba` (default) runs Meta's embedded signup to link an official
-    WhatsApp Business Account. `whatsapp_alt` links the number by scanning a QR code
-    — available only to teams with the WhatsApp Alternative feature enabled.
+    WhatsApp Business Account.
     """
 
     expires_in_days: Annotated[int, PropertyInfo(alias="expiresInDays")]

@@ -18,12 +18,7 @@ class Message(BaseModel):
     id: str
 
     channel: Channel
-    """Delivery channel.
-
-    Use 'auto' for intelligent routing. `whatsapp_alt` is the QR-linked WhatsApp
-    channel and is only accepted for teams with the WhatsApp Alternative feature
-    enabled; the sender must have a connected whatsapp_alt session.
-    """
+    """Delivery channel. Use 'auto' for intelligent routing."""
 
     created_at: datetime = FieldInfo(alias="createdAt")
 

@@ -37,12 +37,10 @@ class Invitation(BaseModel):
 
     completed_at: Optional[datetime] = FieldInfo(alias="completedAt", default=None)
 
-    connection_type: Optional[Literal["whatsapp_waba", "whatsapp_alt"]] = FieldInfo(
-        alias="connectionType", default=None
-    )
+    connection_type: Optional[Literal["whatsapp_waba"]] = FieldInfo(alias="connectionType", default=None)
     """
     How the client connects WhatsApp: `whatsapp_waba` (official Cloud API via
-    embedded signup) or `whatsapp_alt` (QR-linked).
+    embedded signup).
     """
 
     phone_number_id: Optional[str] = FieldInfo(alias="phoneNumberId", default=None)
