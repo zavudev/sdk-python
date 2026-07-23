@@ -221,6 +221,17 @@ class MessagesResource(SyncAPIResource):
         - Unverified accounts: 200 messages per channel per day
         - Complete KYC verification to increase limits to 10,000/day
 
+        **Email recipient pre-flight:** Email messages are validated automatically
+        before dispatch. Sends that would be a guaranteed hard bounce are failed instead
+        of sent, protecting your bounce rate: the message transitions to `failed`
+        (visible via `GET /v1/messages/{messageId}` and the `message.failed` webhook)
+        with `errorCode` set to `EMAIL_INVALID_RECIPIENT` (malformed address),
+        `EMAIL_DOMAIN_NOT_FOUND` (recipient domain has no MX or A records), or
+        `EMAIL_RECIPIENT_SUPPRESSED` (address is on your suppression list after a
+        previous bounce or complaint). Advisory signals (role addresses, disposable
+        domains) do not block sends — check them beforehand with
+        `POST /v1/introspect/email`.
+
         Args:
           to: Recipient phone number in E.164 format, email address, WhatsApp business-scoped
               user ID (BSUID, e.g. `US.13491208655302741918`), WhatsApp group JID
@@ -526,6 +537,17 @@ class AsyncMessagesResource(AsyncAPIResource):
 
         - Unverified accounts: 200 messages per channel per day
         - Complete KYC verification to increase limits to 10,000/day
+
+        **Email recipient pre-flight:** Email messages are validated automatically
+        before dispatch. Sends that would be a guaranteed hard bounce are failed instead
+        of sent, protecting your bounce rate: the message transitions to `failed`
+        (visible via `GET /v1/messages/{messageId}` and the `message.failed` webhook)
+        with `errorCode` set to `EMAIL_INVALID_RECIPIENT` (malformed address),
+        `EMAIL_DOMAIN_NOT_FOUND` (recipient domain has no MX or A records), or
+        `EMAIL_RECIPIENT_SUPPRESSED` (address is on your suppression list after a
+        previous bounce or complaint). Advisory signals (role addresses, disposable
+        domains) do not block sends — check them beforehand with
+        `POST /v1/introspect/email`.
 
         Args:
           to: Recipient phone number in E.164 format, email address, WhatsApp business-scoped
