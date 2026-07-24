@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.46.0 (2026-07-23)
+
+Full Changelog: [v0.45.0...v0.46.0](https://github.com/zavudev/sdk-python/compare/v0.45.0...v0.46.0)
+
+### Features
+
+* **api:** api update ([7ea146c](https://github.com/zavudev/sdk-python/commit/7ea146c1917acabea3b9310b82489937100db013))
+* **api:** api update ([fca9234](https://github.com/zavudev/sdk-python/commit/fca92347b94c2bc00708c379b820a1d192c56d63))
+* **api:** api update ([1c0c9a1](https://github.com/zavudev/sdk-python/commit/1c0c9a12601697b446d19d17d7e5f48b68950e59))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([c3f6e21](https://github.com/zavudev/sdk-python/commit/c3f6e21a3eb053defc91b4bbbb4017871d0f1b50))
+
 ## 0.45.0 (2026-07-15)
 
 Full Changelog: [v0.44.0...v0.45.0](https://github.com/zavudev/sdk-python/compare/v0.44.0...v0.45.0)
