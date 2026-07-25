@@ -45,6 +45,25 @@ class TestAgent:
             temperature=0,
             trigger_on_channels=["string"],
             trigger_on_message_types=["string"],
+            voice={
+                "enabled": True,
+                "greeting": "Hi, thanks for calling Acme. How can I help you today?",
+                "greetings": {"es": "Hola, soy Atlas. Preguntame lo que quieras."},
+                "interruptible": True,
+                "language": "en",
+                "max_call_duration_minutes": 1,
+                "max_idle_seconds": 5,
+                "model": "openai/gpt-4o",
+                "record_calls": True,
+                "stt_model": "sttModel",
+                "stt_provider": "sttProvider",
+                "transfer_phone_number": "+14155551234",
+                "tts_provider": "ttsProvider",
+                "tts_voice_id": "aria",
+                "voicemail_action": "hangup",
+                "voicemail_message": "voicemailMessage",
+                "voice_speed": 0.5,
+            },
         )
         assert_matches_type(AgentResponse, agent, path=["response"])
 
@@ -161,6 +180,25 @@ class TestAgent:
             temperature=0,
             trigger_on_channels=["string"],
             trigger_on_message_types=["string"],
+            voice={
+                "enabled": True,
+                "greeting": "Hi, thanks for calling Acme. How can I help you today?",
+                "greetings": {"es": "Hola, soy Atlas. Preguntame lo que quieras."},
+                "interruptible": True,
+                "language": "en",
+                "max_call_duration_minutes": 1,
+                "max_idle_seconds": 5,
+                "model": "openai/gpt-4o",
+                "record_calls": True,
+                "stt_model": "sttModel",
+                "stt_provider": "sttProvider",
+                "transfer_phone_number": "+14155551234",
+                "tts_provider": "ttsProvider",
+                "tts_voice_id": "aria",
+                "voicemail_action": "hangup",
+                "voicemail_message": "voicemailMessage",
+                "voice_speed": 0.5,
+            },
         )
         assert_matches_type(AgentResponse, agent, path=["response"])
 
@@ -316,6 +354,25 @@ class TestAsyncAgent:
             temperature=0,
             trigger_on_channels=["string"],
             trigger_on_message_types=["string"],
+            voice={
+                "enabled": True,
+                "greeting": "Hi, thanks for calling Acme. How can I help you today?",
+                "greetings": {"es": "Hola, soy Atlas. Preguntame lo que quieras."},
+                "interruptible": True,
+                "language": "en",
+                "max_call_duration_minutes": 1,
+                "max_idle_seconds": 5,
+                "model": "openai/gpt-4o",
+                "record_calls": True,
+                "stt_model": "sttModel",
+                "stt_provider": "sttProvider",
+                "transfer_phone_number": "+14155551234",
+                "tts_provider": "ttsProvider",
+                "tts_voice_id": "aria",
+                "voicemail_action": "hangup",
+                "voicemail_message": "voicemailMessage",
+                "voice_speed": 0.5,
+            },
         )
         assert_matches_type(AgentResponse, agent, path=["response"])
 
@@ -432,6 +489,25 @@ class TestAsyncAgent:
             temperature=0,
             trigger_on_channels=["string"],
             trigger_on_message_types=["string"],
+            voice={
+                "enabled": True,
+                "greeting": "Hi, thanks for calling Acme. How can I help you today?",
+                "greetings": {"es": "Hola, soy Atlas. Preguntame lo que quieras."},
+                "interruptible": True,
+                "language": "en",
+                "max_call_duration_minutes": 1,
+                "max_idle_seconds": 5,
+                "model": "openai/gpt-4o",
+                "record_calls": True,
+                "stt_model": "sttModel",
+                "stt_provider": "sttProvider",
+                "transfer_phone_number": "+14155551234",
+                "tts_provider": "ttsProvider",
+                "tts_voice_id": "aria",
+                "voicemail_action": "hangup",
+                "voicemail_message": "voicemailMessage",
+                "voice_speed": 0.5,
+            },
         )
         assert_matches_type(AgentResponse, agent, path=["response"])
 

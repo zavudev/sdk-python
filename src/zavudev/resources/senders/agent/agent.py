@@ -108,6 +108,7 @@ class AgentResource(SyncAPIResource):
         temperature: float | Omit = omit,
         trigger_on_channels: SequenceNotStr[str] | Omit = omit,
         trigger_on_message_types: SequenceNotStr[str] | Omit = omit,
+        voice: agent_create_params.Voice | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -123,6 +124,10 @@ class AgentResource(SyncAPIResource):
           provider: LLM provider for the AI agent.
 
           api_key: API key for the LLM provider. Required unless provider is 'zavu'.
+
+          voice: Voice Agent configuration. Enable this to let the agent answer and place phone
+              calls with Zavu's managed voice pipeline. Requires the Voice Agents feature to
+              be enabled for your team.
 
           extra_headers: Send extra headers
 
@@ -149,6 +154,7 @@ class AgentResource(SyncAPIResource):
                     "temperature": temperature,
                     "trigger_on_channels": trigger_on_channels,
                     "trigger_on_message_types": trigger_on_message_types,
+                    "voice": voice,
                 },
                 agent_create_params.AgentCreateParams,
             ),
@@ -207,6 +213,7 @@ class AgentResource(SyncAPIResource):
         temperature: Optional[float] | Omit = omit,
         trigger_on_channels: SequenceNotStr[str] | Omit = omit,
         trigger_on_message_types: SequenceNotStr[str] | Omit = omit,
+        voice: agent_update_params.Voice | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -219,6 +226,10 @@ class AgentResource(SyncAPIResource):
 
         Args:
           provider: LLM provider for the AI agent.
+
+          voice: Voice Agent configuration. Patch this object to enable voice, change the
+              greeting, or adjust call limits. Requires the Voice Agents feature to be enabled
+              for your team.
 
           extra_headers: Send extra headers
 
@@ -246,6 +257,7 @@ class AgentResource(SyncAPIResource):
                     "temperature": temperature,
                     "trigger_on_channels": trigger_on_channels,
                     "trigger_on_message_types": trigger_on_message_types,
+                    "voice": voice,
                 },
                 agent_update_params.AgentUpdateParams,
             ),
@@ -374,6 +386,7 @@ class AsyncAgentResource(AsyncAPIResource):
         temperature: float | Omit = omit,
         trigger_on_channels: SequenceNotStr[str] | Omit = omit,
         trigger_on_message_types: SequenceNotStr[str] | Omit = omit,
+        voice: agent_create_params.Voice | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -389,6 +402,10 @@ class AsyncAgentResource(AsyncAPIResource):
           provider: LLM provider for the AI agent.
 
           api_key: API key for the LLM provider. Required unless provider is 'zavu'.
+
+          voice: Voice Agent configuration. Enable this to let the agent answer and place phone
+              calls with Zavu's managed voice pipeline. Requires the Voice Agents feature to
+              be enabled for your team.
 
           extra_headers: Send extra headers
 
@@ -415,6 +432,7 @@ class AsyncAgentResource(AsyncAPIResource):
                     "temperature": temperature,
                     "trigger_on_channels": trigger_on_channels,
                     "trigger_on_message_types": trigger_on_message_types,
+                    "voice": voice,
                 },
                 agent_create_params.AgentCreateParams,
             ),
@@ -473,6 +491,7 @@ class AsyncAgentResource(AsyncAPIResource):
         temperature: Optional[float] | Omit = omit,
         trigger_on_channels: SequenceNotStr[str] | Omit = omit,
         trigger_on_message_types: SequenceNotStr[str] | Omit = omit,
+        voice: agent_update_params.Voice | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -485,6 +504,10 @@ class AsyncAgentResource(AsyncAPIResource):
 
         Args:
           provider: LLM provider for the AI agent.
+
+          voice: Voice Agent configuration. Patch this object to enable voice, change the
+              greeting, or adjust call limits. Requires the Voice Agents feature to be enabled
+              for your team.
 
           extra_headers: Send extra headers
 
@@ -512,6 +535,7 @@ class AsyncAgentResource(AsyncAPIResource):
                     "temperature": temperature,
                     "trigger_on_channels": trigger_on_channels,
                     "trigger_on_message_types": trigger_on_message_types,
+                    "voice": voice,
                 },
                 agent_update_params.AgentUpdateParams,
             ),
