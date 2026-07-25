@@ -9,6 +9,7 @@ WebhookEvent: TypeAlias = Literal[
     "message.sent",
     "message.delivered",
     "message.read",
+    "message.status",
     "message.failed",
     "message.inbound",
     "message.unsupported",
