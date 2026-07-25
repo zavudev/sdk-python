@@ -45,7 +45,7 @@ class TestFunctions:
             http_enabled=True,
             memory_mb=128,
             runtime="nodejs24",
-            source_code="import { defineFunction } from '@zavu/functions';\n\nexport default defineFunction(async (event, ctx) => {\n  ctx.log('received', event.type);\n});\n",
+            source_code="import { defineFunction } from '@zavudev/functions';\n\nexport default defineFunction(async (event, ctx) => {\n  ctx.log('received', event.type);\n});\n",
             timeout_sec=1,
         )
         assert_matches_type(FunctionCreateResponse, function, path=["response"])
@@ -389,7 +389,7 @@ class TestAsyncFunctions:
             http_enabled=True,
             memory_mb=128,
             runtime="nodejs24",
-            source_code="import { defineFunction } from '@zavu/functions';\n\nexport default defineFunction(async (event, ctx) => {\n  ctx.log('received', event.type);\n});\n",
+            source_code="import { defineFunction } from '@zavudev/functions';\n\nexport default defineFunction(async (event, ctx) => {\n  ctx.log('received', event.type);\n});\n",
             timeout_sec=1,
         )
         assert_matches_type(FunctionCreateResponse, function, path=["response"])
