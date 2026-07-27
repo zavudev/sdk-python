@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
 
 from pydantic import Field as FieldInfo
@@ -47,6 +47,14 @@ class Sender(BaseModel):
 
     phone_number: str = FieldInfo(alias="phoneNumber")
     """Phone number in E.164 format."""
+
+    channels: Optional[List[str]] = None
+    """
+    Channels this sender can actually send on right now, computed from its
+    configuration. Empty means the sender cannot send or receive anything yet: a
+    phoneNumber alone does not enable SMS or voice. Check this rather than inferring
+    capability from phoneNumber or emailAddress.
+    """
 
     created_at: Optional[datetime] = FieldInfo(alias="createdAt", default=None)
 
