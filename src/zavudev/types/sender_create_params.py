@@ -36,11 +36,20 @@ class SenderCreateParams(TypedDict, total=False):
     Requires a verified MX record on the domain; ignored otherwise.
     """
 
-    phone_number: Annotated[str, PropertyInfo(alias="phoneNumber")]
-    """Phone number in E.164 format.
+    enable_voice: Annotated[bool, PropertyInfo(alias="enableVoice")]
+    """Let this sender place and answer phone calls.
 
-    Required for phone-based channels (SMS, WhatsApp). Omit for an email-only
-    sender.
+    Requires `phoneNumber`; enabling it without one returns 400. Check the
+    `channels` array on the response to confirm `voice` is on.
+    """
+
+    phone_number: Annotated[str, PropertyInfo(alias="phoneNumber")]
+    """
+    Phone number in E.164 format, and it must be a number your project already owns
+    (see `GET /v1/phone-numbers`). The number is routed to the sender as part of
+    this call, which is what turns the SMS channel on. Passing a number the project
+    does not own, or one already attached to another sender, returns 400 rather than
+    creating a sender that cannot send. Omit for an email-only sender.
     """
 
     set_as_default: Annotated[bool, PropertyInfo(alias="setAsDefault")]

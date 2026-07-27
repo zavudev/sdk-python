@@ -319,6 +319,7 @@ class PhoneNumbersResource(SyncAPIResource):
         self,
         *,
         country_code: str,
+        capabilities: str | Omit = omit,
         contains: str | Omit = omit,
         limit: int | Omit = omit,
         type: PhoneNumberType | Omit = omit,
@@ -334,6 +335,9 @@ class PhoneNumbersResource(SyncAPIResource):
 
         Args:
           country_code: Two-letter ISO country code.
+
+          capabilities: Comma-separated capabilities the number must have: `sms`, `voice`, `mms`.
+              Numbers missing any of them are dropped.
 
           contains: Search for numbers containing this string.
 
@@ -359,6 +363,7 @@ class PhoneNumbersResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "country_code": country_code,
+                        "capabilities": capabilities,
                         "contains": contains,
                         "limit": limit,
                         "type": type,
@@ -650,6 +655,7 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
         self,
         *,
         country_code: str,
+        capabilities: str | Omit = omit,
         contains: str | Omit = omit,
         limit: int | Omit = omit,
         type: PhoneNumberType | Omit = omit,
@@ -665,6 +671,9 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
 
         Args:
           country_code: Two-letter ISO country code.
+
+          capabilities: Comma-separated capabilities the number must have: `sms`, `voice`, `mms`.
+              Numbers missing any of them are dropped.
 
           contains: Search for numbers containing this string.
 
@@ -690,6 +699,7 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "country_code": country_code,
+                        "capabilities": capabilities,
                         "contains": contains,
                         "limit": limit,
                         "type": type,

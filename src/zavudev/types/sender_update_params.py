@@ -39,6 +39,14 @@ class SenderUpdateParams(TypedDict, total=False):
     email_receiving_enabled: Annotated[bool, PropertyInfo(alias="emailReceivingEnabled")]
     """Enable or disable inbound email receiving for this sender."""
 
+    enable_voice: Annotated[bool, PropertyInfo(alias="enableVoice")]
+    """Turn the voice channel on or off.
+
+    The sender must already have a phone number provisioned for calls; enabling it
+    otherwise returns 400 instead of storing a flag that changes nothing. Confirm
+    with the `channels` array on the response.
+    """
+
     name: str
 
     set_as_default: Annotated[bool, PropertyInfo(alias="setAsDefault")]

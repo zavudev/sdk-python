@@ -90,6 +90,7 @@ class SendersResource(SyncAPIResource):
         email_domain_id: str | Omit = omit,
         email_from_name: str | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
+        enable_voice: bool | Omit = omit,
         phone_number: str | Omit = omit,
         set_as_default: bool | Omit = omit,
         webhook_events: List[WebhookEvent] | Omit = omit,
@@ -118,8 +119,15 @@ class SendersResource(SyncAPIResource):
           email_receiving_enabled: Enable inbound email receiving on this sender. Requires a verified MX record on
               the domain; ignored otherwise.
 
-          phone_number: Phone number in E.164 format. Required for phone-based channels (SMS, WhatsApp).
-              Omit for an email-only sender.
+          enable_voice: Let this sender place and answer phone calls. Requires `phoneNumber`; enabling
+              it without one returns 400. Check the `channels` array on the response to
+              confirm `voice` is on.
+
+          phone_number: Phone number in E.164 format, and it must be a number your project already owns
+              (see `GET /v1/phone-numbers`). The number is routed to the sender as part of
+              this call, which is what turns the SMS channel on. Passing a number the project
+              does not own, or one already attached to another sender, returns 400 rather than
+              creating a sender that cannot send. Omit for an email-only sender.
 
           webhook_events: Events to subscribe to.
 
@@ -142,6 +150,7 @@ class SendersResource(SyncAPIResource):
                     "email_domain_id": email_domain_id,
                     "email_from_name": email_from_name,
                     "email_receiving_enabled": email_receiving_enabled,
+                    "enable_voice": enable_voice,
                     "phone_number": phone_number,
                     "set_as_default": set_as_default,
                     "webhook_events": webhook_events,
@@ -197,6 +206,7 @@ class SendersResource(SyncAPIResource):
         email_domain_id: str | Omit = omit,
         email_from_name: str | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
+        enable_voice: bool | Omit = omit,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
         webhook_active: bool | Omit = omit,
@@ -227,6 +237,10 @@ class SendersResource(SyncAPIResource):
 
           email_receiving_enabled: Enable or disable inbound email receiving for this sender.
 
+          enable_voice: Turn the voice channel on or off. The sender must already have a phone number
+              provisioned for calls; enabling it otherwise returns 400 instead of storing a
+              flag that changes nothing. Confirm with the `channels` array on the response.
+
           webhook_active: Whether the webhook is active.
 
           webhook_events: Events to subscribe to.
@@ -252,6 +266,7 @@ class SendersResource(SyncAPIResource):
                     "email_domain_id": email_domain_id,
                     "email_from_name": email_from_name,
                     "email_receiving_enabled": email_receiving_enabled,
+                    "enable_voice": enable_voice,
                     "name": name,
                     "set_as_default": set_as_default,
                     "webhook_active": webhook_active,
@@ -562,6 +577,7 @@ class AsyncSendersResource(AsyncAPIResource):
         email_domain_id: str | Omit = omit,
         email_from_name: str | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
+        enable_voice: bool | Omit = omit,
         phone_number: str | Omit = omit,
         set_as_default: bool | Omit = omit,
         webhook_events: List[WebhookEvent] | Omit = omit,
@@ -590,8 +606,15 @@ class AsyncSendersResource(AsyncAPIResource):
           email_receiving_enabled: Enable inbound email receiving on this sender. Requires a verified MX record on
               the domain; ignored otherwise.
 
-          phone_number: Phone number in E.164 format. Required for phone-based channels (SMS, WhatsApp).
-              Omit for an email-only sender.
+          enable_voice: Let this sender place and answer phone calls. Requires `phoneNumber`; enabling
+              it without one returns 400. Check the `channels` array on the response to
+              confirm `voice` is on.
+
+          phone_number: Phone number in E.164 format, and it must be a number your project already owns
+              (see `GET /v1/phone-numbers`). The number is routed to the sender as part of
+              this call, which is what turns the SMS channel on. Passing a number the project
+              does not own, or one already attached to another sender, returns 400 rather than
+              creating a sender that cannot send. Omit for an email-only sender.
 
           webhook_events: Events to subscribe to.
 
@@ -614,6 +637,7 @@ class AsyncSendersResource(AsyncAPIResource):
                     "email_domain_id": email_domain_id,
                     "email_from_name": email_from_name,
                     "email_receiving_enabled": email_receiving_enabled,
+                    "enable_voice": enable_voice,
                     "phone_number": phone_number,
                     "set_as_default": set_as_default,
                     "webhook_events": webhook_events,
@@ -669,6 +693,7 @@ class AsyncSendersResource(AsyncAPIResource):
         email_domain_id: str | Omit = omit,
         email_from_name: str | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
+        enable_voice: bool | Omit = omit,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
         webhook_active: bool | Omit = omit,
@@ -699,6 +724,10 @@ class AsyncSendersResource(AsyncAPIResource):
 
           email_receiving_enabled: Enable or disable inbound email receiving for this sender.
 
+          enable_voice: Turn the voice channel on or off. The sender must already have a phone number
+              provisioned for calls; enabling it otherwise returns 400 instead of storing a
+              flag that changes nothing. Confirm with the `channels` array on the response.
+
           webhook_active: Whether the webhook is active.
 
           webhook_events: Events to subscribe to.
@@ -724,6 +753,7 @@ class AsyncSendersResource(AsyncAPIResource):
                     "email_domain_id": email_domain_id,
                     "email_from_name": email_from_name,
                     "email_receiving_enabled": email_receiving_enabled,
+                    "enable_voice": enable_voice,
                     "name": name,
                     "set_as_default": set_as_default,
                     "webhook_active": webhook_active,
