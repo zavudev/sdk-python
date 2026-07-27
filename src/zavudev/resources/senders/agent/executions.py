@@ -103,6 +103,11 @@ class ExecutionsResource(SyncAPIResource):
         """
         List recent agent executions with pagination.
 
+        An execution is one inbound message answered by the agent, so this covers the
+        messaging channels only. Voice calls are never listed here regardless of how
+        many the agent handled. Use `GET /v1/calls` (and `GET /v1/calls/{callId}` for
+        the transcript) for voice.
+
         Args:
           status: Status of an agent execution.
 
@@ -214,6 +219,11 @@ class AsyncExecutionsResource(AsyncAPIResource):
     ) -> AsyncPaginator[AgentExecution, AsyncCursor[AgentExecution]]:
         """
         List recent agent executions with pagination.
+
+        An execution is one inbound message answered by the agent, so this covers the
+        messaging channels only. Voice calls are never listed here regardless of how
+        many the agent handled. Use `GET /v1/calls` (and `GET /v1/calls/{callId}` for
+        the transcript) for voice.
 
         Args:
           status: Status of an agent execution.
