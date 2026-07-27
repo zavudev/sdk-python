@@ -134,6 +134,7 @@ class TestFunctions:
         function = client.functions.update(
             function_id="functionId",
             dependencies={"foo": "string"},
+            http_enabled=True,
             source_code="sourceCode",
         )
         assert_matches_type(FunctionUpdateResponse, function, path=["response"])
@@ -478,6 +479,7 @@ class TestAsyncFunctions:
         function = await async_client.functions.update(
             function_id="functionId",
             dependencies={"foo": "string"},
+            http_enabled=True,
             source_code="sourceCode",
         )
         assert_matches_type(FunctionUpdateResponse, function, path=["response"])
