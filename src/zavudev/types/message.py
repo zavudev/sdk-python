@@ -32,6 +32,14 @@ class Message(BaseModel):
     1024 characters) and the button label is fixed by WhatsApp. The recipient's
     answer arrives as an inbound `location` message whose `content.replyToMessageId`
     is the ID of the request.
+
+    `request_contact_info` asks the recipient to share their phone number and is
+    WhatsApp-only. Like `location_request` it takes no `content` object — the prompt
+    goes in `text` (max 1024 characters) and WhatsApp renders a fixed **Share
+    Contact Info** button. The answer arrives as an inbound `contact` message. Use
+    it to recover the phone number of a contact who adopted a WhatsApp username and
+    is only known by their business-scoped user ID (BSUID); when they share it, Zavu
+    automatically links the phone number to that contact.
     """
 
     status: MessageStatus
