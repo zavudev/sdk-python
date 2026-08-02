@@ -319,7 +319,12 @@ class CampaignsResource(SyncAPIResource):
         """Submit a draft campaign for carrier review.
 
         The campaign must be in draft status
-        and its brand must be verified.
+        and its brand must be verified. TCR's one-time registration fee is charged from
+        your balance at submission ($15 for standard use cases, $2 for LOW_VOLUME),
+        passed through at cost and refunded if the carrier rejects it. Once approved,
+        the campaign's monthly TCR fee ($10 standard, $2 LOW_VOLUME) is charged from
+        your balance while the campaign is active — see registrationCostCents and
+        monthlyFeeCents on the campaign object.
 
         Args:
           extra_headers: Send extra headers
@@ -660,7 +665,12 @@ class AsyncCampaignsResource(AsyncAPIResource):
         """Submit a draft campaign for carrier review.
 
         The campaign must be in draft status
-        and its brand must be verified.
+        and its brand must be verified. TCR's one-time registration fee is charged from
+        your balance at submission ($15 for standard use cases, $2 for LOW_VOLUME),
+        passed through at cost and refunded if the carrier rejects it. Once approved,
+        the campaign's monthly TCR fee ($10 standard, $2 LOW_VOLUME) is charged from
+        your balance while the campaign is active — see registrationCostCents and
+        monthlyFeeCents on the campaign object.
 
         Args:
           extra_headers: Send extra headers
