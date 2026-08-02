@@ -34,6 +34,15 @@ class AgentExecution(BaseModel):
 
     inbound_message_id: Optional[str] = FieldInfo(alias="inboundMessageId", default=None)
 
+    knowledge_chunks_used: Optional[int] = FieldInfo(alias="knowledgeChunksUsed", default=None)
+    """Knowledge-base chunks retrieved for this answer.
+
+    Zero on an agent that has documents attached means the reply was not grounded in
+    them, which is otherwise indistinguishable from a correct answer in this record.
+    Absent on executions recorded before this field existed, which is not the same
+    as zero.
+    """
+
     response_message_id: Optional[str] = FieldInfo(alias="responseMessageId", default=None)
 
     response_text: Optional[str] = FieldInfo(alias="responseText", default=None)

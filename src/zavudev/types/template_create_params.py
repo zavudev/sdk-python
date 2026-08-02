@@ -54,9 +54,12 @@ class TemplateCreateParams(TypedDict, total=False):
 
 
 class Button(TypedDict, total=False):
-    text: Required[str]
-
-    type: Required[Literal["quick_reply", "url", "phone", "otp"]]
+    type: Required[Literal["quick_reply", "url", "phone", "otp", "request_contact_info"]]
+    """
+    `request_contact_info` renders a fixed **Share Contact Info** button that asks
+    the recipient to share their phone number — useful when a contact adopted a
+    WhatsApp username and you only know their BSUID. It takes no other fields.
+    """
 
     example: str
     """Sample value Meta uses to review templates with a dynamic URL button.
@@ -78,6 +81,13 @@ class Button(TypedDict, total=False):
 
     signature_hash: Annotated[str, PropertyInfo(alias="signatureHash")]
     """Android app signature hash. Required for ONE_TAP buttons."""
+
+    text: str
+    """Button label.
+
+    Required for every type except `request_contact_info`, whose label is fixed by
+    WhatsApp.
+    """
 
     url: str
     """Button destination.

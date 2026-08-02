@@ -32,7 +32,7 @@ class Button(BaseModel):
 
     text: Optional[str] = None
 
-    type: Optional[Literal["quick_reply", "url", "phone", "otp"]] = None
+    type: Optional[Literal["quick_reply", "url", "phone", "otp", "request_contact_info"]] = None
 
     url: Optional[str] = None
 

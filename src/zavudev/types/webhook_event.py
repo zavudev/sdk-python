@@ -9,6 +9,7 @@ WebhookEvent: TypeAlias = Literal[
     "message.sent",
     "message.delivered",
     "message.read",
+    "message.status",
     "message.failed",
     "message.inbound",
     "message.unsupported",
@@ -16,6 +17,10 @@ WebhookEvent: TypeAlias = Literal[
     "conversation.new",
     "template.status_changed",
     "invitation.status_changed",
+    "call.initiated",
+    "call.answered",
+    "call.completed",
+    "call.failed",
     "domain.verified",
     "domain.failed",
 ]

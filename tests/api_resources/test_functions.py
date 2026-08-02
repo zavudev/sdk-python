@@ -45,7 +45,7 @@ class TestFunctions:
             http_enabled=True,
             memory_mb=128,
             runtime="nodejs24",
-            source_code="import { defineFunction } from '@zavu/functions';\n\nexport default defineFunction(async (event, ctx) => {\n  ctx.log('received', event.type);\n});\n",
+            source_code="import { defineFunction } from '@zavudev/functions';\n\nexport default defineFunction(async (event, ctx) => {\n  ctx.log('received', event.type);\n});\n",
             timeout_sec=1,
         )
         assert_matches_type(FunctionCreateResponse, function, path=["response"])
@@ -134,6 +134,7 @@ class TestFunctions:
         function = client.functions.update(
             function_id="functionId",
             dependencies={"foo": "string"},
+            http_enabled=True,
             source_code="sourceCode",
         )
         assert_matches_type(FunctionUpdateResponse, function, path=["response"])
@@ -389,7 +390,7 @@ class TestAsyncFunctions:
             http_enabled=True,
             memory_mb=128,
             runtime="nodejs24",
-            source_code="import { defineFunction } from '@zavu/functions';\n\nexport default defineFunction(async (event, ctx) => {\n  ctx.log('received', event.type);\n});\n",
+            source_code="import { defineFunction } from '@zavudev/functions';\n\nexport default defineFunction(async (event, ctx) => {\n  ctx.log('received', event.type);\n});\n",
             timeout_sec=1,
         )
         assert_matches_type(FunctionCreateResponse, function, path=["response"])
@@ -478,6 +479,7 @@ class TestAsyncFunctions:
         function = await async_client.functions.update(
             function_id="functionId",
             dependencies={"foo": "string"},
+            http_enabled=True,
             source_code="sourceCode",
         )
         assert_matches_type(FunctionUpdateResponse, function, path=["response"])

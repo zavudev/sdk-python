@@ -169,6 +169,7 @@ class FunctionsResource(SyncAPIResource):
         function_id: str,
         *,
         dependencies: Dict[str, str] | Omit = omit,
+        http_enabled: bool | Omit = omit,
         source_code: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -177,15 +178,22 @@ class FunctionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FunctionUpdateResponse:
-        """
-        Update the draft source code and/or dependency map without triggering a build.
-        Visible in the dashboard immediately, but the live (deployed) function does not
-        change until `POST /v1/functions/{functionId}/deploy` runs.
+        """Update an existing function.
+
+        `sourceCode` / `dependencies` edit the draft
+        without triggering a build — they go live on the next
+        `POST /v1/functions/{functionId}/deploy`. `httpEnabled` is applied to the
+        deployed function immediately, so turning the public endpoint on or off does not
+        require a redeploy.
 
         Args:
           dependencies: New dependency map (replaces existing dependencies).
 
-          source_code: New source code to publish (replaces the draft).
+          http_enabled: Expose the function on its public HTTPS URL, or take it down. Applies to the
+              already-deployed function without redeploying; the URL is returned as
+              `publicUrl`.
+
+          source_code: New source code for the draft (replaces it).
 
           extra_headers: Send extra headers
 
@@ -202,6 +210,7 @@ class FunctionsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "dependencies": dependencies,
+                    "http_enabled": http_enabled,
                     "source_code": source_code,
                 },
                 function_update_params.FunctionUpdateParams,
@@ -520,6 +529,7 @@ class AsyncFunctionsResource(AsyncAPIResource):
         function_id: str,
         *,
         dependencies: Dict[str, str] | Omit = omit,
+        http_enabled: bool | Omit = omit,
         source_code: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -528,15 +538,22 @@ class AsyncFunctionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FunctionUpdateResponse:
-        """
-        Update the draft source code and/or dependency map without triggering a build.
-        Visible in the dashboard immediately, but the live (deployed) function does not
-        change until `POST /v1/functions/{functionId}/deploy` runs.
+        """Update an existing function.
+
+        `sourceCode` / `dependencies` edit the draft
+        without triggering a build — they go live on the next
+        `POST /v1/functions/{functionId}/deploy`. `httpEnabled` is applied to the
+        deployed function immediately, so turning the public endpoint on or off does not
+        require a redeploy.
 
         Args:
           dependencies: New dependency map (replaces existing dependencies).
 
-          source_code: New source code to publish (replaces the draft).
+          http_enabled: Expose the function on its public HTTPS URL, or take it down. Applies to the
+              already-deployed function without redeploying; the URL is returned as
+              `publicUrl`.
+
+          source_code: New source code for the draft (replaces it).
 
           extra_headers: Send extra headers
 
@@ -553,6 +570,7 @@ class AsyncFunctionsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "dependencies": dependencies,
+                    "http_enabled": http_enabled,
                     "source_code": source_code,
                 },
                 function_update_params.FunctionUpdateParams,

@@ -40,13 +40,13 @@ class TestTemplates:
             add_security_recommendation=True,
             buttons=[
                 {
-                    "text": "text",
                     "type": "quick_reply",
                     "example": "ORD-12345",
                     "otp_type": "COPY_CODE",
                     "package_name": "packageName",
                     "phone_number": "phoneNumber",
                     "signature_hash": "signatureHash",
+                    "text": "text",
                     "url": "https://example.com",
                 }
             ],
@@ -295,13 +295,13 @@ class TestAsyncTemplates:
             add_security_recommendation=True,
             buttons=[
                 {
-                    "text": "text",
                     "type": "quick_reply",
                     "example": "ORD-12345",
                     "otp_type": "COPY_CODE",
                     "package_name": "packageName",
                     "phone_number": "phoneNumber",
                     "signature_hash": "signatureHash",
+                    "text": "text",
                     "url": "https://example.com",
                 }
             ],

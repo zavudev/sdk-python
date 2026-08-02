@@ -298,6 +298,7 @@ class TestPhoneNumbers:
     def test_method_search_available_with_all_params(self, client: Zavudev) -> None:
         phone_number = client.phone_numbers.search_available(
             country_code="xx",
+            capabilities="voice,sms",
             contains="contains",
             limit=50,
             type="local",
@@ -609,6 +610,7 @@ class TestAsyncPhoneNumbers:
     async def test_method_search_available_with_all_params(self, async_client: AsyncZavudev) -> None:
         phone_number = await async_client.phone_numbers.search_available(
             country_code="xx",
+            capabilities="voice,sms",
             contains="contains",
             limit=50,
             type="local",

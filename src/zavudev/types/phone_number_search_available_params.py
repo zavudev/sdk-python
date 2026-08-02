@@ -14,6 +14,12 @@ class PhoneNumberSearchAvailableParams(TypedDict, total=False):
     country_code: Required[Annotated[str, PropertyInfo(alias="countryCode")]]
     """Two-letter ISO country code."""
 
+    capabilities: str
+    """Comma-separated capabilities the number must have: `sms`, `voice`, `mms`.
+
+    Numbers missing any of them are dropped.
+    """
+
     contains: str
     """Search for numbers containing this string."""
 
