@@ -201,8 +201,9 @@ class PhoneNumbersResource(SyncAPIResource):
     ) -> PhoneNumberPurchaseResponse:
         """Purchase an available phone number.
 
-        The first US phone number is free for each
-        team.
+        Requires a paid plan: the Free plan cannot
+        purchase phone numbers and receives `402` with code `paid_plan_required`. Paid
+        plans include the first US number at no charge.
 
         Args:
           phone_number: Phone number in E.164 format.
@@ -537,8 +538,9 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
     ) -> PhoneNumberPurchaseResponse:
         """Purchase an available phone number.
 
-        The first US phone number is free for each
-        team.
+        Requires a paid plan: the Free plan cannot
+        purchase phone numbers and receives `402` with code `paid_plan_required`. Paid
+        plans include the first US number at no charge.
 
         Args:
           phone_number: Phone number in E.164 format.

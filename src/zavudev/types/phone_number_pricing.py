@@ -11,7 +11,10 @@ __all__ = ["PhoneNumberPricing"]
 
 class PhoneNumberPricing(BaseModel):
     is_free_eligible: Optional[bool] = FieldInfo(alias="isFreeEligible", default=None)
-    """Whether this number qualifies for the free first US number offer."""
+    """
+    Whether this number qualifies as the plan-included first US number on paid
+    plans.
+    """
 
     monthly_price: Optional[float] = FieldInfo(alias="monthlyPrice", default=None)
     """Monthly price in USD."""
