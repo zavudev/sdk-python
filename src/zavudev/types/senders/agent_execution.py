@@ -46,3 +46,12 @@ class AgentExecution(BaseModel):
     response_message_id: Optional[str] = FieldInfo(alias="responseMessageId", default=None)
 
     response_text: Optional[str] = FieldInfo(alias="responseText", default=None)
+
+    tool_calls: Optional[int] = FieldInfo(alias="toolCalls", default=None)
+    """Tools the agent called while producing this reply.
+
+    Zero on an agent that has tools configured means it answered without calling any
+    — the case where a reply says it will look something up and nothing ever reaches
+    your endpoint. Absent on executions recorded before this field existed, which is
+    not the same as zero.
+    """
