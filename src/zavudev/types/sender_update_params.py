@@ -39,6 +39,13 @@ class SenderUpdateParams(TypedDict, total=False):
     email_receiving_enabled: Annotated[bool, PropertyInfo(alias="emailReceivingEnabled")]
     """Enable or disable inbound email receiving for this sender."""
 
+    enable_sms_oneway: Annotated[bool, PropertyInfo(alias="enableSmsOneway")]
+    """Turn the one-way SMS channel on or off.
+
+    Enabling needs nothing else and takes effect immediately; disabling removes the
+    channel from the sender. Confirm with the `channels` array on the response.
+    """
+
     enable_voice: Annotated[bool, PropertyInfo(alias="enableVoice")]
     """Turn the voice channel on or off.
 

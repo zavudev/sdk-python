@@ -90,6 +90,7 @@ class SendersResource(SyncAPIResource):
         email_domain_id: str | Omit = omit,
         email_from_name: str | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
+        enable_sms_oneway: bool | Omit = omit,
         enable_voice: bool | Omit = omit,
         phone_number: str | Omit = omit,
         set_as_default: bool | Omit = omit,
@@ -118,6 +119,11 @@ class SendersResource(SyncAPIResource):
 
           email_receiving_enabled: Enable inbound email receiving on this sender. Requires a verified MX record on
               the domain; ignored otherwise.
+
+          enable_sms_oneway: Enable the one-way SMS channel (`sms_oneway`). Needs nothing else — no phone
+              number, no credential — so it is the fastest way to get a sender that can send.
+              Recipients cannot reply. Confirm with `sms_oneway` in the `channels` array on
+              the response.
 
           enable_voice: Let this sender place and answer phone calls. Requires `phoneNumber`; enabling
               it without one returns 400. Check the `channels` array on the response to
@@ -150,6 +156,7 @@ class SendersResource(SyncAPIResource):
                     "email_domain_id": email_domain_id,
                     "email_from_name": email_from_name,
                     "email_receiving_enabled": email_receiving_enabled,
+                    "enable_sms_oneway": enable_sms_oneway,
                     "enable_voice": enable_voice,
                     "phone_number": phone_number,
                     "set_as_default": set_as_default,
@@ -206,6 +213,7 @@ class SendersResource(SyncAPIResource):
         email_domain_id: str | Omit = omit,
         email_from_name: str | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
+        enable_sms_oneway: bool | Omit = omit,
         enable_voice: bool | Omit = omit,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
@@ -237,6 +245,10 @@ class SendersResource(SyncAPIResource):
 
           email_receiving_enabled: Enable or disable inbound email receiving for this sender.
 
+          enable_sms_oneway: Turn the one-way SMS channel on or off. Enabling needs nothing else and takes
+              effect immediately; disabling removes the channel from the sender. Confirm with
+              the `channels` array on the response.
+
           enable_voice: Turn the voice channel on or off. The sender must already have a phone number
               provisioned for calls; enabling it otherwise returns 400 instead of storing a
               flag that changes nothing. Confirm with the `channels` array on the response.
@@ -266,6 +278,7 @@ class SendersResource(SyncAPIResource):
                     "email_domain_id": email_domain_id,
                     "email_from_name": email_from_name,
                     "email_receiving_enabled": email_receiving_enabled,
+                    "enable_sms_oneway": enable_sms_oneway,
                     "enable_voice": enable_voice,
                     "name": name,
                     "set_as_default": set_as_default,
@@ -577,6 +590,7 @@ class AsyncSendersResource(AsyncAPIResource):
         email_domain_id: str | Omit = omit,
         email_from_name: str | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
+        enable_sms_oneway: bool | Omit = omit,
         enable_voice: bool | Omit = omit,
         phone_number: str | Omit = omit,
         set_as_default: bool | Omit = omit,
@@ -605,6 +619,11 @@ class AsyncSendersResource(AsyncAPIResource):
 
           email_receiving_enabled: Enable inbound email receiving on this sender. Requires a verified MX record on
               the domain; ignored otherwise.
+
+          enable_sms_oneway: Enable the one-way SMS channel (`sms_oneway`). Needs nothing else — no phone
+              number, no credential — so it is the fastest way to get a sender that can send.
+              Recipients cannot reply. Confirm with `sms_oneway` in the `channels` array on
+              the response.
 
           enable_voice: Let this sender place and answer phone calls. Requires `phoneNumber`; enabling
               it without one returns 400. Check the `channels` array on the response to
@@ -637,6 +656,7 @@ class AsyncSendersResource(AsyncAPIResource):
                     "email_domain_id": email_domain_id,
                     "email_from_name": email_from_name,
                     "email_receiving_enabled": email_receiving_enabled,
+                    "enable_sms_oneway": enable_sms_oneway,
                     "enable_voice": enable_voice,
                     "phone_number": phone_number,
                     "set_as_default": set_as_default,
@@ -693,6 +713,7 @@ class AsyncSendersResource(AsyncAPIResource):
         email_domain_id: str | Omit = omit,
         email_from_name: str | Omit = omit,
         email_receiving_enabled: bool | Omit = omit,
+        enable_sms_oneway: bool | Omit = omit,
         enable_voice: bool | Omit = omit,
         name: str | Omit = omit,
         set_as_default: bool | Omit = omit,
@@ -724,6 +745,10 @@ class AsyncSendersResource(AsyncAPIResource):
 
           email_receiving_enabled: Enable or disable inbound email receiving for this sender.
 
+          enable_sms_oneway: Turn the one-way SMS channel on or off. Enabling needs nothing else and takes
+              effect immediately; disabling removes the channel from the sender. Confirm with
+              the `channels` array on the response.
+
           enable_voice: Turn the voice channel on or off. The sender must already have a phone number
               provisioned for calls; enabling it otherwise returns 400 instead of storing a
               flag that changes nothing. Confirm with the `channels` array on the response.
@@ -753,6 +778,7 @@ class AsyncSendersResource(AsyncAPIResource):
                     "email_domain_id": email_domain_id,
                     "email_from_name": email_from_name,
                     "email_receiving_enabled": email_receiving_enabled,
+                    "enable_sms_oneway": enable_sms_oneway,
                     "enable_voice": enable_voice,
                     "name": name,
                     "set_as_default": set_as_default,
