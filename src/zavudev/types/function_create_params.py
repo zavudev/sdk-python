@@ -33,3 +33,9 @@ class FunctionCreateParams(TypedDict, total=False):
     """TypeScript source code for the function entry point (max ~900KB)."""
 
     timeout_sec: Annotated[int, PropertyInfo(alias="timeoutSec")]
+    """Per-invocation timeout in seconds.
+
+    Event and cron invocations are asynchronous, so a long timeout only bounds cost;
+    a tool called during a live conversation holds up the reply, and a function
+    exposed over HTTP is additionally bounded by the platform's HTTP response limit.
+    """

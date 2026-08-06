@@ -36,6 +36,14 @@ class SenderCreateParams(TypedDict, total=False):
     Requires a verified MX record on the domain; ignored otherwise.
     """
 
+    enable_sms_oneway: Annotated[bool, PropertyInfo(alias="enableSmsOneway")]
+    """Enable the one-way SMS channel (`sms_oneway`).
+
+    Needs nothing else — no phone number, no credential — so it is the fastest way
+    to get a sender that can send. Recipients cannot reply. Confirm with
+    `sms_oneway` in the `channels` array on the response.
+    """
+
     enable_voice: Annotated[bool, PropertyInfo(alias="enableVoice")]
     """Let this sender place and answer phone calls.
 
