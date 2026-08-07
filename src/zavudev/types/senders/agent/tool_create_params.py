@@ -23,4 +23,8 @@ class ToolCreateParams(TypedDict, total=False):
     enabled: bool
 
     webhook_secret: Annotated[str, PropertyInfo(alias="webhookSecret")]
-    """Optional secret for webhook signature verification."""
+    """Signing secret for the webhook.
+
+    Optional: Zavu generates one when omitted and returns it on this response only.
+    Supply your own if you already have a secret you want reused.
+    """

@@ -1,5 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from typing import Optional
 from datetime import datetime
 
 from pydantic import Field as FieldInfo
@@ -30,3 +31,14 @@ class AgentTool(BaseModel):
 
     webhook_url: str = FieldInfo(alias="webhookUrl")
     """HTTPS URL to call when the tool is executed."""
+
+    webhook_secret: Optional[str] = FieldInfo(alias="webhookSecret", default=None)
+    """Signing secret for this tool's webhook.
+
+    **Returned only when the tool is created**, never on a later read.
+
+    Zavu generates one if you do not supply it, and signs every call to this tool
+    with it: `X-Zavu-Signature: <hex>`, the HMAC-SHA256 of the request body. Verify
+    it before trusting the call. Lost it? Rotate with
+    `POST /v1/senders/{senderId}/agent/tools/{toolId}/webhook/secret`.
+    """

@@ -46,6 +46,7 @@ class TestSenders:
             phone_number="phoneNumber",
             set_as_default=True,
             webhook_events=["message.queued"],
+            webhook_signature_version="v2",
             webhook_url="https://example.com",
         )
         assert_matches_type(Sender, sender, path=["response"])
@@ -142,6 +143,7 @@ class TestSenders:
             set_as_default=True,
             webhook_active=True,
             webhook_events=["message.queued"],
+            webhook_signature_version="v2",
             webhook_url="https://example.com",
         )
         assert_matches_type(Sender, sender, path=["response"])
@@ -477,6 +479,7 @@ class TestAsyncSenders:
             phone_number="phoneNumber",
             set_as_default=True,
             webhook_events=["message.queued"],
+            webhook_signature_version="v2",
             webhook_url="https://example.com",
         )
         assert_matches_type(Sender, sender, path=["response"])
@@ -573,6 +576,7 @@ class TestAsyncSenders:
             set_as_default=True,
             webhook_active=True,
             webhook_events=["message.queued"],
+            webhook_signature_version="v2",
             webhook_url="https://example.com",
         )
         assert_matches_type(Sender, sender, path=["response"])

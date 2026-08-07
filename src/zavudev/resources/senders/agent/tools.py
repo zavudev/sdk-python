@@ -78,7 +78,9 @@ class ToolsResource(SyncAPIResource):
         Args:
           webhook_url: Must be HTTPS.
 
-          webhook_secret: Optional secret for webhook signature verification.
+          webhook_secret: Signing secret for the webhook. Optional: Zavu generates one when omitted and
+              returns it on this response only. Supply your own if you already have a secret
+              you want reused.
 
           extra_headers: Send extra headers
 
@@ -377,7 +379,9 @@ class AsyncToolsResource(AsyncAPIResource):
         Args:
           webhook_url: Must be HTTPS.
 
-          webhook_secret: Optional secret for webhook signature verification.
+          webhook_secret: Signing secret for the webhook. Optional: Zavu generates one when omitted and
+              returns it on this response only. Supply your own if you already have a secret
+              you want reused.
 
           extra_headers: Send extra headers
 

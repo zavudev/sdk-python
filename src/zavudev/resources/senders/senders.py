@@ -95,6 +95,7 @@ class SendersResource(SyncAPIResource):
         phone_number: str | Omit = omit,
         set_as_default: bool | Omit = omit,
         webhook_events: List[WebhookEvent] | Omit = omit,
+        webhook_signature_version: Literal["v1", "v1+v2", "v2"] | Omit = omit,
         webhook_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -137,6 +138,19 @@ class SendersResource(SyncAPIResource):
 
           webhook_events: Events to subscribe to.
 
+          webhook_signature_version: Which `X-Zavu-Signature` scheme this receiver is sent.
+
+              - `v1`: `v1=HMAC_SHA256(secret, body)`. The scheme used before this was
+                configurable. Existing webhooks stay on it until you move them.
+              - `v2`: `v2=HMAC_SHA256(secret, "{t}.{body}")`. The current scheme, and the
+                default for new senders. It signs the timestamp together with the body.
+              - `v1+v2`: both signatures, sharing one `t`. The migration setting: a receiver
+                reading either one works, so you can deploy and confirm your new verifier
+                before switching over.
+
+              Moving from `v1` straight to `v2` returns `400`. Set `v1+v2` first. See
+              https://docs.zavu.dev/guides/receiving-messages/signature-migration
+
           webhook_url: HTTPS URL for webhook events.
 
           extra_headers: Send extra headers
@@ -161,6 +175,7 @@ class SendersResource(SyncAPIResource):
                     "phone_number": phone_number,
                     "set_as_default": set_as_default,
                     "webhook_events": webhook_events,
+                    "webhook_signature_version": webhook_signature_version,
                     "webhook_url": webhook_url,
                 },
                 sender_create_params.SenderCreateParams,
@@ -219,6 +234,7 @@ class SendersResource(SyncAPIResource):
         set_as_default: bool | Omit = omit,
         webhook_active: bool | Omit = omit,
         webhook_events: List[WebhookEvent] | Omit = omit,
+        webhook_signature_version: Literal["v1", "v1+v2", "v2"] | Omit = omit,
         webhook_url: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -257,6 +273,19 @@ class SendersResource(SyncAPIResource):
 
           webhook_events: Events to subscribe to.
 
+          webhook_signature_version: Which `X-Zavu-Signature` scheme this receiver is sent.
+
+              - `v1`: `v1=HMAC_SHA256(secret, body)`. The scheme used before this was
+                configurable. Existing webhooks stay on it until you move them.
+              - `v2`: `v2=HMAC_SHA256(secret, "{t}.{body}")`. The current scheme, and the
+                default for new senders. It signs the timestamp together with the body.
+              - `v1+v2`: both signatures, sharing one `t`. The migration setting: a receiver
+                reading either one works, so you can deploy and confirm your new verifier
+                before switching over.
+
+              Moving from `v1` straight to `v2` returns `400`. Set `v1+v2` first. See
+              https://docs.zavu.dev/guides/receiving-messages/signature-migration
+
           webhook_url: HTTPS URL for webhook events. Set to null to remove webhook.
 
           extra_headers: Send extra headers
@@ -284,6 +313,7 @@ class SendersResource(SyncAPIResource):
                     "set_as_default": set_as_default,
                     "webhook_active": webhook_active,
                     "webhook_events": webhook_events,
+                    "webhook_signature_version": webhook_signature_version,
                     "webhook_url": webhook_url,
                 },
                 sender_update_params.SenderUpdateParams,
@@ -595,6 +625,7 @@ class AsyncSendersResource(AsyncAPIResource):
         phone_number: str | Omit = omit,
         set_as_default: bool | Omit = omit,
         webhook_events: List[WebhookEvent] | Omit = omit,
+        webhook_signature_version: Literal["v1", "v1+v2", "v2"] | Omit = omit,
         webhook_url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -637,6 +668,19 @@ class AsyncSendersResource(AsyncAPIResource):
 
           webhook_events: Events to subscribe to.
 
+          webhook_signature_version: Which `X-Zavu-Signature` scheme this receiver is sent.
+
+              - `v1`: `v1=HMAC_SHA256(secret, body)`. The scheme used before this was
+                configurable. Existing webhooks stay on it until you move them.
+              - `v2`: `v2=HMAC_SHA256(secret, "{t}.{body}")`. The current scheme, and the
+                default for new senders. It signs the timestamp together with the body.
+              - `v1+v2`: both signatures, sharing one `t`. The migration setting: a receiver
+                reading either one works, so you can deploy and confirm your new verifier
+                before switching over.
+
+              Moving from `v1` straight to `v2` returns `400`. Set `v1+v2` first. See
+              https://docs.zavu.dev/guides/receiving-messages/signature-migration
+
           webhook_url: HTTPS URL for webhook events.
 
           extra_headers: Send extra headers
@@ -661,6 +705,7 @@ class AsyncSendersResource(AsyncAPIResource):
                     "phone_number": phone_number,
                     "set_as_default": set_as_default,
                     "webhook_events": webhook_events,
+                    "webhook_signature_version": webhook_signature_version,
                     "webhook_url": webhook_url,
                 },
                 sender_create_params.SenderCreateParams,
@@ -719,6 +764,7 @@ class AsyncSendersResource(AsyncAPIResource):
         set_as_default: bool | Omit = omit,
         webhook_active: bool | Omit = omit,
         webhook_events: List[WebhookEvent] | Omit = omit,
+        webhook_signature_version: Literal["v1", "v1+v2", "v2"] | Omit = omit,
         webhook_url: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -757,6 +803,19 @@ class AsyncSendersResource(AsyncAPIResource):
 
           webhook_events: Events to subscribe to.
 
+          webhook_signature_version: Which `X-Zavu-Signature` scheme this receiver is sent.
+
+              - `v1`: `v1=HMAC_SHA256(secret, body)`. The scheme used before this was
+                configurable. Existing webhooks stay on it until you move them.
+              - `v2`: `v2=HMAC_SHA256(secret, "{t}.{body}")`. The current scheme, and the
+                default for new senders. It signs the timestamp together with the body.
+              - `v1+v2`: both signatures, sharing one `t`. The migration setting: a receiver
+                reading either one works, so you can deploy and confirm your new verifier
+                before switching over.
+
+              Moving from `v1` straight to `v2` returns `400`. Set `v1+v2` first. See
+              https://docs.zavu.dev/guides/receiving-messages/signature-migration
+
           webhook_url: HTTPS URL for webhook events. Set to null to remove webhook.
 
           extra_headers: Send extra headers
@@ -784,6 +843,7 @@ class AsyncSendersResource(AsyncAPIResource):
                     "set_as_default": set_as_default,
                     "webhook_active": webhook_active,
                     "webhook_events": webhook_events,
+                    "webhook_signature_version": webhook_signature_version,
                     "webhook_url": webhook_url,
                 },
                 sender_update_params.SenderUpdateParams,
