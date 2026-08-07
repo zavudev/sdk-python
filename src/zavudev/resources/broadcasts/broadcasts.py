@@ -513,12 +513,27 @@ class BroadcastsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BroadcastSendResponse:
-        """Start sending the broadcast immediately or schedule for later.
+        """
+        Start sending the broadcast immediately or schedule for later.
 
-        Broadcasts go
-        through automated AI content review before sending. If the review passes, the
-        broadcast proceeds. If rejected, use PATCH to edit content, then call POST
-        /retry-review. Reserves the estimated cost from your balance.
+        **Verification is required to send, and there are two of them.** The team must
+        have completed both identity verification (KYC) and business verification (KYB);
+        passing one is not enough. Drafts can be created, edited and kept without
+        either. Every send path — dashboard, API and CLI alike — enforces both,
+        returning `403` with code `kyc_required` or `kyb_required` for whichever is
+        outstanding.
+
+        **Review depends on the channel, and cannot be bypassed.** A draft is submitted
+        to automated content review here; it does not go straight out. A WhatsApp
+        broadcast built on a Meta-approved template skips review (Meta already vetted
+        the content) and begins sending. An email broadcast sends as soon as the
+        automated review passes. Every other channel moves to `pending_admin_review` and
+        waits for a person. If the review rejects it, use PATCH to edit the content then
+        call POST /retry-review.
+
+        Calling this on a broadcast that is already `approved` or `scheduled` sends or
+        reschedules it directly, since it has already been reviewed. Reserves the
+        estimated cost from your balance.
 
         Args:
           scheduled_at: Schedule for future delivery. Omit to send immediately.
@@ -1003,12 +1018,27 @@ class AsyncBroadcastsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> BroadcastSendResponse:
-        """Start sending the broadcast immediately or schedule for later.
+        """
+        Start sending the broadcast immediately or schedule for later.
 
-        Broadcasts go
-        through automated AI content review before sending. If the review passes, the
-        broadcast proceeds. If rejected, use PATCH to edit content, then call POST
-        /retry-review. Reserves the estimated cost from your balance.
+        **Verification is required to send, and there are two of them.** The team must
+        have completed both identity verification (KYC) and business verification (KYB);
+        passing one is not enough. Drafts can be created, edited and kept without
+        either. Every send path — dashboard, API and CLI alike — enforces both,
+        returning `403` with code `kyc_required` or `kyb_required` for whichever is
+        outstanding.
+
+        **Review depends on the channel, and cannot be bypassed.** A draft is submitted
+        to automated content review here; it does not go straight out. A WhatsApp
+        broadcast built on a Meta-approved template skips review (Meta already vetted
+        the content) and begins sending. An email broadcast sends as soon as the
+        automated review passes. Every other channel moves to `pending_admin_review` and
+        waits for a person. If the review rejects it, use PATCH to edit the content then
+        call POST /retry-review.
+
+        Calling this on a broadcast that is already `approved` or `scheduled` sends or
+        reschedules it directly, since it has already been reviewed. Reserves the
+        estimated cost from your balance.
 
         Args:
           scheduled_at: Schedule for future delivery. Omit to send immediately.
