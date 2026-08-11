@@ -25,6 +25,7 @@ class Deployment(BaseModel):
     """Monotonically increasing deployment version, starting at 1."""
 
     bundle_bytes: Optional[int] = FieldInfo(alias="bundleBytes", default=None)
+    """Size of the built bundle in bytes. Null until the build finishes."""
 
     deployed_at: Optional[datetime] = FieldInfo(alias="deployedAt", default=None)
 
@@ -32,6 +33,7 @@ class Deployment(BaseModel):
     """Failure reason when status is 'failed'."""
 
     source_code_bytes: Optional[int] = FieldInfo(alias="sourceCodeBytes", default=None)
+    """Total size of the deployed source tree in bytes."""
 
 
 class FunctionDeployResponse(BaseModel):
