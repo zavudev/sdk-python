@@ -24,6 +24,15 @@ class Deployment(BaseModel):
     version: int
     """Monotonically increasing deployment version, starting at 1."""
 
+    build_logs: Optional[str] = FieldInfo(alias="buildLogs", default=None)
+    """
+    What the build printed: dependency installation, the bundler's output, and the
+    compiler's message when it failed. Returned when fetching a single deployment,
+    omitted from the list. Read this first when a deploy fails — `errorMessage` is
+    often the outer wrapper's summary, and the line that names the broken import or
+    the syntax error is here.
+    """
+
     bundle_bytes: Optional[int] = FieldInfo(alias="bundleBytes", default=None)
     """Size of the built bundle in bytes. Null until the build finishes."""
 
