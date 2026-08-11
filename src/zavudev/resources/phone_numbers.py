@@ -203,7 +203,10 @@ class PhoneNumbersResource(SyncAPIResource):
 
         Requires a paid plan: the Free plan cannot
         purchase phone numbers and receives `402` with code `paid_plan_required`. Paid
-        plans include the first US number at no charge.
+        plans include one US number at no charge. The included number is one per account
+        and is granted once: claiming it spends the benefit for good, so releasing that
+        number does not make another one free, and numbers the account already bought do
+        not consume it.
 
         Args:
           phone_number: Phone number in E.164 format.
@@ -540,7 +543,10 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
 
         Requires a paid plan: the Free plan cannot
         purchase phone numbers and receives `402` with code `paid_plan_required`. Paid
-        plans include the first US number at no charge.
+        plans include one US number at no charge. The included number is one per account
+        and is granted once: claiming it spends the benefit for good, so releasing that
+        number does not make another one free, and numbers the account already bought do
+        not consume it.
 
         Args:
           phone_number: Phone number in E.164 format.

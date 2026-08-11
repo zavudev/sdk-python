@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import List
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 from .webhook_event import WebhookEvent
@@ -64,6 +64,21 @@ class SenderCreateParams(TypedDict, total=False):
 
     webhook_events: Annotated[List[WebhookEvent], PropertyInfo(alias="webhookEvents")]
     """Events to subscribe to."""
+
+    webhook_signature_version: Annotated[Literal["v1", "v1+v2", "v2"], PropertyInfo(alias="webhookSignatureVersion")]
+    """Which `X-Zavu-Signature` scheme this receiver is sent.
+
+    - `v1`: `v1=HMAC_SHA256(secret, body)`. The scheme used before this was
+      configurable. Existing webhooks stay on it until you move them.
+    - `v2`: `v2=HMAC_SHA256(secret, "{t}.{body}")`. The current scheme, and the
+      default for new senders. It signs the timestamp together with the body.
+    - `v1+v2`: both signatures, sharing one `t`. The migration setting: a receiver
+      reading either one works, so you can deploy and confirm your new verifier
+      before switching over.
+
+    Moving from `v1` straight to `v2` returns `400`. Set `v1+v2` first. See
+    https://docs.zavu.dev/guides/receiving-messages/signature-migration
+    """
 
     webhook_url: Annotated[str, PropertyInfo(alias="webhookUrl")]
     """HTTPS URL for webhook events."""

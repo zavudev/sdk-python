@@ -42,6 +42,11 @@ class TestFunctions:
             slug="order-bot",
             dependencies={"openai": "^4.20.0"},
             description="Replies to order status questions on WhatsApp.",
+            entrypoint="index.ts",
+            files={
+                "index.ts": "import { formatOrder } from './lib/orders';\n\nexport default async function handler(event) {\n  return { statusCode: 200, body: formatOrder(event) };\n}\n",
+                "lib/orders.ts": "export function formatOrder(event) {\n  return JSON.stringify(event);\n}\n",
+            },
             http_enabled=True,
             memory_mb=128,
             runtime="nodejs24",
@@ -134,6 +139,11 @@ class TestFunctions:
         function = client.functions.update(
             function_id="functionId",
             dependencies={"foo": "string"},
+            entrypoint="index.ts",
+            files={
+                "index.ts": "import { formatOrder } from './lib/orders';\n\nexport default async function handler(event) {\n  return { statusCode: 200, body: formatOrder(event) };\n}\n",
+                "lib/orders.ts": "export function formatOrder(event) {\n  return JSON.stringify(event);\n}\n",
+            },
             http_enabled=True,
             source_code="sourceCode",
         )
@@ -229,6 +239,11 @@ class TestFunctions:
         function = client.functions.deploy(
             function_id="functionId",
             dependencies={"foo": "string"},
+            entrypoint="index.ts",
+            files={
+                "index.ts": "import { formatOrder } from './lib/orders';\n\nexport default async function handler(event) {\n  return { statusCode: 200, body: formatOrder(event) };\n}\n",
+                "lib/orders.ts": "export function formatOrder(event) {\n  return JSON.stringify(event);\n}\n",
+            },
             source_code="sourceCode",
         )
         assert_matches_type(FunctionDeployResponse, function, path=["response"])
@@ -387,6 +402,11 @@ class TestAsyncFunctions:
             slug="order-bot",
             dependencies={"openai": "^4.20.0"},
             description="Replies to order status questions on WhatsApp.",
+            entrypoint="index.ts",
+            files={
+                "index.ts": "import { formatOrder } from './lib/orders';\n\nexport default async function handler(event) {\n  return { statusCode: 200, body: formatOrder(event) };\n}\n",
+                "lib/orders.ts": "export function formatOrder(event) {\n  return JSON.stringify(event);\n}\n",
+            },
             http_enabled=True,
             memory_mb=128,
             runtime="nodejs24",
@@ -479,6 +499,11 @@ class TestAsyncFunctions:
         function = await async_client.functions.update(
             function_id="functionId",
             dependencies={"foo": "string"},
+            entrypoint="index.ts",
+            files={
+                "index.ts": "import { formatOrder } from './lib/orders';\n\nexport default async function handler(event) {\n  return { statusCode: 200, body: formatOrder(event) };\n}\n",
+                "lib/orders.ts": "export function formatOrder(event) {\n  return JSON.stringify(event);\n}\n",
+            },
             http_enabled=True,
             source_code="sourceCode",
         )
@@ -574,6 +599,11 @@ class TestAsyncFunctions:
         function = await async_client.functions.deploy(
             function_id="functionId",
             dependencies={"foo": "string"},
+            entrypoint="index.ts",
+            files={
+                "index.ts": "import { formatOrder } from './lib/orders';\n\nexport default async function handler(event) {\n  return { statusCode: 200, body: formatOrder(event) };\n}\n",
+                "lib/orders.ts": "export function formatOrder(event) {\n  return JSON.stringify(event);\n}\n",
+            },
             source_code="sourceCode",
         )
         assert_matches_type(FunctionDeployResponse, function, path=["response"])
