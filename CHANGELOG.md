@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.49.0 (2026-08-11)
+
+Full Changelog: [v0.48.0...v0.49.0](https://github.com/zavudev/sdk-python/compare/v0.48.0...v0.49.0)
+
+### Features
+
+* **api:** api update ([f90d54e](https://github.com/zavudev/sdk-python/commit/f90d54e6f49ebed82447a815d8c80aecc023b937))
+* **api:** api update ([6d5a3ca](https://github.com/zavudev/sdk-python/commit/6d5a3ca83b4b43226a3309ac2f0a95f88f155cf8))
+* **api:** api update ([9b7009e](https://github.com/zavudev/sdk-python/commit/9b7009ebf8feb54d716c24fec138eb8e06609b10))
+* **api:** api update ([4219934](https://github.com/zavudev/sdk-python/commit/4219934a39d21c244328b7f64ab0554669eb06df))
+* **api:** api update ([142b83f](https://github.com/zavudev/sdk-python/commit/142b83f6f2e703f635a1cbf83400af6fba5fc419))
+
 ## 0.48.0 (2026-08-05)
 
 Full Changelog: [v0.47.0...v0.48.0](https://github.com/zavudev/sdk-python/compare/v0.47.0...v0.48.0)
