@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.49.1 (2026-08-11)
+
+Full Changelog: [v0.49.0...v0.49.1](https://github.com/zavudev/sdk-python/compare/v0.49.0...v0.49.1)
+
+### Chores
+
+* update SDK settings ([c4ff5ba](https://github.com/zavudev/sdk-python/commit/c4ff5ba27a2f8bd92d3672e4745cdaa159e2dc6a))
+* update SDK settings ([5aa1269](https://github.com/zavudev/sdk-python/commit/5aa12698a45934c5c893ec2512137b4d10ae7cc6))
+
 ## 0.49.0 (2026-08-11)
 
 Full Changelog: [v0.48.0...v0.49.0](https://github.com/zavudev/sdk-python/compare/v0.48.0...v0.49.0)
