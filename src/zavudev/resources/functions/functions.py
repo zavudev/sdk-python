@@ -69,6 +69,8 @@ class FunctionsResource(SyncAPIResource):
         slug: str,
         dependencies: Dict[str, str] | Omit = omit,
         description: str | Omit = omit,
+        entrypoint: str | Omit = omit,
+        files: Dict[str, str] | Omit = omit,
         http_enabled: bool | Omit = omit,
         memory_mb: Literal[128, 256, 512, 1024] | Omit = omit,
         runtime: Literal["nodejs24"] | Omit = omit,
@@ -95,11 +97,24 @@ class FunctionsResource(SyncAPIResource):
 
           dependencies: npm dependencies. Keys are package names, values are semver ranges.
 
+          entrypoint: Which file in `files` is the entry point. Defaults to `index.ts`.
+
+          files: The project's source files, keyed by path relative to the project root (e.g.
+              `index.ts`, `lib/orders.ts`). Imports between them are resolved when the
+              function is built, so a function can be split across as many files as it needs.
+
+              Paths must be relative and use forward slashes; `..`, `node_modules/` and
+              `package.json` are rejected. npm packages are not uploaded here — declare them
+              under `dependencies` and Zavu installs them. Limits: 200 files and 900,000 bytes
+              for the whole tree.
+
           http_enabled: Whether to expose a public HTTPS URL for this function.
 
           runtime: Runtime the function is deployed on.
 
-          source_code: TypeScript source code for the function entry point (max ~900KB).
+          source_code: Shortcut for a single-file function: exactly equivalent to sending `files` with
+              one entry named after `entrypoint` (`index.ts` by default). Fully supported —
+              use whichever fits. If both are sent, `files` wins.
 
           timeout_sec: Per-invocation timeout in seconds. Event and cron invocations are asynchronous,
               so a long timeout only bounds cost; a tool called during a live conversation
@@ -122,6 +137,8 @@ class FunctionsResource(SyncAPIResource):
                     "slug": slug,
                     "dependencies": dependencies,
                     "description": description,
+                    "entrypoint": entrypoint,
+                    "files": files,
                     "http_enabled": http_enabled,
                     "memory_mb": memory_mb,
                     "runtime": runtime,
@@ -174,6 +191,8 @@ class FunctionsResource(SyncAPIResource):
         function_id: str,
         *,
         dependencies: Dict[str, str] | Omit = omit,
+        entrypoint: str | Omit = omit,
+        files: Dict[str, str] | Omit = omit,
         http_enabled: bool | Omit = omit,
         source_code: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -194,11 +213,24 @@ class FunctionsResource(SyncAPIResource):
         Args:
           dependencies: New dependency map (replaces existing dependencies).
 
+          entrypoint: Which file in `files` is the entry point. Defaults to `index.ts`.
+
+          files: The project's source files, keyed by path relative to the project root (e.g.
+              `index.ts`, `lib/orders.ts`). Imports between them are resolved when the
+              function is built, so a function can be split across as many files as it needs.
+
+              Paths must be relative and use forward slashes; `..`, `node_modules/` and
+              `package.json` are rejected. npm packages are not uploaded here — declare them
+              under `dependencies` and Zavu installs them. Limits: 200 files and 900,000 bytes
+              for the whole tree.
+
           http_enabled: Expose the function on its public HTTPS URL, or take it down. Applies to the
               already-deployed function without redeploying; the URL is returned as
               `publicUrl`.
 
-          source_code: New source code for the draft (replaces it).
+          source_code: Shortcut for a single-file function: exactly equivalent to sending `files` with
+              one entry named after `entrypoint` (`index.ts` by default). Fully supported —
+              use whichever fits. If both are sent, `files` wins.
 
           extra_headers: Send extra headers
 
@@ -215,6 +247,8 @@ class FunctionsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "dependencies": dependencies,
+                    "entrypoint": entrypoint,
+                    "files": files,
                     "http_enabled": http_enabled,
                     "source_code": source_code,
                 },
@@ -266,6 +300,8 @@ class FunctionsResource(SyncAPIResource):
         function_id: str,
         *,
         dependencies: Dict[str, str] | Omit = omit,
+        entrypoint: str | Omit = omit,
+        files: Dict[str, str] | Omit = omit,
         source_code: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -284,7 +320,20 @@ class FunctionsResource(SyncAPIResource):
         Args:
           dependencies: New dependency map (replaces existing dependencies).
 
-          source_code: New source code to publish (replaces the draft).
+          entrypoint: Which file in `files` is the entry point. Defaults to `index.ts`.
+
+          files: The project's source files, keyed by path relative to the project root (e.g.
+              `index.ts`, `lib/orders.ts`). Imports between them are resolved when the
+              function is built, so a function can be split across as many files as it needs.
+
+              Paths must be relative and use forward slashes; `..`, `node_modules/` and
+              `package.json` are rejected. npm packages are not uploaded here — declare them
+              under `dependencies` and Zavu installs them. Limits: 200 files and 900,000 bytes
+              for the whole tree.
+
+          source_code: Shortcut for a single-file function: exactly equivalent to sending `files` with
+              one entry named after `entrypoint` (`index.ts` by default). Fully supported —
+              use whichever fits. If both are sent, `files` wins.
 
           extra_headers: Send extra headers
 
@@ -301,6 +350,8 @@ class FunctionsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "dependencies": dependencies,
+                    "entrypoint": entrypoint,
+                    "files": files,
                     "source_code": source_code,
                 },
                 function_deploy_params.FunctionDeployParams,
@@ -434,6 +485,8 @@ class AsyncFunctionsResource(AsyncAPIResource):
         slug: str,
         dependencies: Dict[str, str] | Omit = omit,
         description: str | Omit = omit,
+        entrypoint: str | Omit = omit,
+        files: Dict[str, str] | Omit = omit,
         http_enabled: bool | Omit = omit,
         memory_mb: Literal[128, 256, 512, 1024] | Omit = omit,
         runtime: Literal["nodejs24"] | Omit = omit,
@@ -460,11 +513,24 @@ class AsyncFunctionsResource(AsyncAPIResource):
 
           dependencies: npm dependencies. Keys are package names, values are semver ranges.
 
+          entrypoint: Which file in `files` is the entry point. Defaults to `index.ts`.
+
+          files: The project's source files, keyed by path relative to the project root (e.g.
+              `index.ts`, `lib/orders.ts`). Imports between them are resolved when the
+              function is built, so a function can be split across as many files as it needs.
+
+              Paths must be relative and use forward slashes; `..`, `node_modules/` and
+              `package.json` are rejected. npm packages are not uploaded here — declare them
+              under `dependencies` and Zavu installs them. Limits: 200 files and 900,000 bytes
+              for the whole tree.
+
           http_enabled: Whether to expose a public HTTPS URL for this function.
 
           runtime: Runtime the function is deployed on.
 
-          source_code: TypeScript source code for the function entry point (max ~900KB).
+          source_code: Shortcut for a single-file function: exactly equivalent to sending `files` with
+              one entry named after `entrypoint` (`index.ts` by default). Fully supported —
+              use whichever fits. If both are sent, `files` wins.
 
           timeout_sec: Per-invocation timeout in seconds. Event and cron invocations are asynchronous,
               so a long timeout only bounds cost; a tool called during a live conversation
@@ -487,6 +553,8 @@ class AsyncFunctionsResource(AsyncAPIResource):
                     "slug": slug,
                     "dependencies": dependencies,
                     "description": description,
+                    "entrypoint": entrypoint,
+                    "files": files,
                     "http_enabled": http_enabled,
                     "memory_mb": memory_mb,
                     "runtime": runtime,
@@ -539,6 +607,8 @@ class AsyncFunctionsResource(AsyncAPIResource):
         function_id: str,
         *,
         dependencies: Dict[str, str] | Omit = omit,
+        entrypoint: str | Omit = omit,
+        files: Dict[str, str] | Omit = omit,
         http_enabled: bool | Omit = omit,
         source_code: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -559,11 +629,24 @@ class AsyncFunctionsResource(AsyncAPIResource):
         Args:
           dependencies: New dependency map (replaces existing dependencies).
 
+          entrypoint: Which file in `files` is the entry point. Defaults to `index.ts`.
+
+          files: The project's source files, keyed by path relative to the project root (e.g.
+              `index.ts`, `lib/orders.ts`). Imports between them are resolved when the
+              function is built, so a function can be split across as many files as it needs.
+
+              Paths must be relative and use forward slashes; `..`, `node_modules/` and
+              `package.json` are rejected. npm packages are not uploaded here — declare them
+              under `dependencies` and Zavu installs them. Limits: 200 files and 900,000 bytes
+              for the whole tree.
+
           http_enabled: Expose the function on its public HTTPS URL, or take it down. Applies to the
               already-deployed function without redeploying; the URL is returned as
               `publicUrl`.
 
-          source_code: New source code for the draft (replaces it).
+          source_code: Shortcut for a single-file function: exactly equivalent to sending `files` with
+              one entry named after `entrypoint` (`index.ts` by default). Fully supported —
+              use whichever fits. If both are sent, `files` wins.
 
           extra_headers: Send extra headers
 
@@ -580,6 +663,8 @@ class AsyncFunctionsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "dependencies": dependencies,
+                    "entrypoint": entrypoint,
+                    "files": files,
                     "http_enabled": http_enabled,
                     "source_code": source_code,
                 },
@@ -631,6 +716,8 @@ class AsyncFunctionsResource(AsyncAPIResource):
         function_id: str,
         *,
         dependencies: Dict[str, str] | Omit = omit,
+        entrypoint: str | Omit = omit,
+        files: Dict[str, str] | Omit = omit,
         source_code: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -649,7 +736,20 @@ class AsyncFunctionsResource(AsyncAPIResource):
         Args:
           dependencies: New dependency map (replaces existing dependencies).
 
-          source_code: New source code to publish (replaces the draft).
+          entrypoint: Which file in `files` is the entry point. Defaults to `index.ts`.
+
+          files: The project's source files, keyed by path relative to the project root (e.g.
+              `index.ts`, `lib/orders.ts`). Imports between them are resolved when the
+              function is built, so a function can be split across as many files as it needs.
+
+              Paths must be relative and use forward slashes; `..`, `node_modules/` and
+              `package.json` are rejected. npm packages are not uploaded here — declare them
+              under `dependencies` and Zavu installs them. Limits: 200 files and 900,000 bytes
+              for the whole tree.
+
+          source_code: Shortcut for a single-file function: exactly equivalent to sending `files` with
+              one entry named after `entrypoint` (`index.ts` by default). Fully supported —
+              use whichever fits. If both are sent, `files` wins.
 
           extra_headers: Send extra headers
 
@@ -666,6 +766,8 @@ class AsyncFunctionsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "dependencies": dependencies,
+                    "entrypoint": entrypoint,
+                    "files": files,
                     "source_code": source_code,
                 },
                 function_deploy_params.FunctionDeployParams,
