@@ -10,6 +10,7 @@ from zavudev.types import (
     MessageResponse,
     MessageStatus,
     MessageType,
+    MessageListAttachmentsResponse,
     MessageShowTypingResponse,
 )
 ```
@@ -18,6 +19,7 @@ Methods:
 
 - <code title="get /v1/messages/{messageId}">client.messages.<a href="./src/zavudev/resources/messages.py">retrieve</a>(message_id) -> <a href="./src/zavudev/types/message_response.py">MessageResponse</a></code>
 - <code title="get /v1/messages">client.messages.<a href="./src/zavudev/resources/messages.py">list</a>(\*\*<a href="src/zavudev/types/message_list_params.py">params</a>) -> <a href="./src/zavudev/types/message.py">SyncCursor[Message]</a></code>
+- <code title="get /v1/messages/{messageId}/attachments">client.messages.<a href="./src/zavudev/resources/messages.py">list_attachments</a>(message_id) -> <a href="./src/zavudev/types/message_list_attachments_response.py">MessageListAttachmentsResponse</a></code>
 - <code title="post /v1/messages/{messageId}/reactions">client.messages.<a href="./src/zavudev/resources/messages.py">react</a>(message_id, \*\*<a href="src/zavudev/types/message_react_params.py">params</a>) -> <a href="./src/zavudev/types/message_response.py">MessageResponse</a></code>
 - <code title="post /v1/messages">client.messages.<a href="./src/zavudev/resources/messages.py">send</a>(\*\*<a href="src/zavudev/types/message_send_params.py">params</a>) -> <a href="./src/zavudev/types/message_response.py">MessageResponse</a></code>
 - <code title="post /v1/messages/{messageId}/typing">client.messages.<a href="./src/zavudev/resources/messages.py">show_typing</a>(message_id) -> <a href="./src/zavudev/types/message_show_typing_response.py">MessageShowTypingResponse</a></code>
@@ -27,7 +29,7 @@ Methods:
 Types:
 
 ```python
-from zavudev.types import Template, WhatsappCategory
+from zavudev.types import Template, WhatsappCategory, TemplateSyncResponse
 ```
 
 Methods:
@@ -37,6 +39,7 @@ Methods:
 - <code title="get /v1/templates">client.templates.<a href="./src/zavudev/resources/templates.py">list</a>(\*\*<a href="src/zavudev/types/template_list_params.py">params</a>) -> <a href="./src/zavudev/types/template.py">SyncCursor[Template]</a></code>
 - <code title="delete /v1/templates/{templateId}">client.templates.<a href="./src/zavudev/resources/templates.py">delete</a>(template_id) -> None</code>
 - <code title="post /v1/templates/{templateId}/submit">client.templates.<a href="./src/zavudev/resources/templates.py">submit</a>(template_id, \*\*<a href="src/zavudev/types/template_submit_params.py">params</a>) -> <a href="./src/zavudev/types/template.py">Template</a></code>
+- <code title="post /v1/templates/sync">client.templates.<a href="./src/zavudev/resources/templates.py">sync</a>(\*\*<a href="src/zavudev/types/template_sync_params.py">params</a>) -> <a href="./src/zavudev/types/template_sync_response.py">TemplateSyncResponse</a></code>
 
 # Senders
 
@@ -140,18 +143,26 @@ from zavudev.types.senders.agent import (
     ToolCreateResponse,
     ToolRetrieveResponse,
     ToolUpdateResponse,
+    ToolListTestRunsResponse,
     ToolTestResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /v1/senders/{senderId}/agent/tools">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools.py">create</a>(sender_id, \*\*<a href="src/zavudev/types/senders/agent/tool_create_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/tool_create_response.py">ToolCreateResponse</a></code>
-- <code title="get /v1/senders/{senderId}/agent/tools/{toolId}">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools.py">retrieve</a>(tool_id, \*, sender_id) -> <a href="./src/zavudev/types/senders/agent/tool_retrieve_response.py">ToolRetrieveResponse</a></code>
-- <code title="patch /v1/senders/{senderId}/agent/tools/{toolId}">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools.py">update</a>(tool_id, \*, sender_id, \*\*<a href="src/zavudev/types/senders/agent/tool_update_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/tool_update_response.py">ToolUpdateResponse</a></code>
-- <code title="get /v1/senders/{senderId}/agent/tools">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools.py">list</a>(sender_id, \*\*<a href="src/zavudev/types/senders/agent/tool_list_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/agent_tool.py">SyncCursor[AgentTool]</a></code>
-- <code title="delete /v1/senders/{senderId}/agent/tools/{toolId}">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools.py">delete</a>(tool_id, \*, sender_id) -> None</code>
-- <code title="post /v1/senders/{senderId}/agent/tools/{toolId}/test">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools.py">test</a>(tool_id, \*, sender_id, \*\*<a href="src/zavudev/types/senders/agent/tool_test_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/tool_test_response.py">ToolTestResponse</a></code>
+- <code title="post /v1/senders/{senderId}/agent/tools">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools/tools.py">create</a>(sender_id, \*\*<a href="src/zavudev/types/senders/agent/tool_create_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/tool_create_response.py">ToolCreateResponse</a></code>
+- <code title="get /v1/senders/{senderId}/agent/tools/{toolId}">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools/tools.py">retrieve</a>(tool_id, \*, sender_id) -> <a href="./src/zavudev/types/senders/agent/tool_retrieve_response.py">ToolRetrieveResponse</a></code>
+- <code title="patch /v1/senders/{senderId}/agent/tools/{toolId}">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools/tools.py">update</a>(tool_id, \*, sender_id, \*\*<a href="src/zavudev/types/senders/agent/tool_update_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/tool_update_response.py">ToolUpdateResponse</a></code>
+- <code title="get /v1/senders/{senderId}/agent/tools">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools/tools.py">list</a>(sender_id, \*\*<a href="src/zavudev/types/senders/agent/tool_list_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/agent_tool.py">SyncCursor[AgentTool]</a></code>
+- <code title="delete /v1/senders/{senderId}/agent/tools/{toolId}">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools/tools.py">delete</a>(tool_id, \*, sender_id) -> None</code>
+- <code title="get /v1/senders/{senderId}/agent/tools/{toolId}/test-runs">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools/tools.py">list_test_runs</a>(tool_id, \*, sender_id, \*\*<a href="src/zavudev/types/senders/agent/tool_list_test_runs_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/tool_list_test_runs_response.py">ToolListTestRunsResponse</a></code>
+- <code title="post /v1/senders/{senderId}/agent/tools/{toolId}/test">client.senders.agent.tools.<a href="./src/zavudev/resources/senders/agent/tools/tools.py">test</a>(tool_id, \*, sender_id, \*\*<a href="src/zavudev/types/senders/agent/tool_test_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/tool_test_response.py">ToolTestResponse</a></code>
+
+#### Webhook
+
+Methods:
+
+- <code title="post /v1/senders/{senderId}/agent/tools/{toolId}/webhook/secret">client.senders.agent.tools.webhook.<a href="./src/zavudev/resources/senders/agent/tools/webhook.py">rotate_secret</a>(tool_id, \*, sender_id) -> <a href="./src/zavudev/types/webhook_secret_response.py">WebhookSecretResponse</a></code>
 
 ### KnowledgeBases
 
@@ -180,7 +191,11 @@ Methods:
 Types:
 
 ```python
-from zavudev.types.senders.agent.knowledge_bases import DocumentCreateResponse
+from zavudev.types.senders.agent.knowledge_bases import (
+    DocumentCreateResponse,
+    DocumentRetrieveDocumentResponse,
+    DocumentUpdateDocumentResponse,
+)
 ```
 
 Methods:
@@ -188,6 +203,8 @@ Methods:
 - <code title="post /v1/senders/{senderId}/agent/knowledge-bases/{kbId}/documents">client.senders.agent.knowledge_bases.documents.<a href="./src/zavudev/resources/senders/agent/knowledge_bases/documents.py">create</a>(kb_id, \*, sender_id, \*\*<a href="src/zavudev/types/senders/agent/knowledge_bases/document_create_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/knowledge_bases/document_create_response.py">DocumentCreateResponse</a></code>
 - <code title="get /v1/senders/{senderId}/agent/knowledge-bases/{kbId}/documents">client.senders.agent.knowledge_bases.documents.<a href="./src/zavudev/resources/senders/agent/knowledge_bases/documents.py">list</a>(kb_id, \*, sender_id, \*\*<a href="src/zavudev/types/senders/agent/knowledge_bases/document_list_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/agent_document.py">SyncCursor[AgentDocument]</a></code>
 - <code title="delete /v1/senders/{senderId}/agent/knowledge-bases/{kbId}/documents/{docId}">client.senders.agent.knowledge_bases.documents.<a href="./src/zavudev/resources/senders/agent/knowledge_bases/documents.py">delete</a>(doc_id, \*, sender_id, kb_id) -> None</code>
+- <code title="get /v1/senders/{senderId}/agent/knowledge-bases/{kbId}/documents/{docId}">client.senders.agent.knowledge_bases.documents.<a href="./src/zavudev/resources/senders/agent/knowledge_bases/documents.py">retrieve_document</a>(doc_id, \*, sender_id, kb_id) -> <a href="./src/zavudev/types/senders/agent/knowledge_bases/document_retrieve_document_response.py">DocumentRetrieveDocumentResponse</a></code>
+- <code title="patch /v1/senders/{senderId}/agent/knowledge-bases/{kbId}/documents/{docId}">client.senders.agent.knowledge_bases.documents.<a href="./src/zavudev/resources/senders/agent/knowledge_bases/documents.py">update_document</a>(doc_id, \*, sender_id, kb_id, \*\*<a href="src/zavudev/types/senders/agent/knowledge_bases/document_update_document_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/knowledge_bases/document_update_document_response.py">DocumentUpdateDocumentResponse</a></code>
 
 ## WhatsappSync
 
@@ -209,6 +226,19 @@ Methods:
 - <code title="get /v1/senders/{senderId}/whatsapp-sync">client.senders.whatsapp_sync.<a href="./src/zavudev/resources/senders/whatsapp_sync.py">retrieve</a>(sender_id) -> <a href="./src/zavudev/types/senders/whatsapp_sync_retrieve_response.py">WhatsappSyncRetrieveResponse</a></code>
 - <code title="post /v1/senders/{senderId}/whatsapp-sync/contacts">client.senders.whatsapp_sync.<a href="./src/zavudev/resources/senders/whatsapp_sync.py">start_contacts_sync</a>(sender_id) -> <a href="./src/zavudev/types/senders/whatsapp_sync_start_contacts_sync_response.py">WhatsappSyncStartContactsSyncResponse</a></code>
 - <code title="post /v1/senders/{senderId}/whatsapp-sync/history">client.senders.whatsapp_sync.<a href="./src/zavudev/resources/senders/whatsapp_sync.py">start_history_sync</a>(sender_id) -> <a href="./src/zavudev/types/senders/whatsapp_sync_start_history_sync_response.py">WhatsappSyncStartHistorySyncResponse</a></code>
+
+## Telegram
+
+Types:
+
+```python
+from zavudev.types.senders import TelegramConnectResponse
+```
+
+Methods:
+
+- <code title="post /v1/senders/{senderId}/telegram">client.senders.telegram.<a href="./src/zavudev/resources/senders/telegram.py">connect</a>(sender_id, \*\*<a href="src/zavudev/types/senders/telegram_connect_params.py">params</a>) -> <a href="./src/zavudev/types/senders/telegram_connect_response.py">TelegramConnectResponse</a></code>
+- <code title="delete /v1/senders/{senderId}/telegram">client.senders.telegram.<a href="./src/zavudev/resources/senders/telegram.py">disconnect</a>(sender_id) -> None</code>
 
 # Contacts
 
@@ -306,11 +336,12 @@ Methods:
 Types:
 
 ```python
-from zavudev.types import LineType, IntrospectValidatePhoneResponse
+from zavudev.types import LineType, IntrospectValidateEmailResponse, IntrospectValidatePhoneResponse
 ```
 
 Methods:
 
+- <code title="post /v1/introspect/email">client.introspect.<a href="./src/zavudev/resources/introspect.py">validate_email</a>(\*\*<a href="src/zavudev/types/introspect_validate_email_params.py">params</a>) -> <a href="./src/zavudev/types/introspect_validate_email_response.py">IntrospectValidateEmailResponse</a></code>
 - <code title="post /v1/introspect/phone">client.introspect.<a href="./src/zavudev/resources/introspect.py">validate_phone</a>(\*\*<a href="src/zavudev/types/introspect_validate_phone_params.py">params</a>) -> <a href="./src/zavudev/types/introspect_validate_phone_response.py">IntrospectValidatePhoneResponse</a></code>
 
 # PhoneNumbers
@@ -409,11 +440,17 @@ Methods:
 Types:
 
 ```python
-from zavudev.types import VerifiedURL, URLRetrieveDetailsResponse, URLSubmitForVerificationResponse
+from zavudev.types import (
+    VerifiedURL,
+    URLEscalateResponse,
+    URLRetrieveDetailsResponse,
+    URLSubmitForVerificationResponse,
+)
 ```
 
 Methods:
 
+- <code title="post /v1/urls/{urlId}/escalate">client.urls.<a href="./src/zavudev/resources/urls.py">escalate</a>(url_id, \*\*<a href="src/zavudev/types/url_escalate_params.py">params</a>) -> <a href="./src/zavudev/types/url_escalate_response.py">URLEscalateResponse</a></code>
 - <code title="get /v1/urls">client.urls.<a href="./src/zavudev/resources/urls.py">list_verified</a>(\*\*<a href="src/zavudev/types/url_list_verified_params.py">params</a>) -> <a href="./src/zavudev/types/verified_url.py">SyncCursor[VerifiedURL]</a></code>
 - <code title="get /v1/urls/{urlId}">client.urls.<a href="./src/zavudev/resources/urls.py">retrieve_details</a>(url_id) -> <a href="./src/zavudev/types/url_retrieve_details_response.py">URLRetrieveDetailsResponse</a></code>
 - <code title="post /v1/urls">client.urls.<a href="./src/zavudev/resources/urls.py">submit_for_verification</a>(\*\*<a href="src/zavudev/types/url_submit_for_verification_params.py">params</a>) -> <a href="./src/zavudev/types/url_submit_for_verification_response.py">URLSubmitForVerificationResponse</a></code>
@@ -564,6 +601,9 @@ from zavudev.types import (
     FunctionDeleteResponse,
     FunctionDeployResponse,
     FunctionGetDeploymentResponse,
+    FunctionListDeploymentsResponse,
+    FunctionListEventTypesResponse,
+    FunctionRollbackDeploymentResponse,
     FunctionTailLogsResponse,
 )
 ```
@@ -576,6 +616,9 @@ Methods:
 - <code title="delete /v1/functions/{functionId}">client.functions.<a href="./src/zavudev/resources/functions/functions.py">delete</a>(function_id) -> <a href="./src/zavudev/types/function_delete_response.py">FunctionDeleteResponse</a></code>
 - <code title="post /v1/functions/{functionId}/deploy">client.functions.<a href="./src/zavudev/resources/functions/functions.py">deploy</a>(function_id, \*\*<a href="src/zavudev/types/function_deploy_params.py">params</a>) -> <a href="./src/zavudev/types/function_deploy_response.py">FunctionDeployResponse</a></code>
 - <code title="get /v1/functions/deployments/{deploymentId}">client.functions.<a href="./src/zavudev/resources/functions/functions.py">get_deployment</a>(deployment_id) -> <a href="./src/zavudev/types/function_get_deployment_response.py">FunctionGetDeploymentResponse</a></code>
+- <code title="get /v1/functions/{functionId}/deployments">client.functions.<a href="./src/zavudev/resources/functions/functions.py">list_deployments</a>(function_id, \*\*<a href="src/zavudev/types/function_list_deployments_params.py">params</a>) -> <a href="./src/zavudev/types/function_list_deployments_response.py">FunctionListDeploymentsResponse</a></code>
+- <code title="get /v1/functions/event-types">client.functions.<a href="./src/zavudev/resources/functions/functions.py">list_event_types</a>() -> <a href="./src/zavudev/types/function_list_event_types_response.py">FunctionListEventTypesResponse</a></code>
+- <code title="post /v1/functions/{functionId}/rollback">client.functions.<a href="./src/zavudev/resources/functions/functions.py">rollback_deployment</a>(function_id, \*\*<a href="src/zavudev/types/function_rollback_deployment_params.py">params</a>) -> <a href="./src/zavudev/types/function_rollback_deployment_response.py">FunctionRollbackDeploymentResponse</a></code>
 - <code title="get /v1/functions/{functionId}/logs">client.functions.<a href="./src/zavudev/resources/functions/functions.py">tail_logs</a>(function_id, \*\*<a href="src/zavudev/types/function_tail_logs_params.py">params</a>) -> <a href="./src/zavudev/types/function_tail_logs_response.py">FunctionTailLogsResponse</a></code>
 
 ## Secrets
@@ -591,3 +634,153 @@ Methods:
 - <code title="get /v1/functions/{functionId}/secrets">client.functions.secrets.<a href="./src/zavudev/resources/functions/secrets.py">list</a>(function_id) -> <a href="./src/zavudev/types/functions/secret_list_response.py">SecretListResponse</a></code>
 - <code title="put /v1/functions/{functionId}/secrets/{key}">client.functions.secrets.<a href="./src/zavudev/resources/functions/secrets.py">set</a>(key, \*, function_id, \*\*<a href="src/zavudev/types/functions/secret_set_params.py">params</a>) -> object</code>
 - <code title="delete /v1/functions/{functionId}/secrets/{key}">client.functions.secrets.<a href="./src/zavudev/resources/functions/secrets.py">unset</a>(key, \*, function_id) -> None</code>
+
+## Triggers
+
+Types:
+
+```python
+from zavudev.types.functions import (
+    TriggerCreateResponse,
+    TriggerUpdateResponse,
+    TriggerListResponse,
+)
+```
+
+Methods:
+
+- <code title="post /v1/functions/{functionId}/triggers">client.functions.triggers.<a href="./src/zavudev/resources/functions/triggers.py">create</a>(function_id, \*\*<a href="src/zavudev/types/functions/trigger_create_params.py">params</a>) -> <a href="./src/zavudev/types/functions/trigger_create_response.py">TriggerCreateResponse</a></code>
+- <code title="patch /v1/functions/triggers/{triggerId}">client.functions.triggers.<a href="./src/zavudev/resources/functions/triggers.py">update</a>(trigger_id, \*\*<a href="src/zavudev/types/functions/trigger_update_params.py">params</a>) -> <a href="./src/zavudev/types/functions/trigger_update_response.py">TriggerUpdateResponse</a></code>
+- <code title="get /v1/functions/{functionId}/triggers">client.functions.triggers.<a href="./src/zavudev/resources/functions/triggers.py">list</a>(function_id) -> <a href="./src/zavudev/types/functions/trigger_list_response.py">TriggerListResponse</a></code>
+- <code title="delete /v1/functions/triggers/{triggerId}">client.functions.triggers.<a href="./src/zavudev/resources/functions/triggers.py">delete</a>(trigger_id) -> None</code>
+
+## GitLink
+
+Types:
+
+```python
+from zavudev.types.functions import (
+    GitLinkRetrieveResponse,
+    GitLinkUpdateResponse,
+    GitLinkDeployNowResponse,
+    GitLinkLinkResponse,
+)
+```
+
+Methods:
+
+- <code title="get /v1/functions/{functionId}/git-link">client.functions.git_link.<a href="./src/zavudev/resources/functions/git_link.py">retrieve</a>(function_id) -> <a href="./src/zavudev/types/functions/git_link_retrieve_response.py">GitLinkRetrieveResponse</a></code>
+- <code title="patch /v1/functions/{functionId}/git-link">client.functions.git_link.<a href="./src/zavudev/resources/functions/git_link.py">update</a>(function_id, \*\*<a href="src/zavudev/types/functions/git_link_update_params.py">params</a>) -> <a href="./src/zavudev/types/functions/git_link_update_response.py">GitLinkUpdateResponse</a></code>
+- <code title="post /v1/functions/{functionId}/git-link/deploy">client.functions.git_link.<a href="./src/zavudev/resources/functions/git_link.py">deploy_now</a>(function_id) -> <a href="./src/zavudev/types/functions/git_link_deploy_now_response.py">GitLinkDeployNowResponse</a></code>
+- <code title="post /v1/functions/{functionId}/git-link">client.functions.git_link.<a href="./src/zavudev/resources/functions/git_link.py">link</a>(function_id, \*\*<a href="src/zavudev/types/functions/git_link_link_params.py">params</a>) -> <a href="./src/zavudev/types/functions/git_link_link_response.py">GitLinkLinkResponse</a></code>
+- <code title="delete /v1/functions/{functionId}/git-link">client.functions.git_link.<a href="./src/zavudev/resources/functions/git_link.py">unlink</a>(function_id) -> None</code>
+
+# Conversations
+
+Types:
+
+```python
+from zavudev.types import (
+    ConversationRetrieveResponse,
+    ConversationListResponse,
+    ConversationMarkAsReadResponse,
+)
+```
+
+Methods:
+
+- <code title="get /v1/conversations/{conversationId}">client.conversations.<a href="./src/zavudev/resources/conversations.py">retrieve</a>(conversation_id) -> <a href="./src/zavudev/types/conversation_retrieve_response.py">ConversationRetrieveResponse</a></code>
+- <code title="get /v1/conversations">client.conversations.<a href="./src/zavudev/resources/conversations.py">list</a>(\*\*<a href="src/zavudev/types/conversation_list_params.py">params</a>) -> <a href="./src/zavudev/types/conversation_list_response.py">SyncCursor[ConversationListResponse]</a></code>
+- <code title="get /v1/conversations/{conversationId}/messages">client.conversations.<a href="./src/zavudev/resources/conversations.py">list_messages</a>(conversation_id, \*\*<a href="src/zavudev/types/conversation_list_messages_params.py">params</a>) -> <a href="./src/zavudev/types/message.py">SyncCursor[Message]</a></code>
+- <code title="post /v1/conversations/{conversationId}/read">client.conversations.<a href="./src/zavudev/resources/conversations.py">mark_as_read</a>(conversation_id) -> <a href="./src/zavudev/types/conversation_mark_as_read_response.py">ConversationMarkAsReadResponse</a></code>
+
+# Calls
+
+Types:
+
+```python
+from zavudev.types import (
+    CallCreateResponse,
+    CallRetrieveResponse,
+    CallListResponse,
+    CallHangupResponse,
+)
+```
+
+Methods:
+
+- <code title="post /v1/calls">client.calls.<a href="./src/zavudev/resources/calls.py">create</a>(\*\*<a href="src/zavudev/types/call_create_params.py">params</a>) -> <a href="./src/zavudev/types/call_create_response.py">CallCreateResponse</a></code>
+- <code title="get /v1/calls/{callId}">client.calls.<a href="./src/zavudev/resources/calls.py">retrieve</a>(call_id) -> <a href="./src/zavudev/types/call_retrieve_response.py">CallRetrieveResponse</a></code>
+- <code title="get /v1/calls">client.calls.<a href="./src/zavudev/resources/calls.py">list</a>(\*\*<a href="src/zavudev/types/call_list_params.py">params</a>) -> <a href="./src/zavudev/types/call_list_response.py">SyncCursor[CallListResponse]</a></code>
+- <code title="post /v1/calls/{callId}/hangup">client.calls.<a href="./src/zavudev/resources/calls.py">hangup</a>(call_id) -> <a href="./src/zavudev/types/call_hangup_response.py">CallHangupResponse</a></code>
+
+# AgentTemplates
+
+Types:
+
+```python
+from zavudev.types import AgentTemplateRetrieveResponse, AgentTemplateListResponse
+```
+
+Methods:
+
+- <code title="get /v1/agent-templates/{templateId}">client.agent_templates.<a href="./src/zavudev/resources/agent_templates.py">retrieve</a>(template_id) -> <a href="./src/zavudev/types/agent_template_retrieve_response.py">AgentTemplateRetrieveResponse</a></code>
+- <code title="get /v1/agent-templates">client.agent_templates.<a href="./src/zavudev/resources/agent_templates.py">list</a>() -> <a href="./src/zavudev/types/agent_template_list_response.py">AgentTemplateListResponse</a></code>
+
+# EmailDomains
+
+Types:
+
+```python
+from zavudev.types import (
+    EmailDomainCreateResponse,
+    EmailDomainRetrieveResponse,
+    EmailDomainListResponse,
+    EmailDomainVerifyResponse,
+)
+```
+
+Methods:
+
+- <code title="post /v1/email-domains">client.email_domains.<a href="./src/zavudev/resources/email_domains.py">create</a>(\*\*<a href="src/zavudev/types/email_domain_create_params.py">params</a>) -> <a href="./src/zavudev/types/email_domain_create_response.py">EmailDomainCreateResponse</a></code>
+- <code title="get /v1/email-domains/{domainId}">client.email_domains.<a href="./src/zavudev/resources/email_domains.py">retrieve</a>(domain_id) -> <a href="./src/zavudev/types/email_domain_retrieve_response.py">EmailDomainRetrieveResponse</a></code>
+- <code title="get /v1/email-domains">client.email_domains.<a href="./src/zavudev/resources/email_domains.py">list</a>() -> <a href="./src/zavudev/types/email_domain_list_response.py">EmailDomainListResponse</a></code>
+- <code title="delete /v1/email-domains/{domainId}">client.email_domains.<a href="./src/zavudev/resources/email_domains.py">delete</a>(domain_id) -> None</code>
+- <code title="post /v1/email-domains/{domainId}/verify">client.email_domains.<a href="./src/zavudev/resources/email_domains.py">verify</a>(domain_id) -> <a href="./src/zavudev/types/email_domain_verify_response.py">EmailDomainVerifyResponse</a></code>
+
+# Agents
+
+Types:
+
+```python
+from zavudev.types import (
+    AgentCreateResponse,
+    AgentRetrieveResponse,
+    AgentUpdateResponse,
+    AgentListVoicesResponse,
+    AgentTestResponse,
+)
+```
+
+Methods:
+
+- <code title="post /v1/agents">client.agents.<a href="./src/zavudev/resources/agents/agents.py">create</a>(\*\*<a href="src/zavudev/types/agent_create_params.py">params</a>) -> <a href="./src/zavudev/types/agent_create_response.py">AgentCreateResponse</a></code>
+- <code title="get /v1/agents/{agentId}">client.agents.<a href="./src/zavudev/resources/agents/agents.py">retrieve</a>(agent_id) -> <a href="./src/zavudev/types/agent_retrieve_response.py">AgentRetrieveResponse</a></code>
+- <code title="patch /v1/agents/{agentId}">client.agents.<a href="./src/zavudev/resources/agents/agents.py">update</a>(agent_id, \*\*<a href="src/zavudev/types/agent_update_params.py">params</a>) -> <a href="./src/zavudev/types/agent_update_response.py">AgentUpdateResponse</a></code>
+- <code title="get /v1/agents">client.agents.<a href="./src/zavudev/resources/agents/agents.py">list</a>(\*\*<a href="src/zavudev/types/agent_list_params.py">params</a>) -> <a href="./src/zavudev/types/senders/agent/agent.py">SyncCursor[Agent]</a></code>
+- <code title="delete /v1/agents/{agentId}">client.agents.<a href="./src/zavudev/resources/agents/agents.py">delete</a>(agent_id) -> None</code>
+- <code title="get /v1/agents/voices">client.agents.<a href="./src/zavudev/resources/agents/agents.py">list_voices</a>(\*\*<a href="src/zavudev/types/agent_list_voices_params.py">params</a>) -> <a href="./src/zavudev/types/agent_list_voices_response.py">AgentListVoicesResponse</a></code>
+- <code title="post /v1/agents/{agentId}/test">client.agents.<a href="./src/zavudev/resources/agents/agents.py">test</a>(agent_id, \*\*<a href="src/zavudev/types/agent_test_params.py">params</a>) -> <a href="./src/zavudev/types/agent_test_response.py">AgentTestResponse</a></code>
+
+## Senders
+
+Types:
+
+```python
+from zavudev.types.agents import SenderConnectResponse
+```
+
+Methods:
+
+- <code title="post /v1/agents/{agentId}/senders">client.agents.senders.<a href="./src/zavudev/resources/agents/senders.py">connect</a>(agent_id, \*\*<a href="src/zavudev/types/agents/sender_connect_params.py">params</a>) -> <a href="./src/zavudev/types/agents/sender_connect_response.py">SenderConnectResponse</a></code>
+- <code title="delete /v1/agents/{agentId}/senders/{senderId}">client.agents.senders.<a href="./src/zavudev/resources/agents/senders.py">disconnect</a>(sender_id, \*, agent_id) -> None</code>

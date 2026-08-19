@@ -26,6 +26,7 @@ from ..types.message_type import MessageType
 from ..types.message_response import MessageResponse
 from ..types.message_content_param import MessageContentParam
 from ..types.message_show_typing_response import MessageShowTypingResponse
+from ..types.message_list_attachments_response import MessageListAttachmentsResponse
 
 __all__ = ["MessagesResource", "AsyncMessagesResource"]
 
@@ -135,6 +136,44 @@ class MessagesResource(SyncAPIResource):
                 ),
             ),
             model=Message,
+        )
+
+    def list_attachments(
+        self,
+        message_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MessageListAttachmentsResponse:
+        """
+        List the stored file attachments for an email message and get a short-lived
+        signed `downloadUrl` for each. Works for both inbound emails (received via
+        `message.inbound`) and outbound emails you sent with attachments. Messages
+        without stored attachments (including SMS, WhatsApp, and other channels) return
+        an empty list. Each `downloadUrl` is generated fresh per request and expires —
+        fetch the file promptly and do not cache the URL.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not message_id:
+            raise ValueError(f"Expected a non-empty value for `message_id` but received {message_id!r}")
+        return self._get(
+            path_template("/v1/messages/{message_id}/attachments", message_id=message_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MessageListAttachmentsResponse,
         )
 
     def react(
@@ -460,6 +499,44 @@ class AsyncMessagesResource(AsyncAPIResource):
             model=Message,
         )
 
+    async def list_attachments(
+        self,
+        message_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MessageListAttachmentsResponse:
+        """
+        List the stored file attachments for an email message and get a short-lived
+        signed `downloadUrl` for each. Works for both inbound emails (received via
+        `message.inbound`) and outbound emails you sent with attachments. Messages
+        without stored attachments (including SMS, WhatsApp, and other channels) return
+        an empty list. Each `downloadUrl` is generated fresh per request and expires —
+        fetch the file promptly and do not cache the URL.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not message_id:
+            raise ValueError(f"Expected a non-empty value for `message_id` but received {message_id!r}")
+        return await self._get(
+            path_template("/v1/messages/{message_id}/attachments", message_id=message_id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MessageListAttachmentsResponse,
+        )
+
     async def react(
         self,
         message_id: str,
@@ -686,6 +763,9 @@ class MessagesResourceWithRawResponse:
         self.list = to_raw_response_wrapper(
             messages.list,
         )
+        self.list_attachments = to_raw_response_wrapper(
+            messages.list_attachments,
+        )
         self.react = to_raw_response_wrapper(
             messages.react,
         )
@@ -706,6 +786,9 @@ class AsyncMessagesResourceWithRawResponse:
         )
         self.list = async_to_raw_response_wrapper(
             messages.list,
+        )
+        self.list_attachments = async_to_raw_response_wrapper(
+            messages.list_attachments,
         )
         self.react = async_to_raw_response_wrapper(
             messages.react,
@@ -728,6 +811,9 @@ class MessagesResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             messages.list,
         )
+        self.list_attachments = to_streamed_response_wrapper(
+            messages.list_attachments,
+        )
         self.react = to_streamed_response_wrapper(
             messages.react,
         )
@@ -748,6 +834,9 @@ class AsyncMessagesResourceWithStreamingResponse:
         )
         self.list = async_to_streamed_response_wrapper(
             messages.list,
+        )
+        self.list_attachments = async_to_streamed_response_wrapper(
+            messages.list_attachments,
         )
         self.react = async_to_streamed_response_wrapper(
             messages.react,
