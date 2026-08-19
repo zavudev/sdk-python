@@ -13,6 +13,7 @@ from zavudev.types import (
     Message,
     MessageResponse,
     MessageShowTypingResponse,
+    MessageListAttachmentsResponse,
 )
 from zavudev.pagination import SyncCursor, AsyncCursor
 
@@ -103,6 +104,48 @@ class TestMessages:
             assert_matches_type(SyncCursor[Message], message, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_list_attachments(self, client: Zavudev) -> None:
+        message = client.messages.list_attachments(
+            "messageId",
+        )
+        assert_matches_type(MessageListAttachmentsResponse, message, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_list_attachments(self, client: Zavudev) -> None:
+        response = client.messages.with_raw_response.list_attachments(
+            "messageId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        message = response.parse()
+        assert_matches_type(MessageListAttachmentsResponse, message, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_list_attachments(self, client: Zavudev) -> None:
+        with client.messages.with_streaming_response.list_attachments(
+            "messageId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            message = response.parse()
+            assert_matches_type(MessageListAttachmentsResponse, message, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_list_attachments(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_id` but received ''"):
+            client.messages.with_raw_response.list_attachments(
+                "",
+            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -427,6 +470,48 @@ class TestAsyncMessages:
             assert_matches_type(AsyncCursor[Message], message, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_list_attachments(self, async_client: AsyncZavudev) -> None:
+        message = await async_client.messages.list_attachments(
+            "messageId",
+        )
+        assert_matches_type(MessageListAttachmentsResponse, message, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_list_attachments(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.messages.with_raw_response.list_attachments(
+            "messageId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        message = await response.parse()
+        assert_matches_type(MessageListAttachmentsResponse, message, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_list_attachments(self, async_client: AsyncZavudev) -> None:
+        async with async_client.messages.with_streaming_response.list_attachments(
+            "messageId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            message = await response.parse()
+            assert_matches_type(MessageListAttachmentsResponse, message, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_list_attachments(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `message_id` but received ''"):
+            await async_client.messages.with_raw_response.list_attachments(
+                "",
+            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize

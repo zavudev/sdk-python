@@ -3,4 +3,15 @@
 from __future__ import annotations
 
 from .secret_set_params import SecretSetParams as SecretSetParams
+from .git_link_link_params import GitLinkLinkParams as GitLinkLinkParams
 from .secret_list_response import SecretListResponse as SecretListResponse
+from .trigger_create_params import TriggerCreateParams as TriggerCreateParams
+from .trigger_list_response import TriggerListResponse as TriggerListResponse
+from .trigger_update_params import TriggerUpdateParams as TriggerUpdateParams
+from .git_link_link_response import GitLinkLinkResponse as GitLinkLinkResponse
+from .git_link_update_params import GitLinkUpdateParams as GitLinkUpdateParams
+from .trigger_create_response import TriggerCreateResponse as TriggerCreateResponse
+from .trigger_update_response import TriggerUpdateResponse as TriggerUpdateResponse
+from .git_link_update_response import GitLinkUpdateResponse as GitLinkUpdateResponse
+from .git_link_retrieve_response import GitLinkRetrieveResponse as GitLinkRetrieveResponse
+from .git_link_deploy_now_response import GitLinkDeployNowResponse as GitLinkDeployNowResponse

@@ -38,6 +38,8 @@ if TYPE_CHECKING:
     from .resources import (
         me,
         urls,
+        calls,
+        agents,
         balance,
         senders,
         contacts,
@@ -50,18 +52,26 @@ if TYPE_CHECKING:
         invitations,
         number_10dlc,
         sub_accounts,
+        conversations,
+        email_domains,
         phone_numbers,
+        agent_templates,
         regulatory_documents,
     )
     from .resources.me import MeResource, AsyncMeResource
     from .resources.urls import URLsResource, AsyncURLsResource
+    from .resources.calls import CallsResource, AsyncCallsResource
     from .resources.balance import BalanceResource, AsyncBalanceResource
     from .resources.messages import MessagesResource, AsyncMessagesResource
     from .resources.addresses import AddressesResource, AsyncAddressesResource
     from .resources.templates import TemplatesResource, AsyncTemplatesResource
     from .resources.introspect import IntrospectResource, AsyncIntrospectResource
     from .resources.invitations import InvitationsResource, AsyncInvitationsResource
+    from .resources.agents.agents import AgentsResource, AsyncAgentsResource
+    from .resources.conversations import ConversationsResource, AsyncConversationsResource
+    from .resources.email_domains import EmailDomainsResource, AsyncEmailDomainsResource
     from .resources.phone_numbers import PhoneNumbersResource, AsyncPhoneNumbersResource
+    from .resources.agent_templates import AgentTemplatesResource, AsyncAgentTemplatesResource
     from .resources.senders.senders import SendersResource, AsyncSendersResource
     from .resources.contacts.contacts import ContactsResource, AsyncContactsResource
     from .resources.functions.functions import FunctionsResource, AsyncFunctionsResource
@@ -232,6 +242,36 @@ class Zavudev(SyncAPIClient):
         from .resources.functions import FunctionsResource
 
         return FunctionsResource(self)
+
+    @cached_property
+    def conversations(self) -> ConversationsResource:
+        from .resources.conversations import ConversationsResource
+
+        return ConversationsResource(self)
+
+    @cached_property
+    def calls(self) -> CallsResource:
+        from .resources.calls import CallsResource
+
+        return CallsResource(self)
+
+    @cached_property
+    def agent_templates(self) -> AgentTemplatesResource:
+        from .resources.agent_templates import AgentTemplatesResource
+
+        return AgentTemplatesResource(self)
+
+    @cached_property
+    def email_domains(self) -> EmailDomainsResource:
+        from .resources.email_domains import EmailDomainsResource
+
+        return EmailDomainsResource(self)
+
+    @cached_property
+    def agents(self) -> AgentsResource:
+        from .resources.agents import AgentsResource
+
+        return AgentsResource(self)
 
     @cached_property
     def with_raw_response(self) -> ZavudevWithRawResponse:
@@ -507,6 +547,36 @@ class AsyncZavudev(AsyncAPIClient):
         return AsyncFunctionsResource(self)
 
     @cached_property
+    def conversations(self) -> AsyncConversationsResource:
+        from .resources.conversations import AsyncConversationsResource
+
+        return AsyncConversationsResource(self)
+
+    @cached_property
+    def calls(self) -> AsyncCallsResource:
+        from .resources.calls import AsyncCallsResource
+
+        return AsyncCallsResource(self)
+
+    @cached_property
+    def agent_templates(self) -> AsyncAgentTemplatesResource:
+        from .resources.agent_templates import AsyncAgentTemplatesResource
+
+        return AsyncAgentTemplatesResource(self)
+
+    @cached_property
+    def email_domains(self) -> AsyncEmailDomainsResource:
+        from .resources.email_domains import AsyncEmailDomainsResource
+
+        return AsyncEmailDomainsResource(self)
+
+    @cached_property
+    def agents(self) -> AsyncAgentsResource:
+        from .resources.agents import AsyncAgentsResource
+
+        return AsyncAgentsResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncZavudevWithRawResponse:
         return AsyncZavudevWithRawResponse(self)
 
@@ -721,6 +791,36 @@ class ZavudevWithRawResponse:
 
         return FunctionsResourceWithRawResponse(self._client.functions)
 
+    @cached_property
+    def conversations(self) -> conversations.ConversationsResourceWithRawResponse:
+        from .resources.conversations import ConversationsResourceWithRawResponse
+
+        return ConversationsResourceWithRawResponse(self._client.conversations)
+
+    @cached_property
+    def calls(self) -> calls.CallsResourceWithRawResponse:
+        from .resources.calls import CallsResourceWithRawResponse
+
+        return CallsResourceWithRawResponse(self._client.calls)
+
+    @cached_property
+    def agent_templates(self) -> agent_templates.AgentTemplatesResourceWithRawResponse:
+        from .resources.agent_templates import AgentTemplatesResourceWithRawResponse
+
+        return AgentTemplatesResourceWithRawResponse(self._client.agent_templates)
+
+    @cached_property
+    def email_domains(self) -> email_domains.EmailDomainsResourceWithRawResponse:
+        from .resources.email_domains import EmailDomainsResourceWithRawResponse
+
+        return EmailDomainsResourceWithRawResponse(self._client.email_domains)
+
+    @cached_property
+    def agents(self) -> agents.AgentsResourceWithRawResponse:
+        from .resources.agents import AgentsResourceWithRawResponse
+
+        return AgentsResourceWithRawResponse(self._client.agents)
+
 
 class AsyncZavudevWithRawResponse:
     _client: AsyncZavudev
@@ -823,6 +923,36 @@ class AsyncZavudevWithRawResponse:
         from .resources.functions import AsyncFunctionsResourceWithRawResponse
 
         return AsyncFunctionsResourceWithRawResponse(self._client.functions)
+
+    @cached_property
+    def conversations(self) -> conversations.AsyncConversationsResourceWithRawResponse:
+        from .resources.conversations import AsyncConversationsResourceWithRawResponse
+
+        return AsyncConversationsResourceWithRawResponse(self._client.conversations)
+
+    @cached_property
+    def calls(self) -> calls.AsyncCallsResourceWithRawResponse:
+        from .resources.calls import AsyncCallsResourceWithRawResponse
+
+        return AsyncCallsResourceWithRawResponse(self._client.calls)
+
+    @cached_property
+    def agent_templates(self) -> agent_templates.AsyncAgentTemplatesResourceWithRawResponse:
+        from .resources.agent_templates import AsyncAgentTemplatesResourceWithRawResponse
+
+        return AsyncAgentTemplatesResourceWithRawResponse(self._client.agent_templates)
+
+    @cached_property
+    def email_domains(self) -> email_domains.AsyncEmailDomainsResourceWithRawResponse:
+        from .resources.email_domains import AsyncEmailDomainsResourceWithRawResponse
+
+        return AsyncEmailDomainsResourceWithRawResponse(self._client.email_domains)
+
+    @cached_property
+    def agents(self) -> agents.AsyncAgentsResourceWithRawResponse:
+        from .resources.agents import AsyncAgentsResourceWithRawResponse
+
+        return AsyncAgentsResourceWithRawResponse(self._client.agents)
 
 
 class ZavudevWithStreamedResponse:
@@ -927,6 +1057,36 @@ class ZavudevWithStreamedResponse:
 
         return FunctionsResourceWithStreamingResponse(self._client.functions)
 
+    @cached_property
+    def conversations(self) -> conversations.ConversationsResourceWithStreamingResponse:
+        from .resources.conversations import ConversationsResourceWithStreamingResponse
+
+        return ConversationsResourceWithStreamingResponse(self._client.conversations)
+
+    @cached_property
+    def calls(self) -> calls.CallsResourceWithStreamingResponse:
+        from .resources.calls import CallsResourceWithStreamingResponse
+
+        return CallsResourceWithStreamingResponse(self._client.calls)
+
+    @cached_property
+    def agent_templates(self) -> agent_templates.AgentTemplatesResourceWithStreamingResponse:
+        from .resources.agent_templates import AgentTemplatesResourceWithStreamingResponse
+
+        return AgentTemplatesResourceWithStreamingResponse(self._client.agent_templates)
+
+    @cached_property
+    def email_domains(self) -> email_domains.EmailDomainsResourceWithStreamingResponse:
+        from .resources.email_domains import EmailDomainsResourceWithStreamingResponse
+
+        return EmailDomainsResourceWithStreamingResponse(self._client.email_domains)
+
+    @cached_property
+    def agents(self) -> agents.AgentsResourceWithStreamingResponse:
+        from .resources.agents import AgentsResourceWithStreamingResponse
+
+        return AgentsResourceWithStreamingResponse(self._client.agents)
+
 
 class AsyncZavudevWithStreamedResponse:
     _client: AsyncZavudev
@@ -1029,6 +1189,36 @@ class AsyncZavudevWithStreamedResponse:
         from .resources.functions import AsyncFunctionsResourceWithStreamingResponse
 
         return AsyncFunctionsResourceWithStreamingResponse(self._client.functions)
+
+    @cached_property
+    def conversations(self) -> conversations.AsyncConversationsResourceWithStreamingResponse:
+        from .resources.conversations import AsyncConversationsResourceWithStreamingResponse
+
+        return AsyncConversationsResourceWithStreamingResponse(self._client.conversations)
+
+    @cached_property
+    def calls(self) -> calls.AsyncCallsResourceWithStreamingResponse:
+        from .resources.calls import AsyncCallsResourceWithStreamingResponse
+
+        return AsyncCallsResourceWithStreamingResponse(self._client.calls)
+
+    @cached_property
+    def agent_templates(self) -> agent_templates.AsyncAgentTemplatesResourceWithStreamingResponse:
+        from .resources.agent_templates import AsyncAgentTemplatesResourceWithStreamingResponse
+
+        return AsyncAgentTemplatesResourceWithStreamingResponse(self._client.agent_templates)
+
+    @cached_property
+    def email_domains(self) -> email_domains.AsyncEmailDomainsResourceWithStreamingResponse:
+        from .resources.email_domains import AsyncEmailDomainsResourceWithStreamingResponse
+
+        return AsyncEmailDomainsResourceWithStreamingResponse(self._client.email_domains)
+
+    @cached_property
+    def agents(self) -> agents.AsyncAgentsResourceWithStreamingResponse:
+        from .resources.agents import AsyncAgentsResourceWithStreamingResponse
+
+        return AsyncAgentsResourceWithStreamingResponse(self._client.agents)
 
 
 Client = Zavudev
