@@ -255,7 +255,6 @@ Methods:
 - <code title="patch /v1/contacts/{contactId}">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">update</a>(contact_id, \*\*<a href="src/zavudev/types/contact_update_params.py">params</a>) -> <a href="./src/zavudev/types/contact.py">Contact</a></code>
 - <code title="get /v1/contacts">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">list</a>(\*\*<a href="src/zavudev/types/contact_list_params.py">params</a>) -> <a href="./src/zavudev/types/contact.py">SyncCursor[Contact]</a></code>
 - <code title="delete /v1/contacts/{contactId}">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">delete</a>(contact_id) -> None</code>
-- <code title="delete /v1/contacts/{contactId}/merge-suggestion">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">dismiss_merge_suggestion</a>(contact_id) -> None</code>
 - <code title="post /v1/contacts/{contactId}/merge">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">merge</a>(contact_id, \*\*<a href="src/zavudev/types/contact_merge_params.py">params</a>) -> <a href="./src/zavudev/types/contact.py">Contact</a></code>
 - <code title="get /v1/contacts/phone/{phoneNumber}">client.contacts.<a href="./src/zavudev/resources/contacts/contacts.py">retrieve_by_phone</a>(phone_number) -> <a href="./src/zavudev/types/contact.py">Contact</a></code>
 
