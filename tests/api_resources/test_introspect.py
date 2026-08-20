@@ -9,13 +9,53 @@ import pytest
 
 from zavudev import Zavudev, AsyncZavudev
 from tests.utils import assert_matches_type
-from zavudev.types import IntrospectValidatePhoneResponse
+from zavudev.types import (
+    IntrospectValidateEmailResponse,
+    IntrospectValidatePhoneResponse,
+)
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
 class TestIntrospect:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_validate_email(self, client: Zavudev) -> None:
+        introspect = client.introspect.validate_email()
+        assert_matches_type(IntrospectValidateEmailResponse, introspect, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_validate_email_with_all_params(self, client: Zavudev) -> None:
+        introspect = client.introspect.validate_email(
+            email="maria@example.com",
+            emails=["maria@example.com", "info@deaddomain.example"],
+        )
+        assert_matches_type(IntrospectValidateEmailResponse, introspect, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_validate_email(self, client: Zavudev) -> None:
+        response = client.introspect.with_raw_response.validate_email()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        introspect = response.parse()
+        assert_matches_type(IntrospectValidateEmailResponse, introspect, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_validate_email(self, client: Zavudev) -> None:
+        with client.introspect.with_streaming_response.validate_email() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            introspect = response.parse()
+            assert_matches_type(IntrospectValidateEmailResponse, introspect, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -56,6 +96,43 @@ class TestAsyncIntrospect:
     parametrize = pytest.mark.parametrize(
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_validate_email(self, async_client: AsyncZavudev) -> None:
+        introspect = await async_client.introspect.validate_email()
+        assert_matches_type(IntrospectValidateEmailResponse, introspect, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_validate_email_with_all_params(self, async_client: AsyncZavudev) -> None:
+        introspect = await async_client.introspect.validate_email(
+            email="maria@example.com",
+            emails=["maria@example.com", "info@deaddomain.example"],
+        )
+        assert_matches_type(IntrospectValidateEmailResponse, introspect, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_validate_email(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.introspect.with_raw_response.validate_email()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        introspect = await response.parse()
+        assert_matches_type(IntrospectValidateEmailResponse, introspect, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_validate_email(self, async_client: AsyncZavudev) -> None:
+        async with async_client.introspect.with_streaming_response.validate_email() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            introspect = await response.parse()
+            assert_matches_type(IntrospectValidateEmailResponse, introspect, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize

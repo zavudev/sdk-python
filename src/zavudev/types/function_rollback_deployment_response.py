@@ -1,0 +1,54 @@
+# File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+from typing import Optional
+from datetime import datetime
+from typing_extensions import Literal
+
+from pydantic import Field as FieldInfo
+
+from .._models import BaseModel
+
+__all__ = ["FunctionRollbackDeploymentResponse", "Deployment"]
+
+
+class Deployment(BaseModel):
+    id: str
+
+    created_at: datetime = FieldInfo(alias="createdAt")
+
+    function_id: str = FieldInfo(alias="functionId")
+
+    status: Literal["pending", "bundling", "uploading", "publishing", "active", "failed", "superseded"]
+    """Stage of a function deployment."""
+
+    version: int
+    """Monotonically increasing deployment version, starting at 1."""
+
+    build_logs: Optional[str] = FieldInfo(alias="buildLogs", default=None)
+    """
+    What the build printed: dependency installation, the bundler's output, and the
+    compiler's message when it failed. Returned when fetching a single deployment,
+    omitted from the list. Read this first when a deploy fails — `errorMessage` is
+    often the outer wrapper's summary, and the line that names the broken import or
+    the syntax error is here.
+    """
+
+    bundle_bytes: Optional[int] = FieldInfo(alias="bundleBytes", default=None)
+    """Size of the built bundle in bytes. Null until the build finishes."""
+
+    deployed_at: Optional[datetime] = FieldInfo(alias="deployedAt", default=None)
+
+    error_message: Optional[str] = FieldInfo(alias="errorMessage", default=None)
+    """Failure reason when status is 'failed'."""
+
+    source_code_bytes: Optional[int] = FieldInfo(alias="sourceCodeBytes", default=None)
+    """Total size of the deployed source tree in bytes."""
+
+
+class FunctionRollbackDeploymentResponse(BaseModel):
+    deployment: Deployment
+
+    previous_draft: Optional[object] = FieldInfo(alias="previousDraft", default=None)
+    """The draft that was replaced, so a UI can offer to restore it."""
+
+    rolled_back_to_version: Optional[int] = FieldInfo(alias="rolledBackToVersion", default=None)

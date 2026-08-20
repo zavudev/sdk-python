@@ -11,6 +11,7 @@ from zavudev import Zavudev, AsyncZavudev
 from tests.utils import assert_matches_type
 from zavudev.types import (
     Template,
+    TemplateSyncResponse,
 )
 from zavudev.pagination import SyncCursor, AsyncCursor
 
@@ -269,6 +270,42 @@ class TestTemplates:
                 sender_id="sender_abc123",
             )
 
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_sync(self, client: Zavudev) -> None:
+        template = client.templates.sync()
+        assert_matches_type(TemplateSyncResponse, template, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_sync_with_all_params(self, client: Zavudev) -> None:
+        template = client.templates.sync(
+            sender_id="sender_12345",
+        )
+        assert_matches_type(TemplateSyncResponse, template, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_sync(self, client: Zavudev) -> None:
+        response = client.templates.with_raw_response.sync()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        template = response.parse()
+        assert_matches_type(TemplateSyncResponse, template, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_sync(self, client: Zavudev) -> None:
+        with client.templates.with_streaming_response.sync() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            template = response.parse()
+            assert_matches_type(TemplateSyncResponse, template, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncTemplates:
     parametrize = pytest.mark.parametrize(
@@ -523,3 +560,39 @@ class TestAsyncTemplates:
                 template_id="",
                 sender_id="sender_abc123",
             )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_sync(self, async_client: AsyncZavudev) -> None:
+        template = await async_client.templates.sync()
+        assert_matches_type(TemplateSyncResponse, template, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_sync_with_all_params(self, async_client: AsyncZavudev) -> None:
+        template = await async_client.templates.sync(
+            sender_id="sender_12345",
+        )
+        assert_matches_type(TemplateSyncResponse, template, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_sync(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.templates.with_raw_response.sync()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        template = await response.parse()
+        assert_matches_type(TemplateSyncResponse, template, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_sync(self, async_client: AsyncZavudev) -> None:
+        async with async_client.templates.with_streaming_response.sync() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            template = await response.parse()
+            assert_matches_type(TemplateSyncResponse, template, path=["response"])
+
+        assert cast(Any, response.is_closed) is True

@@ -143,6 +143,7 @@ class TestContacts:
         contact = client.contacts.update(
             contact_id="contactId",
             default_channel="sms",
+            display_name="John Doe",
             metadata={"foo": "string"},
         )
         assert_matches_type(Contact, contact, path=["response"])
@@ -194,6 +195,8 @@ class TestContacts:
             cursor="cursor",
             limit=100,
             phone_number="phoneNumber",
+            search="search",
+            tag=["string"],
         )
         assert_matches_type(SyncCursor[Contact], contact, path=["response"])
 
@@ -258,48 +261,6 @@ class TestContacts:
     def test_path_params_delete(self, client: Zavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
             client.contacts.with_raw_response.delete(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_dismiss_merge_suggestion(self, client: Zavudev) -> None:
-        contact = client.contacts.dismiss_merge_suggestion(
-            "contactId",
-        )
-        assert contact is None
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_dismiss_merge_suggestion(self, client: Zavudev) -> None:
-        response = client.contacts.with_raw_response.dismiss_merge_suggestion(
-            "contactId",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        contact = response.parse()
-        assert contact is None
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_dismiss_merge_suggestion(self, client: Zavudev) -> None:
-        with client.contacts.with_streaming_response.dismiss_merge_suggestion(
-            "contactId",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            contact = response.parse()
-            assert contact is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_path_params_dismiss_merge_suggestion(self, client: Zavudev) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
-            client.contacts.with_raw_response.dismiss_merge_suggestion(
                 "",
             )
 
@@ -520,6 +481,7 @@ class TestAsyncContacts:
         contact = await async_client.contacts.update(
             contact_id="contactId",
             default_channel="sms",
+            display_name="John Doe",
             metadata={"foo": "string"},
         )
         assert_matches_type(Contact, contact, path=["response"])
@@ -571,6 +533,8 @@ class TestAsyncContacts:
             cursor="cursor",
             limit=100,
             phone_number="phoneNumber",
+            search="search",
+            tag=["string"],
         )
         assert_matches_type(AsyncCursor[Contact], contact, path=["response"])
 
@@ -635,48 +599,6 @@ class TestAsyncContacts:
     async def test_path_params_delete(self, async_client: AsyncZavudev) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
             await async_client.contacts.with_raw_response.delete(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_dismiss_merge_suggestion(self, async_client: AsyncZavudev) -> None:
-        contact = await async_client.contacts.dismiss_merge_suggestion(
-            "contactId",
-        )
-        assert contact is None
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_dismiss_merge_suggestion(self, async_client: AsyncZavudev) -> None:
-        response = await async_client.contacts.with_raw_response.dismiss_merge_suggestion(
-            "contactId",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        contact = await response.parse()
-        assert contact is None
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_dismiss_merge_suggestion(self, async_client: AsyncZavudev) -> None:
-        async with async_client.contacts.with_streaming_response.dismiss_merge_suggestion(
-            "contactId",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            contact = await response.parse()
-            assert contact is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_path_params_dismiss_merge_suggestion(self, async_client: AsyncZavudev) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `contact_id` but received ''"):
-            await async_client.contacts.with_raw_response.dismiss_merge_suggestion(
                 "",
             )
 
