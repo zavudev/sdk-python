@@ -6,35 +6,49 @@ from typing import Dict, Optional
 
 import httpx
 
-from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
-from ...._utils import path_template, maybe_transform, async_maybe_transform
-from ...._compat import cached_property
-from ...._resource import SyncAPIResource, AsyncAPIResource
-from ...._response import (
+from .webhook import (
+    WebhookResource,
+    AsyncWebhookResource,
+    WebhookResourceWithRawResponse,
+    AsyncWebhookResourceWithRawResponse,
+    WebhookResourceWithStreamingResponse,
+    AsyncWebhookResourceWithStreamingResponse,
+)
+from ....._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from ....._utils import path_template, maybe_transform, async_maybe_transform
+from ....._compat import cached_property
+from ....._resource import SyncAPIResource, AsyncAPIResource
+from ....._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ....pagination import SyncCursor, AsyncCursor
-from ...._base_client import AsyncPaginator, make_request_options
-from ....types.senders.agent import (
+from .....pagination import SyncCursor, AsyncCursor
+from ....._base_client import AsyncPaginator, make_request_options
+from .....types.senders.agent import (
     tool_list_params,
     tool_test_params,
     tool_create_params,
     tool_update_params,
+    tool_list_test_runs_params,
 )
-from ....types.senders.agent.agent_tool import AgentTool
-from ....types.senders.agent.tool_test_response import ToolTestResponse
-from ....types.senders.agent.tool_create_response import ToolCreateResponse
-from ....types.senders.agent.tool_update_response import ToolUpdateResponse
-from ....types.senders.agent.tool_parameters_param import ToolParametersParam
-from ....types.senders.agent.tool_retrieve_response import ToolRetrieveResponse
+from .....types.senders.agent.agent_tool import AgentTool
+from .....types.senders.agent.tool_test_response import ToolTestResponse
+from .....types.senders.agent.tool_create_response import ToolCreateResponse
+from .....types.senders.agent.tool_update_response import ToolUpdateResponse
+from .....types.senders.agent.tool_parameters_param import ToolParametersParam
+from .....types.senders.agent.tool_retrieve_response import ToolRetrieveResponse
+from .....types.senders.agent.tool_list_test_runs_response import ToolListTestRunsResponse
 
 __all__ = ["ToolsResource", "AsyncToolsResource"]
 
 
 class ToolsResource(SyncAPIResource):
+    @cached_property
+    def webhook(self) -> WebhookResource:
+        return WebhookResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> ToolsResourceWithRawResponse:
         """
@@ -285,6 +299,52 @@ class ToolsResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    def list_test_runs(
+        self,
+        tool_id: str,
+        *,
+        sender_id: str,
+        limit: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ToolListTestRunsResponse:
+        """Recent runs of this tool triggered from the test endpoint, newest first.
+
+        Covers
+        manual tests only: a tool called by an agent during a real conversation is not
+        recorded here.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        if not tool_id:
+            raise ValueError(f"Expected a non-empty value for `tool_id` but received {tool_id!r}")
+        return self._get(
+            path_template(
+                "/v1/senders/{sender_id}/agent/tools/{tool_id}/test-runs", sender_id=sender_id, tool_id=tool_id
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"limit": limit}, tool_list_test_runs_params.ToolListTestRunsParams),
+            ),
+            cast_to=ToolListTestRunsResponse,
+        )
+
     def test(
         self,
         tool_id: str,
@@ -336,6 +396,10 @@ class ToolsResource(SyncAPIResource):
 
 
 class AsyncToolsResource(AsyncAPIResource):
+    @cached_property
+    def webhook(self) -> AsyncWebhookResource:
+        return AsyncWebhookResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> AsyncToolsResourceWithRawResponse:
         """
@@ -586,6 +650,52 @@ class AsyncToolsResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def list_test_runs(
+        self,
+        tool_id: str,
+        *,
+        sender_id: str,
+        limit: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ToolListTestRunsResponse:
+        """Recent runs of this tool triggered from the test endpoint, newest first.
+
+        Covers
+        manual tests only: a tool called by an agent during a real conversation is not
+        recorded here.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        if not tool_id:
+            raise ValueError(f"Expected a non-empty value for `tool_id` but received {tool_id!r}")
+        return await self._get(
+            path_template(
+                "/v1/senders/{sender_id}/agent/tools/{tool_id}/test-runs", sender_id=sender_id, tool_id=tool_id
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"limit": limit}, tool_list_test_runs_params.ToolListTestRunsParams),
+            ),
+            cast_to=ToolListTestRunsResponse,
+        )
+
     async def test(
         self,
         tool_id: str,
@@ -655,9 +765,16 @@ class ToolsResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             tools.delete,
         )
+        self.list_test_runs = to_raw_response_wrapper(
+            tools.list_test_runs,
+        )
         self.test = to_raw_response_wrapper(
             tools.test,
         )
+
+    @cached_property
+    def webhook(self) -> WebhookResourceWithRawResponse:
+        return WebhookResourceWithRawResponse(self._tools.webhook)
 
 
 class AsyncToolsResourceWithRawResponse:
@@ -679,9 +796,16 @@ class AsyncToolsResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             tools.delete,
         )
+        self.list_test_runs = async_to_raw_response_wrapper(
+            tools.list_test_runs,
+        )
         self.test = async_to_raw_response_wrapper(
             tools.test,
         )
+
+    @cached_property
+    def webhook(self) -> AsyncWebhookResourceWithRawResponse:
+        return AsyncWebhookResourceWithRawResponse(self._tools.webhook)
 
 
 class ToolsResourceWithStreamingResponse:
@@ -703,9 +827,16 @@ class ToolsResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             tools.delete,
         )
+        self.list_test_runs = to_streamed_response_wrapper(
+            tools.list_test_runs,
+        )
         self.test = to_streamed_response_wrapper(
             tools.test,
         )
+
+    @cached_property
+    def webhook(self) -> WebhookResourceWithStreamingResponse:
+        return WebhookResourceWithStreamingResponse(self._tools.webhook)
 
 
 class AsyncToolsResourceWithStreamingResponse:
@@ -727,6 +858,13 @@ class AsyncToolsResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             tools.delete,
         )
+        self.list_test_runs = async_to_streamed_response_wrapper(
+            tools.list_test_runs,
+        )
         self.test = async_to_streamed_response_wrapper(
             tools.test,
         )
+
+    @cached_property
+    def webhook(self) -> AsyncWebhookResourceWithStreamingResponse:
+        return AsyncWebhookResourceWithStreamingResponse(self._tools.webhook)

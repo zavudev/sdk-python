@@ -16,6 +16,14 @@ from .senders import (
     SendersResourceWithStreamingResponse,
     AsyncSendersResourceWithStreamingResponse,
 )
+from .telegram import (
+    TelegramResource,
+    AsyncTelegramResource,
+    TelegramResourceWithRawResponse,
+    AsyncTelegramResourceWithRawResponse,
+    TelegramResourceWithStreamingResponse,
+    AsyncTelegramResourceWithStreamingResponse,
+)
 from .whatsapp_sync import (
     WhatsappSyncResource,
     AsyncWhatsappSyncResource,
@@ -38,6 +46,12 @@ __all__ = [
     "AsyncWhatsappSyncResourceWithRawResponse",
     "WhatsappSyncResourceWithStreamingResponse",
     "AsyncWhatsappSyncResourceWithStreamingResponse",
+    "TelegramResource",
+    "AsyncTelegramResource",
+    "TelegramResourceWithRawResponse",
+    "AsyncTelegramResourceWithRawResponse",
+    "TelegramResourceWithStreamingResponse",
+    "AsyncTelegramResourceWithStreamingResponse",
     "SendersResource",
     "AsyncSendersResource",
     "SendersResourceWithRawResponse",

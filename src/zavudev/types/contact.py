@@ -50,7 +50,4 @@ class Contact(BaseModel):
     profile_name: Optional[str] = FieldInfo(alias="profileName", default=None)
     """Contact's WhatsApp profile name. Only available for WhatsApp contacts."""
 
-    suggested_merge_with: Optional[str] = FieldInfo(alias="suggestedMergeWith", default=None)
-    """ID of a contact suggested for merging."""
-
     updated_at: Optional[datetime] = FieldInfo(alias="updatedAt", default=None)

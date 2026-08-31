@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import introspect_validate_phone_params
-from .._types import Body, Query, Headers, NotGiven, not_given
+from ..types import introspect_validate_email_params, introspect_validate_phone_params
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -16,6 +16,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.introspect_validate_email_response import IntrospectValidateEmailResponse
 from ..types.introspect_validate_phone_response import IntrospectValidatePhoneResponse
 
 __all__ = ["IntrospectResource", "AsyncIntrospectResource"]
@@ -40,6 +41,58 @@ class IntrospectResource(SyncAPIResource):
         For more information, see https://www.github.com/zavudev/sdk-python#with_streaming_response
         """
         return IntrospectResourceWithStreamingResponse(self)
+
+    def validate_email(
+        self,
+        *,
+        email: str | Omit = omit,
+        emails: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> IntrospectValidateEmailResponse:
+        """
+        Heuristic email validation to run before sending: catches invalid syntax, dead
+        domains (no MX/A records), disposable inboxes, role-based addresses (info@,
+        contacto@, sales@), and addresses already on your project's suppression list.
+        Use it to clean a list before a broadcast and keep your bounce rate low.
+
+        No mailbox-level (SMTP) probe is performed, so a `deliverable` verdict is not a
+        delivery guarantee — it means no negative signal was found. Treat `risky`
+        addresses with care and drop `undeliverable` ones.
+
+        Accepts a single `email` or an `emails` batch (max 100 per request).
+
+        Args:
+          email: Single email address to validate.
+
+          emails: Batch of email addresses to validate (max 100).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/introspect/email",
+            body=maybe_transform(
+                {
+                    "email": email,
+                    "emails": emails,
+                },
+                introspect_validate_email_params.IntrospectValidateEmailParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=IntrospectValidateEmailResponse,
+        )
 
     def validate_phone(
         self,
@@ -96,6 +149,58 @@ class AsyncIntrospectResource(AsyncAPIResource):
         """
         return AsyncIntrospectResourceWithStreamingResponse(self)
 
+    async def validate_email(
+        self,
+        *,
+        email: str | Omit = omit,
+        emails: SequenceNotStr[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> IntrospectValidateEmailResponse:
+        """
+        Heuristic email validation to run before sending: catches invalid syntax, dead
+        domains (no MX/A records), disposable inboxes, role-based addresses (info@,
+        contacto@, sales@), and addresses already on your project's suppression list.
+        Use it to clean a list before a broadcast and keep your bounce rate low.
+
+        No mailbox-level (SMTP) probe is performed, so a `deliverable` verdict is not a
+        delivery guarantee — it means no negative signal was found. Treat `risky`
+        addresses with care and drop `undeliverable` ones.
+
+        Accepts a single `email` or an `emails` batch (max 100 per request).
+
+        Args:
+          email: Single email address to validate.
+
+          emails: Batch of email addresses to validate (max 100).
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/introspect/email",
+            body=await async_maybe_transform(
+                {
+                    "email": email,
+                    "emails": emails,
+                },
+                introspect_validate_email_params.IntrospectValidateEmailParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=IntrospectValidateEmailResponse,
+        )
+
     async def validate_phone(
         self,
         *,
@@ -135,6 +240,9 @@ class IntrospectResourceWithRawResponse:
     def __init__(self, introspect: IntrospectResource) -> None:
         self._introspect = introspect
 
+        self.validate_email = to_raw_response_wrapper(
+            introspect.validate_email,
+        )
         self.validate_phone = to_raw_response_wrapper(
             introspect.validate_phone,
         )
@@ -144,6 +252,9 @@ class AsyncIntrospectResourceWithRawResponse:
     def __init__(self, introspect: AsyncIntrospectResource) -> None:
         self._introspect = introspect
 
+        self.validate_email = async_to_raw_response_wrapper(
+            introspect.validate_email,
+        )
         self.validate_phone = async_to_raw_response_wrapper(
             introspect.validate_phone,
         )
@@ -153,6 +264,9 @@ class IntrospectResourceWithStreamingResponse:
     def __init__(self, introspect: IntrospectResource) -> None:
         self._introspect = introspect
 
+        self.validate_email = to_streamed_response_wrapper(
+            introspect.validate_email,
+        )
         self.validate_phone = to_streamed_response_wrapper(
             introspect.validate_phone,
         )
@@ -162,6 +276,9 @@ class AsyncIntrospectResourceWithStreamingResponse:
     def __init__(self, introspect: AsyncIntrospectResource) -> None:
         self._introspect = introspect
 
+        self.validate_email = async_to_streamed_response_wrapper(
+            introspect.validate_email,
+        )
         self.validate_phone = async_to_streamed_response_wrapper(
             introspect.validate_phone,
         )

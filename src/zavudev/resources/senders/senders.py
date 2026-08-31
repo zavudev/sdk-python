@@ -17,6 +17,14 @@ from ...types import (
 )
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
+from .telegram import (
+    TelegramResource,
+    AsyncTelegramResource,
+    TelegramResourceWithRawResponse,
+    AsyncTelegramResourceWithRawResponse,
+    TelegramResourceWithStreamingResponse,
+    AsyncTelegramResourceWithStreamingResponse,
+)
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -62,6 +70,10 @@ class SendersResource(SyncAPIResource):
     @cached_property
     def whatsapp_sync(self) -> WhatsappSyncResource:
         return WhatsappSyncResource(self._client)
+
+    @cached_property
+    def telegram(self) -> TelegramResource:
+        return TelegramResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> SendersResourceWithRawResponse:
@@ -592,6 +604,10 @@ class AsyncSendersResource(AsyncAPIResource):
     @cached_property
     def whatsapp_sync(self) -> AsyncWhatsappSyncResource:
         return AsyncWhatsappSyncResource(self._client)
+
+    @cached_property
+    def telegram(self) -> AsyncTelegramResource:
+        return AsyncTelegramResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncSendersResourceWithRawResponse:
@@ -1154,6 +1170,10 @@ class SendersResourceWithRawResponse:
     def whatsapp_sync(self) -> WhatsappSyncResourceWithRawResponse:
         return WhatsappSyncResourceWithRawResponse(self._senders.whatsapp_sync)
 
+    @cached_property
+    def telegram(self) -> TelegramResourceWithRawResponse:
+        return TelegramResourceWithRawResponse(self._senders.telegram)
+
 
 class AsyncSendersResourceWithRawResponse:
     def __init__(self, senders: AsyncSendersResource) -> None:
@@ -1194,6 +1214,10 @@ class AsyncSendersResourceWithRawResponse:
     @cached_property
     def whatsapp_sync(self) -> AsyncWhatsappSyncResourceWithRawResponse:
         return AsyncWhatsappSyncResourceWithRawResponse(self._senders.whatsapp_sync)
+
+    @cached_property
+    def telegram(self) -> AsyncTelegramResourceWithRawResponse:
+        return AsyncTelegramResourceWithRawResponse(self._senders.telegram)
 
 
 class SendersResourceWithStreamingResponse:
@@ -1236,6 +1260,10 @@ class SendersResourceWithStreamingResponse:
     def whatsapp_sync(self) -> WhatsappSyncResourceWithStreamingResponse:
         return WhatsappSyncResourceWithStreamingResponse(self._senders.whatsapp_sync)
 
+    @cached_property
+    def telegram(self) -> TelegramResourceWithStreamingResponse:
+        return TelegramResourceWithStreamingResponse(self._senders.telegram)
+
 
 class AsyncSendersResourceWithStreamingResponse:
     def __init__(self, senders: AsyncSendersResource) -> None:
@@ -1276,3 +1304,7 @@ class AsyncSendersResourceWithStreamingResponse:
     @cached_property
     def whatsapp_sync(self) -> AsyncWhatsappSyncResourceWithStreamingResponse:
         return AsyncWhatsappSyncResourceWithStreamingResponse(self._senders.whatsapp_sync)
+
+    @cached_property
+    def telegram(self) -> AsyncTelegramResourceWithStreamingResponse:
+        return AsyncTelegramResourceWithStreamingResponse(self._senders.telegram)
