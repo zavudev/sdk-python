@@ -7,7 +7,13 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import WhatsappCategory, template_list_params, template_create_params, template_submit_params
+from ..types import (
+    WhatsappCategory,
+    template_list_params,
+    template_sync_params,
+    template_create_params,
+    template_submit_params,
+)
 from .._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -22,6 +28,7 @@ from ..pagination import SyncCursor, AsyncCursor
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.template import Template
 from ..types.whatsapp_category import WhatsappCategory
+from ..types.template_sync_response import TemplateSyncResponse
 
 __all__ = ["TemplatesResource", "AsyncTemplatesResource"]
 
@@ -292,6 +299,62 @@ class TemplatesResource(SyncAPIResource):
             cast_to=Template,
         )
 
+    def sync(
+        self,
+        *,
+        sender_id: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> TemplateSyncResponse:
+        """Reconcile this project's templates against WhatsApp.
+
+        Two things happen per
+        connected WhatsApp Business Account: templates that exist on Meta but not in
+        Zavu are imported (or linked to an existing template with the same name), and
+        the approval status of the templates Zavu already knows about is refreshed from
+        Meta.
+
+        This is what to call when a template was created outside Zavu — in Meta Business
+        Manager, or by another tool — or when a `template.status_changed` webhook was
+        missed and a template is stuck in `pending`. Status changes normally arrive by
+        webhook; this endpoint is the recovery path and the only path for a template
+        Zavu never created.
+
+        Templates that Meta reports as rejected or disabled are not imported; they are
+        counted in `skipped`. Existing local templates are matched first by Meta
+        template ID, then by name.
+
+        By default every sender in the project with a WhatsApp Business Account is
+        synced. Pass `senderId` to sync only that sender's account. The call is
+        synchronous — it waits for Meta and returns what changed — so it can take a few
+        seconds per account. A failure on one account does not fail the request: it is
+        reported in `errors` and the remaining accounts are still synced.
+
+        Args:
+          sender_id: Sync only the WhatsApp Business Account attached to this sender. If omitted,
+              every WhatsApp sender in the project is synced.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/templates/sync",
+            body=maybe_transform({"sender_id": sender_id}, template_sync_params.TemplateSyncParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=TemplateSyncResponse,
+        )
+
 
 class AsyncTemplatesResource(AsyncAPIResource):
     @cached_property
@@ -559,6 +622,62 @@ class AsyncTemplatesResource(AsyncAPIResource):
             cast_to=Template,
         )
 
+    async def sync(
+        self,
+        *,
+        sender_id: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> TemplateSyncResponse:
+        """Reconcile this project's templates against WhatsApp.
+
+        Two things happen per
+        connected WhatsApp Business Account: templates that exist on Meta but not in
+        Zavu are imported (or linked to an existing template with the same name), and
+        the approval status of the templates Zavu already knows about is refreshed from
+        Meta.
+
+        This is what to call when a template was created outside Zavu — in Meta Business
+        Manager, or by another tool — or when a `template.status_changed` webhook was
+        missed and a template is stuck in `pending`. Status changes normally arrive by
+        webhook; this endpoint is the recovery path and the only path for a template
+        Zavu never created.
+
+        Templates that Meta reports as rejected or disabled are not imported; they are
+        counted in `skipped`. Existing local templates are matched first by Meta
+        template ID, then by name.
+
+        By default every sender in the project with a WhatsApp Business Account is
+        synced. Pass `senderId` to sync only that sender's account. The call is
+        synchronous — it waits for Meta and returns what changed — so it can take a few
+        seconds per account. A failure on one account does not fail the request: it is
+        reported in `errors` and the remaining accounts are still synced.
+
+        Args:
+          sender_id: Sync only the WhatsApp Business Account attached to this sender. If omitted,
+              every WhatsApp sender in the project is synced.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/templates/sync",
+            body=await async_maybe_transform({"sender_id": sender_id}, template_sync_params.TemplateSyncParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=TemplateSyncResponse,
+        )
+
 
 class TemplatesResourceWithRawResponse:
     def __init__(self, templates: TemplatesResource) -> None:
@@ -578,6 +697,9 @@ class TemplatesResourceWithRawResponse:
         )
         self.submit = to_raw_response_wrapper(
             templates.submit,
+        )
+        self.sync = to_raw_response_wrapper(
+            templates.sync,
         )
 
 
@@ -600,6 +722,9 @@ class AsyncTemplatesResourceWithRawResponse:
         self.submit = async_to_raw_response_wrapper(
             templates.submit,
         )
+        self.sync = async_to_raw_response_wrapper(
+            templates.sync,
+        )
 
 
 class TemplatesResourceWithStreamingResponse:
@@ -621,6 +746,9 @@ class TemplatesResourceWithStreamingResponse:
         self.submit = to_streamed_response_wrapper(
             templates.submit,
         )
+        self.sync = to_streamed_response_wrapper(
+            templates.sync,
+        )
 
 
 class AsyncTemplatesResourceWithStreamingResponse:
@@ -641,4 +769,7 @@ class AsyncTemplatesResourceWithStreamingResponse:
         )
         self.submit = async_to_streamed_response_wrapper(
             templates.submit,
+        )
+        self.sync = async_to_streamed_response_wrapper(
+            templates.sync,
         )

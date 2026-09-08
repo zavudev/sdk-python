@@ -16,6 +16,22 @@ from .urls import (
     URLsResourceWithStreamingResponse,
     AsyncURLsResourceWithStreamingResponse,
 )
+from .calls import (
+    CallsResource,
+    AsyncCallsResource,
+    CallsResourceWithRawResponse,
+    AsyncCallsResourceWithRawResponse,
+    CallsResourceWithStreamingResponse,
+    AsyncCallsResourceWithStreamingResponse,
+)
+from .agents import (
+    AgentsResource,
+    AsyncAgentsResource,
+    AgentsResourceWithRawResponse,
+    AsyncAgentsResourceWithRawResponse,
+    AgentsResourceWithStreamingResponse,
+    AsyncAgentsResourceWithStreamingResponse,
+)
 from .balance import (
     BalanceResource,
     AsyncBalanceResource,
@@ -112,6 +128,22 @@ from .sub_accounts import (
     SubAccountsResourceWithStreamingResponse,
     AsyncSubAccountsResourceWithStreamingResponse,
 )
+from .conversations import (
+    ConversationsResource,
+    AsyncConversationsResource,
+    ConversationsResourceWithRawResponse,
+    AsyncConversationsResourceWithRawResponse,
+    ConversationsResourceWithStreamingResponse,
+    AsyncConversationsResourceWithStreamingResponse,
+)
+from .email_domains import (
+    EmailDomainsResource,
+    AsyncEmailDomainsResource,
+    EmailDomainsResourceWithRawResponse,
+    AsyncEmailDomainsResourceWithRawResponse,
+    EmailDomainsResourceWithStreamingResponse,
+    AsyncEmailDomainsResourceWithStreamingResponse,
+)
 from .phone_numbers import (
     PhoneNumbersResource,
     AsyncPhoneNumbersResource,
@@ -119,6 +151,14 @@ from .phone_numbers import (
     AsyncPhoneNumbersResourceWithRawResponse,
     PhoneNumbersResourceWithStreamingResponse,
     AsyncPhoneNumbersResourceWithStreamingResponse,
+)
+from .agent_templates import (
+    AgentTemplatesResource,
+    AsyncAgentTemplatesResource,
+    AgentTemplatesResourceWithRawResponse,
+    AsyncAgentTemplatesResourceWithRawResponse,
+    AgentTemplatesResourceWithStreamingResponse,
+    AsyncAgentTemplatesResourceWithStreamingResponse,
 )
 from .regulatory_documents import (
     RegulatoryDocumentsResource,
@@ -226,4 +266,34 @@ __all__ = [
     "AsyncFunctionsResourceWithRawResponse",
     "FunctionsResourceWithStreamingResponse",
     "AsyncFunctionsResourceWithStreamingResponse",
+    "ConversationsResource",
+    "AsyncConversationsResource",
+    "ConversationsResourceWithRawResponse",
+    "AsyncConversationsResourceWithRawResponse",
+    "ConversationsResourceWithStreamingResponse",
+    "AsyncConversationsResourceWithStreamingResponse",
+    "CallsResource",
+    "AsyncCallsResource",
+    "CallsResourceWithRawResponse",
+    "AsyncCallsResourceWithRawResponse",
+    "CallsResourceWithStreamingResponse",
+    "AsyncCallsResourceWithStreamingResponse",
+    "AgentTemplatesResource",
+    "AsyncAgentTemplatesResource",
+    "AgentTemplatesResourceWithRawResponse",
+    "AsyncAgentTemplatesResourceWithRawResponse",
+    "AgentTemplatesResourceWithStreamingResponse",
+    "AsyncAgentTemplatesResourceWithStreamingResponse",
+    "EmailDomainsResource",
+    "AsyncEmailDomainsResource",
+    "EmailDomainsResourceWithRawResponse",
+    "AsyncEmailDomainsResourceWithRawResponse",
+    "EmailDomainsResourceWithStreamingResponse",
+    "AsyncEmailDomainsResourceWithStreamingResponse",
+    "AgentsResource",
+    "AsyncAgentsResource",
+    "AgentsResourceWithRawResponse",
+    "AsyncAgentsResourceWithRawResponse",
+    "AgentsResourceWithStreamingResponse",
+    "AsyncAgentsResourceWithStreamingResponse",
 ]

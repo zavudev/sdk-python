@@ -5,3 +5,6 @@ from __future__ import annotations
 from .document_list_params import DocumentListParams as DocumentListParams
 from .document_create_params import DocumentCreateParams as DocumentCreateParams
 from .document_create_response import DocumentCreateResponse as DocumentCreateResponse
+from .document_update_document_params import DocumentUpdateDocumentParams as DocumentUpdateDocumentParams
+from .document_update_document_response import DocumentUpdateDocumentResponse as DocumentUpdateDocumentResponse
+from .document_retrieve_document_response import DocumentRetrieveDocumentResponse as DocumentRetrieveDocumentResponse

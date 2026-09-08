@@ -17,6 +17,9 @@ from zavudev.types import (
     FunctionRetrieveResponse,
     FunctionTailLogsResponse,
     FunctionGetDeploymentResponse,
+    FunctionListEventTypesResponse,
+    FunctionListDeploymentsResponse,
+    FunctionRollbackDeploymentResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -322,6 +325,131 @@ class TestFunctions:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `deployment_id` but received ''"):
             client.functions.with_raw_response.get_deployment(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_list_deployments(self, client: Zavudev) -> None:
+        function = client.functions.list_deployments(
+            function_id="functionId",
+        )
+        assert_matches_type(FunctionListDeploymentsResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_list_deployments_with_all_params(self, client: Zavudev) -> None:
+        function = client.functions.list_deployments(
+            function_id="functionId",
+            limit=100,
+        )
+        assert_matches_type(FunctionListDeploymentsResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_list_deployments(self, client: Zavudev) -> None:
+        response = client.functions.with_raw_response.list_deployments(
+            function_id="functionId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        function = response.parse()
+        assert_matches_type(FunctionListDeploymentsResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_list_deployments(self, client: Zavudev) -> None:
+        with client.functions.with_streaming_response.list_deployments(
+            function_id="functionId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            function = response.parse()
+            assert_matches_type(FunctionListDeploymentsResponse, function, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_list_deployments(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `function_id` but received ''"):
+            client.functions.with_raw_response.list_deployments(
+                function_id="",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_list_event_types(self, client: Zavudev) -> None:
+        function = client.functions.list_event_types()
+        assert_matches_type(FunctionListEventTypesResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_list_event_types(self, client: Zavudev) -> None:
+        response = client.functions.with_raw_response.list_event_types()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        function = response.parse()
+        assert_matches_type(FunctionListEventTypesResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_list_event_types(self, client: Zavudev) -> None:
+        with client.functions.with_streaming_response.list_event_types() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            function = response.parse()
+            assert_matches_type(FunctionListEventTypesResponse, function, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_rollback_deployment(self, client: Zavudev) -> None:
+        function = client.functions.rollback_deployment(
+            function_id="functionId",
+            deployment_id="fnd_abc123",
+        )
+        assert_matches_type(FunctionRollbackDeploymentResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_rollback_deployment(self, client: Zavudev) -> None:
+        response = client.functions.with_raw_response.rollback_deployment(
+            function_id="functionId",
+            deployment_id="fnd_abc123",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        function = response.parse()
+        assert_matches_type(FunctionRollbackDeploymentResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_rollback_deployment(self, client: Zavudev) -> None:
+        with client.functions.with_streaming_response.rollback_deployment(
+            function_id="functionId",
+            deployment_id="fnd_abc123",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            function = response.parse()
+            assert_matches_type(FunctionRollbackDeploymentResponse, function, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_rollback_deployment(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `function_id` but received ''"):
+            client.functions.with_raw_response.rollback_deployment(
+                function_id="",
+                deployment_id="fnd_abc123",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -682,6 +810,131 @@ class TestAsyncFunctions:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `deployment_id` but received ''"):
             await async_client.functions.with_raw_response.get_deployment(
                 "",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_list_deployments(self, async_client: AsyncZavudev) -> None:
+        function = await async_client.functions.list_deployments(
+            function_id="functionId",
+        )
+        assert_matches_type(FunctionListDeploymentsResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_list_deployments_with_all_params(self, async_client: AsyncZavudev) -> None:
+        function = await async_client.functions.list_deployments(
+            function_id="functionId",
+            limit=100,
+        )
+        assert_matches_type(FunctionListDeploymentsResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_list_deployments(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.functions.with_raw_response.list_deployments(
+            function_id="functionId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        function = await response.parse()
+        assert_matches_type(FunctionListDeploymentsResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_list_deployments(self, async_client: AsyncZavudev) -> None:
+        async with async_client.functions.with_streaming_response.list_deployments(
+            function_id="functionId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            function = await response.parse()
+            assert_matches_type(FunctionListDeploymentsResponse, function, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_list_deployments(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `function_id` but received ''"):
+            await async_client.functions.with_raw_response.list_deployments(
+                function_id="",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_list_event_types(self, async_client: AsyncZavudev) -> None:
+        function = await async_client.functions.list_event_types()
+        assert_matches_type(FunctionListEventTypesResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_list_event_types(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.functions.with_raw_response.list_event_types()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        function = await response.parse()
+        assert_matches_type(FunctionListEventTypesResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_list_event_types(self, async_client: AsyncZavudev) -> None:
+        async with async_client.functions.with_streaming_response.list_event_types() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            function = await response.parse()
+            assert_matches_type(FunctionListEventTypesResponse, function, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_rollback_deployment(self, async_client: AsyncZavudev) -> None:
+        function = await async_client.functions.rollback_deployment(
+            function_id="functionId",
+            deployment_id="fnd_abc123",
+        )
+        assert_matches_type(FunctionRollbackDeploymentResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_rollback_deployment(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.functions.with_raw_response.rollback_deployment(
+            function_id="functionId",
+            deployment_id="fnd_abc123",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        function = await response.parse()
+        assert_matches_type(FunctionRollbackDeploymentResponse, function, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_rollback_deployment(self, async_client: AsyncZavudev) -> None:
+        async with async_client.functions.with_streaming_response.rollback_deployment(
+            function_id="functionId",
+            deployment_id="fnd_abc123",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            function = await response.parse()
+            assert_matches_type(FunctionRollbackDeploymentResponse, function, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_rollback_deployment(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `function_id` but received ''"):
+            await async_client.functions.with_raw_response.rollback_deployment(
+                function_id="",
+                deployment_id="fnd_abc123",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")

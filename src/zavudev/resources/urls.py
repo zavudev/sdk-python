@@ -6,7 +6,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import url_list_verified_params, url_submit_for_verification_params
+from ..types import url_escalate_params, url_list_verified_params, url_submit_for_verification_params
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -20,6 +20,7 @@ from .._response import (
 from ..pagination import SyncCursor, AsyncCursor
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.verified_url import VerifiedURL
+from ..types.url_escalate_response import URLEscalateResponse
 from ..types.url_retrieve_details_response import URLRetrieveDetailsResponse
 from ..types.url_submit_for_verification_response import URLSubmitForVerificationResponse
 
@@ -45,6 +46,45 @@ class URLsResource(SyncAPIResource):
         For more information, see https://www.github.com/zavudev/sdk-python#with_streaming_response
         """
         return URLsResourceWithStreamingResponse(self)
+
+    def escalate(
+        self,
+        url_id: str,
+        *,
+        reason: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> URLEscalateResponse:
+        """Request manual review of a rejected URL.
+
+        Only URLs in 'rejected' status can be
+        escalated; the status then moves to 'escalated'.
+
+        Args:
+          reason: Why the URL should be reviewed manually.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not url_id:
+            raise ValueError(f"Expected a non-empty value for `url_id` but received {url_id!r}")
+        return self._post(
+            path_template("/v1/urls/{url_id}/escalate", url_id=url_id),
+            body=maybe_transform({"reason": reason}, url_escalate_params.URLEscalateParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=URLEscalateResponse,
+        )
 
     def list_verified(
         self,
@@ -188,6 +228,45 @@ class AsyncURLsResource(AsyncAPIResource):
         """
         return AsyncURLsResourceWithStreamingResponse(self)
 
+    async def escalate(
+        self,
+        url_id: str,
+        *,
+        reason: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> URLEscalateResponse:
+        """Request manual review of a rejected URL.
+
+        Only URLs in 'rejected' status can be
+        escalated; the status then moves to 'escalated'.
+
+        Args:
+          reason: Why the URL should be reviewed manually.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not url_id:
+            raise ValueError(f"Expected a non-empty value for `url_id` but received {url_id!r}")
+        return await self._post(
+            path_template("/v1/urls/{url_id}/escalate", url_id=url_id),
+            body=await async_maybe_transform({"reason": reason}, url_escalate_params.URLEscalateParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=URLEscalateResponse,
+        )
+
     def list_verified(
         self,
         *,
@@ -316,6 +395,9 @@ class URLsResourceWithRawResponse:
     def __init__(self, urls: URLsResource) -> None:
         self._urls = urls
 
+        self.escalate = to_raw_response_wrapper(
+            urls.escalate,
+        )
         self.list_verified = to_raw_response_wrapper(
             urls.list_verified,
         )
@@ -331,6 +413,9 @@ class AsyncURLsResourceWithRawResponse:
     def __init__(self, urls: AsyncURLsResource) -> None:
         self._urls = urls
 
+        self.escalate = async_to_raw_response_wrapper(
+            urls.escalate,
+        )
         self.list_verified = async_to_raw_response_wrapper(
             urls.list_verified,
         )
@@ -346,6 +431,9 @@ class URLsResourceWithStreamingResponse:
     def __init__(self, urls: URLsResource) -> None:
         self._urls = urls
 
+        self.escalate = to_streamed_response_wrapper(
+            urls.escalate,
+        )
         self.list_verified = to_streamed_response_wrapper(
             urls.list_verified,
         )
@@ -361,6 +449,9 @@ class AsyncURLsResourceWithStreamingResponse:
     def __init__(self, urls: AsyncURLsResource) -> None:
         self._urls = urls
 
+        self.escalate = async_to_streamed_response_wrapper(
+            urls.escalate,
+        )
         self.list_verified = async_to_streamed_response_wrapper(
             urls.list_verified,
         )
