@@ -17,4 +17,12 @@ class ContactUpdateParams(TypedDict, total=False):
     ]
     """Preferred channel for this contact. Set to null to clear."""
 
+    display_name: Annotated[Optional[str], PropertyInfo(alias="displayName")]
+    """Human-readable name for this contact.
+
+    Set to null to clear it and fall back to the contact's identifier. Contacts
+    created automatically from an inbound message have no display name until you set
+    one.
+    """
+
     metadata: Dict[str, str]

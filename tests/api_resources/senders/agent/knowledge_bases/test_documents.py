@@ -13,6 +13,8 @@ from zavudev.pagination import SyncCursor, AsyncCursor
 from zavudev.types.senders.agent import AgentDocument
 from zavudev.types.senders.agent.knowledge_bases import (
     DocumentCreateResponse,
+    DocumentUpdateDocumentResponse,
+    DocumentRetrieveDocumentResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -210,6 +212,146 @@ class TestDocuments:
                 kb_id="kbId",
             )
 
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_document(self, client: Zavudev) -> None:
+        document = client.senders.agent.knowledge_bases.documents.retrieve_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        )
+        assert_matches_type(DocumentRetrieveDocumentResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_document(self, client: Zavudev) -> None:
+        response = client.senders.agent.knowledge_bases.documents.with_raw_response.retrieve_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(DocumentRetrieveDocumentResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_document(self, client: Zavudev) -> None:
+        with client.senders.agent.knowledge_bases.documents.with_streaming_response.retrieve_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(DocumentRetrieveDocumentResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_retrieve_document(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
+            client.senders.agent.knowledge_bases.documents.with_raw_response.retrieve_document(
+                doc_id="docId",
+                sender_id="",
+                kb_id="kbId",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `kb_id` but received ''"):
+            client.senders.agent.knowledge_bases.documents.with_raw_response.retrieve_document(
+                doc_id="docId",
+                sender_id="senderId",
+                kb_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `doc_id` but received ''"):
+            client.senders.agent.knowledge_bases.documents.with_raw_response.retrieve_document(
+                doc_id="",
+                sender_id="senderId",
+                kb_id="kbId",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_update_document(self, client: Zavudev) -> None:
+        document = client.senders.agent.knowledge_bases.documents.update_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        )
+        assert_matches_type(DocumentUpdateDocumentResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_update_document_with_all_params(self, client: Zavudev) -> None:
+        document = client.senders.agent.knowledge_bases.documents.update_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+            content="content",
+            title="title",
+        )
+        assert_matches_type(DocumentUpdateDocumentResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_update_document(self, client: Zavudev) -> None:
+        response = client.senders.agent.knowledge_bases.documents.with_raw_response.update_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = response.parse()
+        assert_matches_type(DocumentUpdateDocumentResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_update_document(self, client: Zavudev) -> None:
+        with client.senders.agent.knowledge_bases.documents.with_streaming_response.update_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = response.parse()
+            assert_matches_type(DocumentUpdateDocumentResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_update_document(self, client: Zavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
+            client.senders.agent.knowledge_bases.documents.with_raw_response.update_document(
+                doc_id="docId",
+                sender_id="",
+                kb_id="kbId",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `kb_id` but received ''"):
+            client.senders.agent.knowledge_bases.documents.with_raw_response.update_document(
+                doc_id="docId",
+                sender_id="senderId",
+                kb_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `doc_id` but received ''"):
+            client.senders.agent.knowledge_bases.documents.with_raw_response.update_document(
+                doc_id="",
+                sender_id="senderId",
+                kb_id="kbId",
+            )
+
 
 class TestAsyncDocuments:
     parametrize = pytest.mark.parametrize(
@@ -400,6 +542,146 @@ class TestAsyncDocuments:
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `doc_id` but received ''"):
             await async_client.senders.agent.knowledge_bases.documents.with_raw_response.delete(
+                doc_id="",
+                sender_id="senderId",
+                kb_id="kbId",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_document(self, async_client: AsyncZavudev) -> None:
+        document = await async_client.senders.agent.knowledge_bases.documents.retrieve_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        )
+        assert_matches_type(DocumentRetrieveDocumentResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_document(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.senders.agent.knowledge_bases.documents.with_raw_response.retrieve_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(DocumentRetrieveDocumentResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_document(self, async_client: AsyncZavudev) -> None:
+        async with async_client.senders.agent.knowledge_bases.documents.with_streaming_response.retrieve_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(DocumentRetrieveDocumentResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_retrieve_document(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
+            await async_client.senders.agent.knowledge_bases.documents.with_raw_response.retrieve_document(
+                doc_id="docId",
+                sender_id="",
+                kb_id="kbId",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `kb_id` but received ''"):
+            await async_client.senders.agent.knowledge_bases.documents.with_raw_response.retrieve_document(
+                doc_id="docId",
+                sender_id="senderId",
+                kb_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `doc_id` but received ''"):
+            await async_client.senders.agent.knowledge_bases.documents.with_raw_response.retrieve_document(
+                doc_id="",
+                sender_id="senderId",
+                kb_id="kbId",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_update_document(self, async_client: AsyncZavudev) -> None:
+        document = await async_client.senders.agent.knowledge_bases.documents.update_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        )
+        assert_matches_type(DocumentUpdateDocumentResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_update_document_with_all_params(self, async_client: AsyncZavudev) -> None:
+        document = await async_client.senders.agent.knowledge_bases.documents.update_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+            content="content",
+            title="title",
+        )
+        assert_matches_type(DocumentUpdateDocumentResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_update_document(self, async_client: AsyncZavudev) -> None:
+        response = await async_client.senders.agent.knowledge_bases.documents.with_raw_response.update_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        document = await response.parse()
+        assert_matches_type(DocumentUpdateDocumentResponse, document, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_update_document(self, async_client: AsyncZavudev) -> None:
+        async with async_client.senders.agent.knowledge_bases.documents.with_streaming_response.update_document(
+            doc_id="docId",
+            sender_id="senderId",
+            kb_id="kbId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            document = await response.parse()
+            assert_matches_type(DocumentUpdateDocumentResponse, document, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_update_document(self, async_client: AsyncZavudev) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `sender_id` but received ''"):
+            await async_client.senders.agent.knowledge_bases.documents.with_raw_response.update_document(
+                doc_id="docId",
+                sender_id="",
+                kb_id="kbId",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `kb_id` but received ''"):
+            await async_client.senders.agent.knowledge_bases.documents.with_raw_response.update_document(
+                doc_id="docId",
+                sender_id="senderId",
+                kb_id="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `doc_id` but received ''"):
+            await async_client.senders.agent.knowledge_bases.documents.with_raw_response.update_document(
                 doc_id="",
                 sender_id="senderId",
                 kb_id="kbId",

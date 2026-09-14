@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ...types import contact_list_params, contact_merge_params, contact_create_params, contact_update_params
-from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
+from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
 from .channels import (
     ChannelsResource,
@@ -143,6 +143,7 @@ class ContactsResource(SyncAPIResource):
         *,
         default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email", "instagram", "messenger", "voice"]]
         | Omit = omit,
+        display_name: Optional[str] | Omit = omit,
         metadata: Dict[str, str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -157,6 +158,10 @@ class ContactsResource(SyncAPIResource):
           default_channel: Preferred channel for this contact.
 
         Set to null to clear.
+
+          display_name: Human-readable name for this contact. Set to null to clear it and fall back to
+              the contact's identifier. Contacts created automatically from an inbound message
+              have no display name until you set one.
 
           extra_headers: Send extra headers
 
@@ -173,6 +178,7 @@ class ContactsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "default_channel": default_channel,
+                    "display_name": display_name,
                     "metadata": metadata,
                 },
                 contact_update_params.ContactUpdateParams,
@@ -189,6 +195,8 @@ class ContactsResource(SyncAPIResource):
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
         phone_number: str | Omit = omit,
+        search: str | Omit = omit,
+        tag: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -200,6 +208,29 @@ class ContactsResource(SyncAPIResource):
         List contacts with their communication channels.
 
         Args:
+          cursor: Opaque cursor from a previous response's `nextCursor`. Do not construct it.
+
+          phone_number: Exact match on the contact's primary phone number, in E.164.
+
+          search: Free-text match over the contact's name (`displayName` and the WhatsApp profile
+              name), phone numbers and email addresses. Case- and accent-insensitive. A phone
+              number matches on a trailing fragment too, so `5551234` finds `+14155551234`.
+
+              Contacts created automatically from an inbound message have no `displayName` —
+              they are matched by their identifier until you set one with
+              `PATCH /v1/contacts/{contactId}`.
+
+              Results come back in relevance order rather than newest-first. `cursor` is
+              opaque in both modes; pass back exactly what the previous response returned, and
+              start a new pagination run when the search term changes.
+
+          tag: Tag name. Repeatable: `?tag=vip&tag=chile` returns contacts carrying **every**
+              tag given, not any of them — the same rule the dashboard filter applies.
+
+              Tags are matched by name, case-insensitively. An unknown tag returns 400 rather
+              than being ignored, because a typo that silently matched every contact would be
+              a worse answer than an error.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -221,6 +252,8 @@ class ContactsResource(SyncAPIResource):
                         "cursor": cursor,
                         "limit": limit,
                         "phone_number": phone_number,
+                        "search": search,
+                        "tag": tag,
                     },
                     contact_list_params.ContactListParams,
                 ),
@@ -262,40 +295,6 @@ class ContactsResource(SyncAPIResource):
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
             path_template("/v1/contacts/{contact_id}", contact_id=contact_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
-    def dismiss_merge_suggestion(
-        self,
-        contact_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Dismiss the merge suggestion for a contact.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not contact_id:
-            raise ValueError(f"Expected a non-empty value for `contact_id` but received {contact_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return self._delete(
-            path_template("/v1/contacts/{contact_id}/merge-suggestion", contact_id=contact_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -487,6 +486,7 @@ class AsyncContactsResource(AsyncAPIResource):
         *,
         default_channel: Optional[Literal["sms", "whatsapp", "telegram", "email", "instagram", "messenger", "voice"]]
         | Omit = omit,
+        display_name: Optional[str] | Omit = omit,
         metadata: Dict[str, str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -501,6 +501,10 @@ class AsyncContactsResource(AsyncAPIResource):
           default_channel: Preferred channel for this contact.
 
         Set to null to clear.
+
+          display_name: Human-readable name for this contact. Set to null to clear it and fall back to
+              the contact's identifier. Contacts created automatically from an inbound message
+              have no display name until you set one.
 
           extra_headers: Send extra headers
 
@@ -517,6 +521,7 @@ class AsyncContactsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "default_channel": default_channel,
+                    "display_name": display_name,
                     "metadata": metadata,
                 },
                 contact_update_params.ContactUpdateParams,
@@ -533,6 +538,8 @@ class AsyncContactsResource(AsyncAPIResource):
         cursor: str | Omit = omit,
         limit: int | Omit = omit,
         phone_number: str | Omit = omit,
+        search: str | Omit = omit,
+        tag: SequenceNotStr[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -544,6 +551,29 @@ class AsyncContactsResource(AsyncAPIResource):
         List contacts with their communication channels.
 
         Args:
+          cursor: Opaque cursor from a previous response's `nextCursor`. Do not construct it.
+
+          phone_number: Exact match on the contact's primary phone number, in E.164.
+
+          search: Free-text match over the contact's name (`displayName` and the WhatsApp profile
+              name), phone numbers and email addresses. Case- and accent-insensitive. A phone
+              number matches on a trailing fragment too, so `5551234` finds `+14155551234`.
+
+              Contacts created automatically from an inbound message have no `displayName` —
+              they are matched by their identifier until you set one with
+              `PATCH /v1/contacts/{contactId}`.
+
+              Results come back in relevance order rather than newest-first. `cursor` is
+              opaque in both modes; pass back exactly what the previous response returned, and
+              start a new pagination run when the search term changes.
+
+          tag: Tag name. Repeatable: `?tag=vip&tag=chile` returns contacts carrying **every**
+              tag given, not any of them — the same rule the dashboard filter applies.
+
+              Tags are matched by name, case-insensitively. An unknown tag returns 400 rather
+              than being ignored, because a typo that silently matched every contact would be
+              a worse answer than an error.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -565,6 +595,8 @@ class AsyncContactsResource(AsyncAPIResource):
                         "cursor": cursor,
                         "limit": limit,
                         "phone_number": phone_number,
+                        "search": search,
+                        "tag": tag,
                     },
                     contact_list_params.ContactListParams,
                 ),
@@ -606,40 +638,6 @@ class AsyncContactsResource(AsyncAPIResource):
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
             path_template("/v1/contacts/{contact_id}", contact_id=contact_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
-    async def dismiss_merge_suggestion(
-        self,
-        contact_id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Dismiss the merge suggestion for a contact.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not contact_id:
-            raise ValueError(f"Expected a non-empty value for `contact_id` but received {contact_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return await self._delete(
-            path_template("/v1/contacts/{contact_id}/merge-suggestion", contact_id=contact_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -742,9 +740,6 @@ class ContactsResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             contacts.delete,
         )
-        self.dismiss_merge_suggestion = to_raw_response_wrapper(
-            contacts.dismiss_merge_suggestion,
-        )
         self.merge = to_raw_response_wrapper(
             contacts.merge,
         )
@@ -775,9 +770,6 @@ class AsyncContactsResourceWithRawResponse:
         )
         self.delete = async_to_raw_response_wrapper(
             contacts.delete,
-        )
-        self.dismiss_merge_suggestion = async_to_raw_response_wrapper(
-            contacts.dismiss_merge_suggestion,
         )
         self.merge = async_to_raw_response_wrapper(
             contacts.merge,
@@ -810,9 +802,6 @@ class ContactsResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             contacts.delete,
         )
-        self.dismiss_merge_suggestion = to_streamed_response_wrapper(
-            contacts.dismiss_merge_suggestion,
-        )
         self.merge = to_streamed_response_wrapper(
             contacts.merge,
         )
@@ -843,9 +832,6 @@ class AsyncContactsResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             contacts.delete,
-        )
-        self.dismiss_merge_suggestion = async_to_streamed_response_wrapper(
-            contacts.dismiss_merge_suggestion,
         )
         self.merge = async_to_streamed_response_wrapper(
             contacts.merge,

@@ -17,8 +17,16 @@ from ....._response import (
 from .....pagination import SyncCursor, AsyncCursor
 from ....._base_client import AsyncPaginator, make_request_options
 from .....types.senders.agent.agent_document import AgentDocument
-from .....types.senders.agent.knowledge_bases import document_list_params, document_create_params
+from .....types.senders.agent.knowledge_bases import (
+    document_list_params,
+    document_create_params,
+    document_update_document_params,
+)
 from .....types.senders.agent.knowledge_bases.document_create_response import DocumentCreateResponse
+from .....types.senders.agent.knowledge_bases.document_update_document_response import DocumentUpdateDocumentResponse
+from .....types.senders.agent.knowledge_bases.document_retrieve_document_response import (
+    DocumentRetrieveDocumentResponse,
+)
 
 __all__ = ["DocumentsResource", "AsyncDocumentsResource"]
 
@@ -188,6 +196,105 @@ class DocumentsResource(SyncAPIResource):
             cast_to=NoneType,
         )
 
+    def retrieve_document(
+        self,
+        doc_id: str,
+        *,
+        sender_id: str,
+        kb_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentRetrieveDocumentResponse:
+        """
+        Get a single document from a knowledge base.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        if not kb_id:
+            raise ValueError(f"Expected a non-empty value for `kb_id` but received {kb_id!r}")
+        if not doc_id:
+            raise ValueError(f"Expected a non-empty value for `doc_id` but received {doc_id!r}")
+        return self._get(
+            path_template(
+                "/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}/documents/{doc_id}",
+                sender_id=sender_id,
+                kb_id=kb_id,
+                doc_id=doc_id,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentRetrieveDocumentResponse,
+        )
+
+    def update_document(
+        self,
+        doc_id: str,
+        *,
+        sender_id: str,
+        kb_id: str,
+        content: str | Omit = omit,
+        title: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentUpdateDocumentResponse:
+        """Update a document's title or content.
+
+        Updating content reprocesses the document
+        for RAG.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        if not kb_id:
+            raise ValueError(f"Expected a non-empty value for `kb_id` but received {kb_id!r}")
+        if not doc_id:
+            raise ValueError(f"Expected a non-empty value for `doc_id` but received {doc_id!r}")
+        return self._patch(
+            path_template(
+                "/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}/documents/{doc_id}",
+                sender_id=sender_id,
+                kb_id=kb_id,
+                doc_id=doc_id,
+            ),
+            body=maybe_transform(
+                {
+                    "content": content,
+                    "title": title,
+                },
+                document_update_document_params.DocumentUpdateDocumentParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentUpdateDocumentResponse,
+        )
+
 
 class AsyncDocumentsResource(AsyncAPIResource):
     @cached_property
@@ -354,6 +461,105 @@ class AsyncDocumentsResource(AsyncAPIResource):
             cast_to=NoneType,
         )
 
+    async def retrieve_document(
+        self,
+        doc_id: str,
+        *,
+        sender_id: str,
+        kb_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentRetrieveDocumentResponse:
+        """
+        Get a single document from a knowledge base.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        if not kb_id:
+            raise ValueError(f"Expected a non-empty value for `kb_id` but received {kb_id!r}")
+        if not doc_id:
+            raise ValueError(f"Expected a non-empty value for `doc_id` but received {doc_id!r}")
+        return await self._get(
+            path_template(
+                "/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}/documents/{doc_id}",
+                sender_id=sender_id,
+                kb_id=kb_id,
+                doc_id=doc_id,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentRetrieveDocumentResponse,
+        )
+
+    async def update_document(
+        self,
+        doc_id: str,
+        *,
+        sender_id: str,
+        kb_id: str,
+        content: str | Omit = omit,
+        title: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> DocumentUpdateDocumentResponse:
+        """Update a document's title or content.
+
+        Updating content reprocesses the document
+        for RAG.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not sender_id:
+            raise ValueError(f"Expected a non-empty value for `sender_id` but received {sender_id!r}")
+        if not kb_id:
+            raise ValueError(f"Expected a non-empty value for `kb_id` but received {kb_id!r}")
+        if not doc_id:
+            raise ValueError(f"Expected a non-empty value for `doc_id` but received {doc_id!r}")
+        return await self._patch(
+            path_template(
+                "/v1/senders/{sender_id}/agent/knowledge-bases/{kb_id}/documents/{doc_id}",
+                sender_id=sender_id,
+                kb_id=kb_id,
+                doc_id=doc_id,
+            ),
+            body=await async_maybe_transform(
+                {
+                    "content": content,
+                    "title": title,
+                },
+                document_update_document_params.DocumentUpdateDocumentParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=DocumentUpdateDocumentResponse,
+        )
+
 
 class DocumentsResourceWithRawResponse:
     def __init__(self, documents: DocumentsResource) -> None:
@@ -367,6 +573,12 @@ class DocumentsResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             documents.delete,
+        )
+        self.retrieve_document = to_raw_response_wrapper(
+            documents.retrieve_document,
+        )
+        self.update_document = to_raw_response_wrapper(
+            documents.update_document,
         )
 
 
@@ -383,6 +595,12 @@ class AsyncDocumentsResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             documents.delete,
         )
+        self.retrieve_document = async_to_raw_response_wrapper(
+            documents.retrieve_document,
+        )
+        self.update_document = async_to_raw_response_wrapper(
+            documents.update_document,
+        )
 
 
 class DocumentsResourceWithStreamingResponse:
@@ -398,6 +616,12 @@ class DocumentsResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             documents.delete,
         )
+        self.retrieve_document = to_streamed_response_wrapper(
+            documents.retrieve_document,
+        )
+        self.update_document = to_streamed_response_wrapper(
+            documents.update_document,
+        )
 
 
 class AsyncDocumentsResourceWithStreamingResponse:
@@ -412,4 +636,10 @@ class AsyncDocumentsResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             documents.delete,
+        )
+        self.retrieve_document = async_to_streamed_response_wrapper(
+            documents.retrieve_document,
+        )
+        self.update_document = async_to_streamed_response_wrapper(
+            documents.update_document,
         )

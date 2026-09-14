@@ -8,7 +8,7 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["MessageContentParam", "Button", "Contact", "Section", "SectionRow"]
+__all__ = ["MessageContentParam", "Button", "Contact", "Referral", "Section", "SectionRow"]
 
 
 class Button(TypedDict, total=False):
@@ -21,6 +21,51 @@ class Contact(TypedDict, total=False):
     name: str
 
     phones: SequenceNotStr[str]
+
+
+class Referral(TypedDict, total=False):
+    """
+    Click-to-WhatsApp (CTWA) ad attribution: where an inbound conversation came from.
+
+    WhatsApp only. Present on the **first inbound message** of a conversation opened from a Meta ad or post, and on no message after it — so store it when it arrives rather than expecting it again. Organic conversations never carry it.
+
+    Field names are camelCased to match the rest of this API; Meta sends them as snake_case (`ctwa_clid`, `source_id`, ...). Fields that do not apply are omitted: a `post` source has no click id, and an image ad has no `videoUrl`.
+    """
+
+    body: str
+    """Body copy of the ad or post."""
+
+    ctwa_clid: Annotated[str, PropertyInfo(alias="ctwaClid")]
+    """Click-to-WhatsApp click identifier.
+
+    This is the value Meta's Conversions API needs to credit a conversion back to
+    the ad that produced the conversation. Present on `ad` sources; a `post` source
+    has none.
+    """
+
+    headline: str
+    """Headline of the ad or post."""
+
+    image_url: Annotated[str, PropertyInfo(alias="imageUrl")]
+    """Image of the ad. Present when `mediaType` is `image`."""
+
+    media_type: Annotated[Literal["image", "video"], PropertyInfo(alias="mediaType")]
+    """Type of media on the ad, when it had any."""
+
+    source_id: Annotated[str, PropertyInfo(alias="sourceId")]
+    """Identifier of the ad or post that produced the click."""
+
+    source_type: Annotated[Literal["ad", "post"], PropertyInfo(alias="sourceType")]
+    """Where the click came from."""
+
+    source_url: Annotated[str, PropertyInfo(alias="sourceUrl")]
+    """Meta permalink to the ad or post."""
+
+    thumbnail_url: Annotated[str, PropertyInfo(alias="thumbnailUrl")]
+    """Thumbnail of the ad media."""
+
+    video_url: Annotated[str, PropertyInfo(alias="videoUrl")]
+    """Video of the ad. Present when `mediaType` is `video`."""
 
 
 class SectionRow(TypedDict, total=False):
@@ -104,6 +149,20 @@ class MessageContentParam(TypedDict, total=False):
 
     react_to_message_id: Annotated[str, PropertyInfo(alias="reactToMessageId")]
     """Message ID to react to."""
+
+    referral: Referral
+    """
+    Click-to-WhatsApp (CTWA) ad attribution: where an inbound conversation came
+    from.
+
+    WhatsApp only. Present on the **first inbound message** of a conversation opened
+    from a Meta ad or post, and on no message after it — so store it when it arrives
+    rather than expecting it again. Organic conversations never carry it.
+
+    Field names are camelCased to match the rest of this API; Meta sends them as
+    snake_case (`ctwa_clid`, `source_id`, ...). Fields that do not apply are
+    omitted: a `post` source has no click id, and an image ad has no `videoUrl`.
+    """
 
     reply_to_from: Annotated[str, PropertyInfo(alias="replyToFrom")]
     """Sender of the quoted message (phone number in E.164 format)."""

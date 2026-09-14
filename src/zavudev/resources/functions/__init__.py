@@ -8,6 +8,22 @@ from .secrets import (
     SecretsResourceWithStreamingResponse,
     AsyncSecretsResourceWithStreamingResponse,
 )
+from .git_link import (
+    GitLinkResource,
+    AsyncGitLinkResource,
+    GitLinkResourceWithRawResponse,
+    AsyncGitLinkResourceWithRawResponse,
+    GitLinkResourceWithStreamingResponse,
+    AsyncGitLinkResourceWithStreamingResponse,
+)
+from .triggers import (
+    TriggersResource,
+    AsyncTriggersResource,
+    TriggersResourceWithRawResponse,
+    AsyncTriggersResourceWithRawResponse,
+    TriggersResourceWithStreamingResponse,
+    AsyncTriggersResourceWithStreamingResponse,
+)
 from .functions import (
     FunctionsResource,
     AsyncFunctionsResource,
@@ -24,6 +40,18 @@ __all__ = [
     "AsyncSecretsResourceWithRawResponse",
     "SecretsResourceWithStreamingResponse",
     "AsyncSecretsResourceWithStreamingResponse",
+    "TriggersResource",
+    "AsyncTriggersResource",
+    "TriggersResourceWithRawResponse",
+    "AsyncTriggersResourceWithRawResponse",
+    "TriggersResourceWithStreamingResponse",
+    "AsyncTriggersResourceWithStreamingResponse",
+    "GitLinkResource",
+    "AsyncGitLinkResource",
+    "GitLinkResourceWithRawResponse",
+    "AsyncGitLinkResourceWithRawResponse",
+    "GitLinkResourceWithStreamingResponse",
+    "AsyncGitLinkResourceWithStreamingResponse",
     "FunctionsResource",
     "AsyncFunctionsResource",
     "FunctionsResourceWithRawResponse",

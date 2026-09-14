@@ -7,7 +7,14 @@ from typing_extensions import Literal
 
 import httpx
 
-from ...types import function_create_params, function_deploy_params, function_update_params, function_tail_logs_params
+from ...types import (
+    function_create_params,
+    function_deploy_params,
+    function_update_params,
+    function_tail_logs_params,
+    function_list_deployments_params,
+    function_rollback_deployment_params,
+)
 from .secrets import (
     SecretsResource,
     AsyncSecretsResource,
@@ -18,6 +25,22 @@ from .secrets import (
 )
 from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import path_template, maybe_transform, async_maybe_transform
+from .git_link import (
+    GitLinkResource,
+    AsyncGitLinkResource,
+    GitLinkResourceWithRawResponse,
+    AsyncGitLinkResourceWithRawResponse,
+    GitLinkResourceWithStreamingResponse,
+    AsyncGitLinkResourceWithStreamingResponse,
+)
+from .triggers import (
+    TriggersResource,
+    AsyncTriggersResource,
+    TriggersResourceWithRawResponse,
+    AsyncTriggersResourceWithRawResponse,
+    TriggersResourceWithStreamingResponse,
+    AsyncTriggersResourceWithStreamingResponse,
+)
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -34,6 +57,9 @@ from ...types.function_update_response import FunctionUpdateResponse
 from ...types.function_retrieve_response import FunctionRetrieveResponse
 from ...types.function_tail_logs_response import FunctionTailLogsResponse
 from ...types.function_get_deployment_response import FunctionGetDeploymentResponse
+from ...types.function_list_deployments_response import FunctionListDeploymentsResponse
+from ...types.function_list_event_types_response import FunctionListEventTypesResponse
+from ...types.function_rollback_deployment_response import FunctionRollbackDeploymentResponse
 
 __all__ = ["FunctionsResource", "AsyncFunctionsResource"]
 
@@ -42,6 +68,14 @@ class FunctionsResource(SyncAPIResource):
     @cached_property
     def secrets(self) -> SecretsResource:
         return SecretsResource(self._client)
+
+    @cached_property
+    def triggers(self) -> TriggersResource:
+        return TriggersResource(self._client)
+
+    @cached_property
+    def git_link(self) -> GitLinkResource:
+        return GitLinkResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> FunctionsResourceWithRawResponse:
@@ -395,6 +429,113 @@ class FunctionsResource(SyncAPIResource):
             cast_to=FunctionGetDeploymentResponse,
         )
 
+    def list_deployments(
+        self,
+        function_id: str,
+        *,
+        limit: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FunctionListDeploymentsResponse:
+        """List a function's deployment history, newest first.
+
+        Source code is omitted;
+        fetch a single deployment via GET /v1/functions/deployments/{deploymentId} for
+        full details.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not function_id:
+            raise ValueError(f"Expected a non-empty value for `function_id` but received {function_id!r}")
+        return self._get(
+            path_template("/v1/functions/{function_id}/deployments", function_id=function_id),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"limit": limit}, function_list_deployments_params.FunctionListDeploymentsParams),
+            ),
+            cast_to=FunctionListDeploymentsResponse,
+        )
+
+    def list_event_types(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FunctionListEventTypesResponse:
+        """List the event types a function trigger can subscribe to.
+
+        Includes the special
+        type `cron`, which fires on a schedule (see POST
+        /v1/functions/{functionId}/triggers) rather than on a messaging event.
+        """
+        return self._get(
+            "/v1/functions/event-types",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=FunctionListEventTypesResponse,
+        )
+
+    def rollback_deployment(
+        self,
+        function_id: str,
+        *,
+        deployment_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FunctionRollbackDeploymentResponse:
+        """
+        Re-deploy a previous version by copying its source, dependencies, and runtime
+        pin onto the function's draft, then deploying. Returns immediately with a
+        deployment ID — poll GET /v1/functions/deployments/{deploymentId} until status
+        is active or failed. Secrets are not rolled back.
+
+        Args:
+          deployment_id: ID of the deployment to roll back to.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not function_id:
+            raise ValueError(f"Expected a non-empty value for `function_id` but received {function_id!r}")
+        return self._post(
+            path_template("/v1/functions/{function_id}/rollback", function_id=function_id),
+            body=maybe_transform(
+                {"deployment_id": deployment_id}, function_rollback_deployment_params.FunctionRollbackDeploymentParams
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=FunctionRollbackDeploymentResponse,
+        )
+
     def tail_logs(
         self,
         function_id: str,
@@ -458,6 +599,14 @@ class AsyncFunctionsResource(AsyncAPIResource):
     @cached_property
     def secrets(self) -> AsyncSecretsResource:
         return AsyncSecretsResource(self._client)
+
+    @cached_property
+    def triggers(self) -> AsyncTriggersResource:
+        return AsyncTriggersResource(self._client)
+
+    @cached_property
+    def git_link(self) -> AsyncGitLinkResource:
+        return AsyncGitLinkResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncFunctionsResourceWithRawResponse:
@@ -811,6 +960,115 @@ class AsyncFunctionsResource(AsyncAPIResource):
             cast_to=FunctionGetDeploymentResponse,
         )
 
+    async def list_deployments(
+        self,
+        function_id: str,
+        *,
+        limit: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FunctionListDeploymentsResponse:
+        """List a function's deployment history, newest first.
+
+        Source code is omitted;
+        fetch a single deployment via GET /v1/functions/deployments/{deploymentId} for
+        full details.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not function_id:
+            raise ValueError(f"Expected a non-empty value for `function_id` but received {function_id!r}")
+        return await self._get(
+            path_template("/v1/functions/{function_id}/deployments", function_id=function_id),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"limit": limit}, function_list_deployments_params.FunctionListDeploymentsParams
+                ),
+            ),
+            cast_to=FunctionListDeploymentsResponse,
+        )
+
+    async def list_event_types(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FunctionListEventTypesResponse:
+        """List the event types a function trigger can subscribe to.
+
+        Includes the special
+        type `cron`, which fires on a schedule (see POST
+        /v1/functions/{functionId}/triggers) rather than on a messaging event.
+        """
+        return await self._get(
+            "/v1/functions/event-types",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=FunctionListEventTypesResponse,
+        )
+
+    async def rollback_deployment(
+        self,
+        function_id: str,
+        *,
+        deployment_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> FunctionRollbackDeploymentResponse:
+        """
+        Re-deploy a previous version by copying its source, dependencies, and runtime
+        pin onto the function's draft, then deploying. Returns immediately with a
+        deployment ID — poll GET /v1/functions/deployments/{deploymentId} until status
+        is active or failed. Secrets are not rolled back.
+
+        Args:
+          deployment_id: ID of the deployment to roll back to.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not function_id:
+            raise ValueError(f"Expected a non-empty value for `function_id` but received {function_id!r}")
+        return await self._post(
+            path_template("/v1/functions/{function_id}/rollback", function_id=function_id),
+            body=await async_maybe_transform(
+                {"deployment_id": deployment_id}, function_rollback_deployment_params.FunctionRollbackDeploymentParams
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=FunctionRollbackDeploymentResponse,
+        )
+
     async def tail_logs(
         self,
         function_id: str,
@@ -892,6 +1150,15 @@ class FunctionsResourceWithRawResponse:
         self.get_deployment = to_raw_response_wrapper(
             functions.get_deployment,
         )
+        self.list_deployments = to_raw_response_wrapper(
+            functions.list_deployments,
+        )
+        self.list_event_types = to_raw_response_wrapper(
+            functions.list_event_types,
+        )
+        self.rollback_deployment = to_raw_response_wrapper(
+            functions.rollback_deployment,
+        )
         self.tail_logs = to_raw_response_wrapper(
             functions.tail_logs,
         )
@@ -899,6 +1166,14 @@ class FunctionsResourceWithRawResponse:
     @cached_property
     def secrets(self) -> SecretsResourceWithRawResponse:
         return SecretsResourceWithRawResponse(self._functions.secrets)
+
+    @cached_property
+    def triggers(self) -> TriggersResourceWithRawResponse:
+        return TriggersResourceWithRawResponse(self._functions.triggers)
+
+    @cached_property
+    def git_link(self) -> GitLinkResourceWithRawResponse:
+        return GitLinkResourceWithRawResponse(self._functions.git_link)
 
 
 class AsyncFunctionsResourceWithRawResponse:
@@ -923,6 +1198,15 @@ class AsyncFunctionsResourceWithRawResponse:
         self.get_deployment = async_to_raw_response_wrapper(
             functions.get_deployment,
         )
+        self.list_deployments = async_to_raw_response_wrapper(
+            functions.list_deployments,
+        )
+        self.list_event_types = async_to_raw_response_wrapper(
+            functions.list_event_types,
+        )
+        self.rollback_deployment = async_to_raw_response_wrapper(
+            functions.rollback_deployment,
+        )
         self.tail_logs = async_to_raw_response_wrapper(
             functions.tail_logs,
         )
@@ -930,6 +1214,14 @@ class AsyncFunctionsResourceWithRawResponse:
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithRawResponse:
         return AsyncSecretsResourceWithRawResponse(self._functions.secrets)
+
+    @cached_property
+    def triggers(self) -> AsyncTriggersResourceWithRawResponse:
+        return AsyncTriggersResourceWithRawResponse(self._functions.triggers)
+
+    @cached_property
+    def git_link(self) -> AsyncGitLinkResourceWithRawResponse:
+        return AsyncGitLinkResourceWithRawResponse(self._functions.git_link)
 
 
 class FunctionsResourceWithStreamingResponse:
@@ -954,6 +1246,15 @@ class FunctionsResourceWithStreamingResponse:
         self.get_deployment = to_streamed_response_wrapper(
             functions.get_deployment,
         )
+        self.list_deployments = to_streamed_response_wrapper(
+            functions.list_deployments,
+        )
+        self.list_event_types = to_streamed_response_wrapper(
+            functions.list_event_types,
+        )
+        self.rollback_deployment = to_streamed_response_wrapper(
+            functions.rollback_deployment,
+        )
         self.tail_logs = to_streamed_response_wrapper(
             functions.tail_logs,
         )
@@ -961,6 +1262,14 @@ class FunctionsResourceWithStreamingResponse:
     @cached_property
     def secrets(self) -> SecretsResourceWithStreamingResponse:
         return SecretsResourceWithStreamingResponse(self._functions.secrets)
+
+    @cached_property
+    def triggers(self) -> TriggersResourceWithStreamingResponse:
+        return TriggersResourceWithStreamingResponse(self._functions.triggers)
+
+    @cached_property
+    def git_link(self) -> GitLinkResourceWithStreamingResponse:
+        return GitLinkResourceWithStreamingResponse(self._functions.git_link)
 
 
 class AsyncFunctionsResourceWithStreamingResponse:
@@ -985,6 +1294,15 @@ class AsyncFunctionsResourceWithStreamingResponse:
         self.get_deployment = async_to_streamed_response_wrapper(
             functions.get_deployment,
         )
+        self.list_deployments = async_to_streamed_response_wrapper(
+            functions.list_deployments,
+        )
+        self.list_event_types = async_to_streamed_response_wrapper(
+            functions.list_event_types,
+        )
+        self.rollback_deployment = async_to_streamed_response_wrapper(
+            functions.rollback_deployment,
+        )
         self.tail_logs = async_to_streamed_response_wrapper(
             functions.tail_logs,
         )
@@ -992,3 +1310,11 @@ class AsyncFunctionsResourceWithStreamingResponse:
     @cached_property
     def secrets(self) -> AsyncSecretsResourceWithStreamingResponse:
         return AsyncSecretsResourceWithStreamingResponse(self._functions.secrets)
+
+    @cached_property
+    def triggers(self) -> AsyncTriggersResourceWithStreamingResponse:
+        return AsyncTriggersResourceWithStreamingResponse(self._functions.triggers)
+
+    @cached_property
+    def git_link(self) -> AsyncGitLinkResourceWithStreamingResponse:
+        return AsyncGitLinkResourceWithStreamingResponse(self._functions.git_link)

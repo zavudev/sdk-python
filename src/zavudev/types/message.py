@@ -2,6 +2,7 @@
 
 from typing import Dict, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
@@ -21,6 +22,13 @@ class Message(BaseModel):
     """Delivery channel. Use 'auto' for intelligent routing."""
 
     created_at: datetime = FieldInfo(alias="createdAt")
+
+    direction: Literal["inbound", "outbound"]
+    """Who sent the message.
+
+    Needed to render a thread: `status` cannot tell the two apart, because an
+    inbound message is also stored as `delivered`.
+    """
 
     message_type: MessageType = FieldInfo(alias="messageType")
     """Type of message.

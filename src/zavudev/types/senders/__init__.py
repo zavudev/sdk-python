@@ -12,7 +12,9 @@ from .agent_update_params import AgentUpdateParams as AgentUpdateParams
 from .whats_app_sync_status import WhatsAppSyncStatus as WhatsAppSyncStatus
 from .agent_execution_status import AgentExecutionStatus as AgentExecutionStatus
 from .whats_app_sync_history import WhatsAppSyncHistory as WhatsAppSyncHistory
+from .telegram_connect_params import TelegramConnectParams as TelegramConnectParams
 from .whats_app_sync_contacts import WhatsAppSyncContacts as WhatsAppSyncContacts
+from .telegram_connect_response import TelegramConnectResponse as TelegramConnectResponse
 from .whatsapp_sync_retrieve_response import WhatsappSyncRetrieveResponse as WhatsappSyncRetrieveResponse
 from .whatsapp_sync_start_history_sync_response import (
     WhatsappSyncStartHistorySyncResponse as WhatsappSyncStartHistorySyncResponse,
