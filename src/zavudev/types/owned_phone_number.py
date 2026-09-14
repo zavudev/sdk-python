@@ -2,6 +2,7 @@
 
 from typing import List, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
@@ -23,7 +24,31 @@ class OwnedPhoneNumber(BaseModel):
 
     pricing: OwnedPhoneNumberPricing
 
+    regulatory_status: Literal["approved", "pending_review", "rejected"] = FieldInfo(alias="regulatoryStatus")
+    """Regulatory review state.
+
+    Numbers that need no review are `approved` immediately. A number bought with
+    regulatory information is owned and billed from purchase and starts
+    `pending_review`; it cannot send messages or place calls until this is
+    `approved`. The state is re-checked every 6 hours: poll
+    `GET /v1/phone-numbers/{phoneNumberId}` to follow it.
+
+    Assign it to a sender with `PATCH /v1/phone-numbers/{phoneNumberId}`
+    (`senderId`) before or after approval. A number assigned while under review is
+    recorded and connected to that sender when it is approved; the connection is
+    retried until it succeeds. A sender created over the API is set up for SMS as
+    part of the assignment. `rejected` means review refused the information: the
+    number cannot be assigned to a sender. A number that stays `pending_review` may
+    be waiting on information the API cannot supply; contact support.
+    """
+
     status: PhoneNumberStatus
+    """Billing state of an owned number, separate from `regulatoryStatus`.
+
+    `pending` is legacy and is not written to numbers today. The SDKs carry
+    `active`, `suspended` and `pending` only; `releasing` and `released` are
+    returned by the REST API until their next release.
+    """
 
     name: Optional[str] = None
     """Optional custom name for the phone number."""

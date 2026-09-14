@@ -15,6 +15,7 @@ class RequirementType(BaseModel):
     """A specific requirement type within a requirement group."""
 
     id: str
+    """Send this as `requirementType` in `regulatoryRequirements` when purchasing."""
 
     description: str
 

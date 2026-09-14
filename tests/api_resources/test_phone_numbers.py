@@ -171,6 +171,13 @@ class TestPhoneNumbers:
         phone_number = client.phone_numbers.purchase(
             phone_number="+15551234567",
             name="Primary Line",
+            regulatory_requirements=[
+                {
+                    "field_value": "jd7x2k3m4n5p6q7r8s9t0abc",
+                    "requirement_type": "8c5b1a2e-0f3d-4f5b-9a61-2c7e4d9b1f10",
+                }
+            ],
+            type="local",
         )
         assert_matches_type(PhoneNumberPurchaseResponse, phone_number, path=["response"])
 
@@ -245,9 +252,7 @@ class TestPhoneNumbers:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_requirements(self, client: Zavudev) -> None:
-        phone_number = client.phone_numbers.requirements(
-            country_code="xx",
-        )
+        phone_number = client.phone_numbers.requirements()
         assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -255,6 +260,7 @@ class TestPhoneNumbers:
     def test_method_requirements_with_all_params(self, client: Zavudev) -> None:
         phone_number = client.phone_numbers.requirements(
             country_code="xx",
+            phone_number="phoneNumber",
             type="local",
         )
         assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
@@ -262,9 +268,7 @@ class TestPhoneNumbers:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_requirements(self, client: Zavudev) -> None:
-        response = client.phone_numbers.with_raw_response.requirements(
-            country_code="xx",
-        )
+        response = client.phone_numbers.with_raw_response.requirements()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -274,9 +278,7 @@ class TestPhoneNumbers:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_requirements(self, client: Zavudev) -> None:
-        with client.phone_numbers.with_streaming_response.requirements(
-            country_code="xx",
-        ) as response:
+        with client.phone_numbers.with_streaming_response.requirements() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -483,6 +485,13 @@ class TestAsyncPhoneNumbers:
         phone_number = await async_client.phone_numbers.purchase(
             phone_number="+15551234567",
             name="Primary Line",
+            regulatory_requirements=[
+                {
+                    "field_value": "jd7x2k3m4n5p6q7r8s9t0abc",
+                    "requirement_type": "8c5b1a2e-0f3d-4f5b-9a61-2c7e4d9b1f10",
+                }
+            ],
+            type="local",
         )
         assert_matches_type(PhoneNumberPurchaseResponse, phone_number, path=["response"])
 
@@ -557,9 +566,7 @@ class TestAsyncPhoneNumbers:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_requirements(self, async_client: AsyncZavudev) -> None:
-        phone_number = await async_client.phone_numbers.requirements(
-            country_code="xx",
-        )
+        phone_number = await async_client.phone_numbers.requirements()
         assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -567,6 +574,7 @@ class TestAsyncPhoneNumbers:
     async def test_method_requirements_with_all_params(self, async_client: AsyncZavudev) -> None:
         phone_number = await async_client.phone_numbers.requirements(
             country_code="xx",
+            phone_number="phoneNumber",
             type="local",
         )
         assert_matches_type(PhoneNumberRequirementsResponse, phone_number, path=["response"])
@@ -574,9 +582,7 @@ class TestAsyncPhoneNumbers:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_requirements(self, async_client: AsyncZavudev) -> None:
-        response = await async_client.phone_numbers.with_raw_response.requirements(
-            country_code="xx",
-        )
+        response = await async_client.phone_numbers.with_raw_response.requirements()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -586,9 +592,7 @@ class TestAsyncPhoneNumbers:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_requirements(self, async_client: AsyncZavudev) -> None:
-        async with async_client.phone_numbers.with_streaming_response.requirements(
-            country_code="xx",
-        ) as response:
+        async with async_client.phone_numbers.with_streaming_response.requirements() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
