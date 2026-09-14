@@ -12,6 +12,12 @@ __all__ = ["AddressCreateParams"]
 class AddressCreateParams(TypedDict, total=False):
     country_code: Required[Annotated[str, PropertyInfo(alias="countryCode")]]
 
+    first_name: Required[Annotated[str, PropertyInfo(alias="firstName")]]
+    """First name of the person the address is registered to."""
+
+    last_name: Required[Annotated[str, PropertyInfo(alias="lastName")]]
+    """Last name of the person the address is registered to."""
+
     locality: Required[str]
 
     postal_code: Required[Annotated[str, PropertyInfo(alias="postalCode")]]
@@ -21,9 +27,9 @@ class AddressCreateParams(TypedDict, total=False):
     administrative_area: Annotated[str, PropertyInfo(alias="administrativeArea")]
 
     business_name: Annotated[str, PropertyInfo(alias="businessName")]
+    """Business name, when the address belongs to a business.
+
+    Defaults to the person's full name.
+    """
 
     extended_address: Annotated[str, PropertyInfo(alias="extendedAddress")]
-
-    first_name: Annotated[str, PropertyInfo(alias="firstName")]
-
-    last_name: Annotated[str, PropertyInfo(alias="lastName")]

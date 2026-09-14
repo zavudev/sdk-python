@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Iterable, Optional
 
 import httpx
 
@@ -111,7 +111,9 @@ class PhoneNumbersResource(SyncAPIResource):
         Args:
           name: Custom name for the phone number. Set to null to clear.
 
-          sender_id: Sender ID to assign the phone number to. Set to null to unassign.
+          sender_id: Sender ID to assign the phone number to. Set to null to unassign. A number under
+              regulatory review is recorded now and connected to the sender when approved; a
+              rejected number is refused.
 
           extra_headers: Send extra headers
 
@@ -192,6 +194,8 @@ class PhoneNumbersResource(SyncAPIResource):
         *,
         phone_number: str,
         name: str | Omit = omit,
+        regulatory_requirements: Iterable[phone_number_purchase_params.RegulatoryRequirement] | Omit = omit,
+        type: PhoneNumberType | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -202,16 +206,62 @@ class PhoneNumbersResource(SyncAPIResource):
         """Purchase an available phone number.
 
         Requires a paid plan: the Free plan cannot
-        purchase phone numbers and receives `402` with code `paid_plan_required`. Paid
-        plans include one US number at no charge. The included number is one per account
-        and is granted once: claiming it spends the benefit for good, so releasing that
-        number does not make another one free, and numbers the account already bought do
-        not consume it.
+        purchase phone numbers and receives `402` with code `paid_plan_required`.
+
+        **The included number.** A paid plan includes one number at no charge, once per
+        account: it must be a US or Canadian number (a +1 number) costing $20 a month or
+        less. `isFreeEligible` in `GET /v1/phone-numbers/available` marks the numbers
+        that qualify. Claiming it spends the benefit for good, across every team the
+        account owner owns, so releasing that number does not make another one free.
+
+        **Numbers with regulatory requirements.** Which numbers need regulatory
+        information is decided per number, not by a fixed country list. The purchase
+        looks the requirements up for the exact number before charging anything:
+
+        1. `GET /v1/phone-numbers/requirements?phoneNumber=...`. If `items` is empty,
+           buy normally.
+        2. Create what it asks for: addresses with `POST /v1/addresses`, documents with
+           `POST /v1/documents`.
+        3. Purchase with `type` and `regulatoryRequirements`. The number is bought and
+           billed at once with `regulatoryStatus: pending_review`.
+        4. Poll `GET /v1/phone-numbers/{phoneNumberId}` until `regulatoryStatus` is
+           `approved`. Assign it to a sender before or after approval; it starts
+           carrying messages once approved.
+
+        **Reuse.** Information you submitted is kept for your project, per country and
+        `type`, and a later purchase there may omit `regulatoryRequirements`. Reuse only
+        happens when what is kept still covers every requirement of the new number and
+        every address and document in it belongs to the project. Otherwise, or when
+        nothing is kept, the purchase returns `400 regulatory_compliance_required` with
+        the missing requirements in `details`.
+
+        Invalid values (a missing, unknown or repeated requirement id, an address or
+        document from another project, or one rejected in review) return
+        `400 invalid_request`. If an address or document cannot be registered for
+        review, the purchase returns `400 invalid_request` naming the requirement. If
+        the requirements cannot be looked up, the purchase returns
+        `502 requirements_unavailable`, except for US and Canadian numbers, which are
+        sold as numbers without requirements. None of these errors charge anything.
 
         Args:
           phone_number: Phone number in E.164 format.
 
           name: Optional custom name for the phone number.
+
+          regulatory_requirements: Regulatory information, for numbers whose requirements list is not empty. Get
+              the list with `GET /v1/phone-numbers/requirements?phoneNumber=...` and send one
+              entry per requirement id, except `action` requirements, which take no value.
+              Every required id must be present, once, and no unknown id may be sent;
+              otherwise the purchase is refused with `400 invalid_request` before anything is
+              charged.
+
+              The information is kept for your project under the number's country and `type`.
+              A later purchase there may omit this field if what is kept still covers that
+              number's requirements. Omit it for numbers without requirements.
+
+          type: Type of phone number. `mobile` is stocked in countries where no geographic
+              (`local`) or non-geographic (`national`) inventory exists, and in several
+              markets it is the only type that can receive SMS.
 
           extra_headers: Send extra headers
 
@@ -227,6 +277,8 @@ class PhoneNumbersResource(SyncAPIResource):
                 {
                     "phone_number": phone_number,
                     "name": name,
+                    "regulatory_requirements": regulatory_requirements,
+                    "type": type,
                 },
                 phone_number_purchase_params.PhoneNumberPurchaseParams,
             ),
@@ -274,7 +326,8 @@ class PhoneNumbersResource(SyncAPIResource):
     def requirements(
         self,
         *,
-        country_code: str,
+        country_code: str | Omit = omit,
+        phone_number: str | Omit = omit,
         type: PhoneNumberType | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -284,14 +337,31 @@ class PhoneNumbersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PhoneNumberRequirementsResponse:
         """
-        Get regulatory requirements for purchasing phone numbers in a specific country.
-        Some countries require additional documentation (addresses, identity documents)
-        before phone numbers can be activated.
+        Get the regulatory information needed to buy a phone number, for one specific
+        number or for a country and number type. Prefer `phoneNumber`: the response is
+        then exactly the list the purchase of that number validates against. Pass each
+        `requirementTypes[].id` back as `requirementType` in `regulatoryRequirements` on
+        `POST /v1/phone-numbers`.
+
+        For `phoneNumber`, the requirements of that exact number are returned. When they
+        cannot be resolved for the number itself, the list for its country and `type` is
+        returned instead, and the purchase uses the same list. An empty `items` array
+        means the number needs no regulatory information. If the requirements cannot be
+        retrieved at all, the response is `502 requirements_unavailable`, never an empty
+        list.
+
+        URL-encode the `+` of `phoneNumber` as `%2B`. An unencoded `+` is also accepted.
 
         Args:
-          country_code: Two-letter ISO country code.
+          country_code: Two-letter ISO country code. Required unless `phoneNumber` is given.
 
-          type: Type of phone number (local, mobile, tollFree).
+          phone_number: E.164 number from `GET /v1/phone-numbers/available`, with `+` encoded as `%2B`.
+              Returns the requirements the purchase of that number checks. Takes precedence
+              over `countryCode`.
+
+          type: Type of phone number (local, national, mobile, tollFree). Defaults to `local`.
+              With `phoneNumber`, used only when the number's own requirements cannot be
+              resolved and the country list is returned.
 
           extra_headers: Send extra headers
 
@@ -311,6 +381,7 @@ class PhoneNumbersResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "country_code": country_code,
+                        "phone_number": phone_number,
                         "type": type,
                     },
                     phone_number_requirements_params.PhoneNumberRequirementsParams,
@@ -451,7 +522,9 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
         Args:
           name: Custom name for the phone number. Set to null to clear.
 
-          sender_id: Sender ID to assign the phone number to. Set to null to unassign.
+          sender_id: Sender ID to assign the phone number to. Set to null to unassign. A number under
+              regulatory review is recorded now and connected to the sender when approved; a
+              rejected number is refused.
 
           extra_headers: Send extra headers
 
@@ -532,6 +605,8 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
         *,
         phone_number: str,
         name: str | Omit = omit,
+        regulatory_requirements: Iterable[phone_number_purchase_params.RegulatoryRequirement] | Omit = omit,
+        type: PhoneNumberType | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -542,16 +617,62 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
         """Purchase an available phone number.
 
         Requires a paid plan: the Free plan cannot
-        purchase phone numbers and receives `402` with code `paid_plan_required`. Paid
-        plans include one US number at no charge. The included number is one per account
-        and is granted once: claiming it spends the benefit for good, so releasing that
-        number does not make another one free, and numbers the account already bought do
-        not consume it.
+        purchase phone numbers and receives `402` with code `paid_plan_required`.
+
+        **The included number.** A paid plan includes one number at no charge, once per
+        account: it must be a US or Canadian number (a +1 number) costing $20 a month or
+        less. `isFreeEligible` in `GET /v1/phone-numbers/available` marks the numbers
+        that qualify. Claiming it spends the benefit for good, across every team the
+        account owner owns, so releasing that number does not make another one free.
+
+        **Numbers with regulatory requirements.** Which numbers need regulatory
+        information is decided per number, not by a fixed country list. The purchase
+        looks the requirements up for the exact number before charging anything:
+
+        1. `GET /v1/phone-numbers/requirements?phoneNumber=...`. If `items` is empty,
+           buy normally.
+        2. Create what it asks for: addresses with `POST /v1/addresses`, documents with
+           `POST /v1/documents`.
+        3. Purchase with `type` and `regulatoryRequirements`. The number is bought and
+           billed at once with `regulatoryStatus: pending_review`.
+        4. Poll `GET /v1/phone-numbers/{phoneNumberId}` until `regulatoryStatus` is
+           `approved`. Assign it to a sender before or after approval; it starts
+           carrying messages once approved.
+
+        **Reuse.** Information you submitted is kept for your project, per country and
+        `type`, and a later purchase there may omit `regulatoryRequirements`. Reuse only
+        happens when what is kept still covers every requirement of the new number and
+        every address and document in it belongs to the project. Otherwise, or when
+        nothing is kept, the purchase returns `400 regulatory_compliance_required` with
+        the missing requirements in `details`.
+
+        Invalid values (a missing, unknown or repeated requirement id, an address or
+        document from another project, or one rejected in review) return
+        `400 invalid_request`. If an address or document cannot be registered for
+        review, the purchase returns `400 invalid_request` naming the requirement. If
+        the requirements cannot be looked up, the purchase returns
+        `502 requirements_unavailable`, except for US and Canadian numbers, which are
+        sold as numbers without requirements. None of these errors charge anything.
 
         Args:
           phone_number: Phone number in E.164 format.
 
           name: Optional custom name for the phone number.
+
+          regulatory_requirements: Regulatory information, for numbers whose requirements list is not empty. Get
+              the list with `GET /v1/phone-numbers/requirements?phoneNumber=...` and send one
+              entry per requirement id, except `action` requirements, which take no value.
+              Every required id must be present, once, and no unknown id may be sent;
+              otherwise the purchase is refused with `400 invalid_request` before anything is
+              charged.
+
+              The information is kept for your project under the number's country and `type`.
+              A later purchase there may omit this field if what is kept still covers that
+              number's requirements. Omit it for numbers without requirements.
+
+          type: Type of phone number. `mobile` is stocked in countries where no geographic
+              (`local`) or non-geographic (`national`) inventory exists, and in several
+              markets it is the only type that can receive SMS.
 
           extra_headers: Send extra headers
 
@@ -567,6 +688,8 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
                 {
                     "phone_number": phone_number,
                     "name": name,
+                    "regulatory_requirements": regulatory_requirements,
+                    "type": type,
                 },
                 phone_number_purchase_params.PhoneNumberPurchaseParams,
             ),
@@ -614,7 +737,8 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
     async def requirements(
         self,
         *,
-        country_code: str,
+        country_code: str | Omit = omit,
+        phone_number: str | Omit = omit,
         type: PhoneNumberType | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -624,14 +748,31 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PhoneNumberRequirementsResponse:
         """
-        Get regulatory requirements for purchasing phone numbers in a specific country.
-        Some countries require additional documentation (addresses, identity documents)
-        before phone numbers can be activated.
+        Get the regulatory information needed to buy a phone number, for one specific
+        number or for a country and number type. Prefer `phoneNumber`: the response is
+        then exactly the list the purchase of that number validates against. Pass each
+        `requirementTypes[].id` back as `requirementType` in `regulatoryRequirements` on
+        `POST /v1/phone-numbers`.
+
+        For `phoneNumber`, the requirements of that exact number are returned. When they
+        cannot be resolved for the number itself, the list for its country and `type` is
+        returned instead, and the purchase uses the same list. An empty `items` array
+        means the number needs no regulatory information. If the requirements cannot be
+        retrieved at all, the response is `502 requirements_unavailable`, never an empty
+        list.
+
+        URL-encode the `+` of `phoneNumber` as `%2B`. An unencoded `+` is also accepted.
 
         Args:
-          country_code: Two-letter ISO country code.
+          country_code: Two-letter ISO country code. Required unless `phoneNumber` is given.
 
-          type: Type of phone number (local, mobile, tollFree).
+          phone_number: E.164 number from `GET /v1/phone-numbers/available`, with `+` encoded as `%2B`.
+              Returns the requirements the purchase of that number checks. Takes precedence
+              over `countryCode`.
+
+          type: Type of phone number (local, national, mobile, tollFree). Defaults to `local`.
+              With `phoneNumber`, used only when the number's own requirements cannot be
+              resolved and the country list is returned.
 
           extra_headers: Send extra headers
 
@@ -651,6 +792,7 @@ class AsyncPhoneNumbersResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "country_code": country_code,
+                        "phone_number": phone_number,
                         "type": type,
                     },
                     phone_number_requirements_params.PhoneNumberRequirementsParams,
