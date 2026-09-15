@@ -48,14 +48,14 @@ class AddressesResource(SyncAPIResource):
         self,
         *,
         country_code: str,
+        first_name: str,
+        last_name: str,
         locality: str,
         postal_code: str,
         street_address: str,
         administrative_area: str | Omit = omit,
         business_name: str | Omit = omit,
         extended_address: str | Omit = omit,
-        first_name: str | Omit = omit,
-        last_name: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -63,12 +63,19 @@ class AddressesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AddressCreateResponse:
-        """Create a regulatory address for phone number purchases.
-
-        Some countries require a
-        verified address before phone numbers can be activated.
+        """
+        Create a regulatory address, to use as the value of an `address` requirement
+        when buying a phone number. It is registered for review when it is created, with
+        status `pending`.
 
         Args:
+          first_name: First name of the person the address is registered to.
+
+          last_name: Last name of the person the address is registered to.
+
+          business_name: Business name, when the address belongs to a business. Defaults to the person's
+              full name.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -82,14 +89,14 @@ class AddressesResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "country_code": country_code,
+                    "first_name": first_name,
+                    "last_name": last_name,
                     "locality": locality,
                     "postal_code": postal_code,
                     "street_address": street_address,
                     "administrative_area": administrative_area,
                     "business_name": business_name,
                     "extended_address": extended_address,
-                    "first_name": first_name,
-                    "last_name": last_name,
                 },
                 address_create_params.AddressCreateParams,
             ),
@@ -186,9 +193,11 @@ class AddressesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
-        """Delete a regulatory address.
+        """Delete a regulatory address from this project.
 
-        Cannot delete addresses that are in use.
+        Any address can be deleted,
+        whatever its status. Phone numbers already purchased with it are not affected,
+        and neither is information already submitted for later purchases in its country.
 
         Args:
           extra_headers: Send extra headers
@@ -235,14 +244,14 @@ class AsyncAddressesResource(AsyncAPIResource):
         self,
         *,
         country_code: str,
+        first_name: str,
+        last_name: str,
         locality: str,
         postal_code: str,
         street_address: str,
         administrative_area: str | Omit = omit,
         business_name: str | Omit = omit,
         extended_address: str | Omit = omit,
-        first_name: str | Omit = omit,
-        last_name: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -250,12 +259,19 @@ class AsyncAddressesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AddressCreateResponse:
-        """Create a regulatory address for phone number purchases.
-
-        Some countries require a
-        verified address before phone numbers can be activated.
+        """
+        Create a regulatory address, to use as the value of an `address` requirement
+        when buying a phone number. It is registered for review when it is created, with
+        status `pending`.
 
         Args:
+          first_name: First name of the person the address is registered to.
+
+          last_name: Last name of the person the address is registered to.
+
+          business_name: Business name, when the address belongs to a business. Defaults to the person's
+              full name.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -269,14 +285,14 @@ class AsyncAddressesResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "country_code": country_code,
+                    "first_name": first_name,
+                    "last_name": last_name,
                     "locality": locality,
                     "postal_code": postal_code,
                     "street_address": street_address,
                     "administrative_area": administrative_area,
                     "business_name": business_name,
                     "extended_address": extended_address,
-                    "first_name": first_name,
-                    "last_name": last_name,
                 },
                 address_create_params.AddressCreateParams,
             ),
@@ -373,9 +389,11 @@ class AsyncAddressesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> None:
-        """Delete a regulatory address.
+        """Delete a regulatory address from this project.
 
-        Cannot delete addresses that are in use.
+        Any address can be deleted,
+        whatever its status. Phone numbers already purchased with it are not affected,
+        and neither is information already submitted for later purchases in its country.
 
         Args:
           extra_headers: Send extra headers

@@ -49,11 +49,13 @@ class Sender(BaseModel):
     """Phone number in E.164 format."""
 
     channels: Optional[List[str]] = None
-    """
-    Channels this sender can actually send on right now, computed from its
-    configuration. Empty means the sender cannot send or receive anything yet: a
-    phoneNumber alone does not enable SMS or voice. Check this rather than inferring
-    capability from phoneNumber or emailAddress.
+    """Channels this sender can actually send on right now: configured AND activated.
+
+    Empty means the sender cannot send or receive anything yet: a phoneNumber alone
+    does not enable SMS or voice, and a connected account that is not activated is
+    left out, because every send on it is refused. Check this rather than inferring
+    capability from phoneNumber or emailAddress, and turn a connected channel on
+    with `POST /v1/senders/{senderId}/channels/{channel}/activate`.
     """
 
     created_at: Optional[datetime] = FieldInfo(alias="createdAt", default=None)
