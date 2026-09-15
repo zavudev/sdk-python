@@ -33,7 +33,9 @@ class SenderCreateParams(TypedDict, total=False):
     email_receiving_enabled: Annotated[bool, PropertyInfo(alias="emailReceivingEnabled")]
     """Enable inbound email receiving on this sender.
 
-    Requires a verified MX record on the domain; ignored otherwise.
+    Requires a verified inbound MX record on the domain; the request is ignored
+    otherwise. Read `emailReceivingEnabled` back off the response to see whether it
+    was applied — it comes back `false` when the MX has not verified.
     """
 
     enable_sms_oneway: Annotated[bool, PropertyInfo(alias="enableSmsOneway")]
