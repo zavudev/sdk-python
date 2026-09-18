@@ -43,7 +43,9 @@ class SenderCreateParams(TypedDict, total=False):
 
     Needs nothing else — no phone number, no credential — so it is the fastest way
     to get a sender that can send. Recipients cannot reply. Confirm with
-    `sms_oneway` in the `channels` array on the response.
+    `sms_oneway` in the `channels` array on the response. Turning the channel on
+    needs nothing, but SENDING on it requires an approved business verification
+    (KYB): without one every send is refused with `403 kyb_required`.
     """
 
     enable_voice: Annotated[bool, PropertyInfo(alias="enableVoice")]
