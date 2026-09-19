@@ -27,6 +27,8 @@ class TestAddresses:
     def test_method_create(self, client: Zavudev) -> None:
         address = client.addresses.create(
             country_code="DE",
+            first_name="John",
+            last_name="Doe",
             locality="Berlin",
             postal_code="10115",
             street_address="123 Main St",
@@ -38,14 +40,14 @@ class TestAddresses:
     def test_method_create_with_all_params(self, client: Zavudev) -> None:
         address = client.addresses.create(
             country_code="DE",
+            first_name="John",
+            last_name="Doe",
             locality="Berlin",
             postal_code="10115",
             street_address="123 Main St",
             administrative_area="administrativeArea",
             business_name="businessName",
             extended_address="extendedAddress",
-            first_name="John",
-            last_name="Doe",
         )
         assert_matches_type(AddressCreateResponse, address, path=["response"])
 
@@ -54,6 +56,8 @@ class TestAddresses:
     def test_raw_response_create(self, client: Zavudev) -> None:
         response = client.addresses.with_raw_response.create(
             country_code="DE",
+            first_name="John",
+            last_name="Doe",
             locality="Berlin",
             postal_code="10115",
             street_address="123 Main St",
@@ -69,6 +73,8 @@ class TestAddresses:
     def test_streaming_response_create(self, client: Zavudev) -> None:
         with client.addresses.with_streaming_response.create(
             country_code="DE",
+            first_name="John",
+            last_name="Doe",
             locality="Berlin",
             postal_code="10115",
             street_address="123 Main St",
@@ -213,6 +219,8 @@ class TestAsyncAddresses:
     async def test_method_create(self, async_client: AsyncZavudev) -> None:
         address = await async_client.addresses.create(
             country_code="DE",
+            first_name="John",
+            last_name="Doe",
             locality="Berlin",
             postal_code="10115",
             street_address="123 Main St",
@@ -224,14 +232,14 @@ class TestAsyncAddresses:
     async def test_method_create_with_all_params(self, async_client: AsyncZavudev) -> None:
         address = await async_client.addresses.create(
             country_code="DE",
+            first_name="John",
+            last_name="Doe",
             locality="Berlin",
             postal_code="10115",
             street_address="123 Main St",
             administrative_area="administrativeArea",
             business_name="businessName",
             extended_address="extendedAddress",
-            first_name="John",
-            last_name="Doe",
         )
         assert_matches_type(AddressCreateResponse, address, path=["response"])
 
@@ -240,6 +248,8 @@ class TestAsyncAddresses:
     async def test_raw_response_create(self, async_client: AsyncZavudev) -> None:
         response = await async_client.addresses.with_raw_response.create(
             country_code="DE",
+            first_name="John",
+            last_name="Doe",
             locality="Berlin",
             postal_code="10115",
             street_address="123 Main St",
@@ -255,6 +265,8 @@ class TestAsyncAddresses:
     async def test_streaming_response_create(self, async_client: AsyncZavudev) -> None:
         async with async_client.addresses.with_streaming_response.create(
             country_code="DE",
+            first_name="John",
+            last_name="Doe",
             locality="Berlin",
             postal_code="10115",
             street_address="123 Main St",
