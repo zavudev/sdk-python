@@ -15,7 +15,7 @@ class BroadcastProgress(BaseModel):
     broadcast_id: str = FieldInfo(alias="broadcastId")
 
     delivered: int
-    """Successfully delivered."""
+    """Confirmed delivered to the device."""
 
     failed: int
     """Failed to deliver."""
@@ -48,5 +48,8 @@ class BroadcastProgress(BaseModel):
 
     reserved_amount: Optional[float] = FieldInfo(alias="reservedAmount", default=None)
     """Amount reserved from balance in USD."""
+
+    sent: Optional[int] = None
+    """Accepted by the provider, delivery not confirmed yet."""
 
     started_at: Optional[datetime] = FieldInfo(alias="startedAt", default=None)
