@@ -4,4 +4,4 @@ from typing_extensions import Literal, TypeAlias
 
 __all__ = ["BroadcastContactStatus"]
 
-BroadcastContactStatus: TypeAlias = Literal["pending", "queued", "sending", "delivered", "failed", "skipped"]
+BroadcastContactStatus: TypeAlias = Literal["pending", "queued", "sending", "sent", "delivered", "failed", "skipped"]
