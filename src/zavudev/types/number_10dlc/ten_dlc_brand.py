@@ -38,8 +38,20 @@ class TenDlcBrand(BaseModel):
 
     state: str
 
-    status: Literal["draft", "pending", "verified", "rejected"]
-    """Status of a 10DLC brand registration."""
+    status: Literal["draft", "pending", "verified", "unverified", "rejected", "failed"]
+    """Status of a 10DLC brand registration.
+
+    - `draft`: created, not yet submitted to the carrier.
+    - `pending`: submitted, awaiting the carrier's answer.
+    - `verified`: the carrier registered the brand AND verified the business behind
+      it.
+    - `unverified`: the carrier registered the brand but did not verify the business
+      — the registration exists, the identity check did not pass or has not been
+      resolved. Campaigns are allowed, with lower daily limits. Read
+      `identityStatus` for the carrier's own wording.
+    - `rejected`: refused by the carrier.
+    - `failed`: the registration never reached the carrier; the fee is refunded.
+    """
 
     street: str
 
@@ -63,6 +75,14 @@ class TenDlcBrand(BaseModel):
     """Reason for rejection, if applicable."""
 
     first_name: Optional[str] = FieldInfo(alias="firstName", default=None)
+
+    identity_status: Optional[str] = FieldInfo(alias="identityStatus", default=None)
+    """
+    The carrier's raw identity verdict on the business, as the carrier spells it
+    (`VERIFIED`, `VETTED_VERIFIED`, `SELF_DECLARED`, `UNVERIFIED`). Null while the
+    identity has not been resolved — which is not the same as verified, and is why
+    such a brand reports `status: unverified`.
+    """
 
     last_name: Optional[str] = FieldInfo(alias="lastName", default=None)
 

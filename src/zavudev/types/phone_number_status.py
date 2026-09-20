@@ -4,4 +4,4 @@ from typing_extensions import Literal, TypeAlias
 
 __all__ = ["PhoneNumberStatus"]
 
-PhoneNumberStatus: TypeAlias = Literal["active", "suspended", "pending"]
+PhoneNumberStatus: TypeAlias = Literal["active", "suspended", "pending", "releasing", "released"]

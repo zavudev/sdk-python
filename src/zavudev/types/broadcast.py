@@ -60,6 +60,7 @@ class Broadcast(BaseModel):
     """Content for non-text broadcast message types."""
 
     delivered_count: Optional[int] = FieldInfo(alias="deliveredCount", default=None)
+    """Recipients with confirmed delivery to the device."""
 
     email_subject: Optional[str] = FieldInfo(alias="emailSubject", default=None)
 
@@ -86,6 +87,13 @@ class Broadcast(BaseModel):
     sender_id: Optional[str] = FieldInfo(alias="senderId", default=None)
 
     sending_count: Optional[int] = FieldInfo(alias="sendingCount", default=None)
+
+    sent_count: Optional[int] = FieldInfo(alias="sentCount", default=None)
+    """Recipients whose message the provider accepted, without a confirmed delivery
+    yet.
+
+    Channels that never report delivery keep their recipients here.
+    """
 
     started_at: Optional[datetime] = FieldInfo(alias="startedAt", default=None)
 

@@ -74,7 +74,7 @@ class TestFlows:
             ],
             trigger={
                 "type": "keyword",
-                "intent": "intent",
+                "intent": "quiere saber precios o cotizar",
                 "keywords": ["info", "pricing", "demo"],
             },
             description="Capture lead information",
@@ -249,7 +249,7 @@ class TestFlows:
             ],
             trigger={
                 "type": "keyword",
-                "intent": "intent",
+                "intent": "quiere saber precios o cotizar",
                 "keywords": ["string"],
             },
         )
@@ -516,7 +516,7 @@ class TestAsyncFlows:
             ],
             trigger={
                 "type": "keyword",
-                "intent": "intent",
+                "intent": "quiere saber precios o cotizar",
                 "keywords": ["info", "pricing", "demo"],
             },
             description="Capture lead information",
@@ -691,7 +691,7 @@ class TestAsyncFlows:
             ],
             trigger={
                 "type": "keyword",
-                "intent": "intent",
+                "intent": "quiere saber precios o cotizar",
                 "keywords": ["string"],
             },
         )
