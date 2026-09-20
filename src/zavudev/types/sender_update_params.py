@@ -49,9 +49,6 @@ class SenderUpdateParams(TypedDict, total=False):
 
     Enabling needs nothing else and takes effect immediately; disabling removes the
     channel from the sender. Confirm with the `channels` array on the response.
-    Turning the channel on needs nothing, but SENDING on it requires an approved
-    business verification (KYB): without one every send is refused with
-    `403 kyb_required`.
     """
 
     enable_voice: Annotated[bool, PropertyInfo(alias="enableVoice")]

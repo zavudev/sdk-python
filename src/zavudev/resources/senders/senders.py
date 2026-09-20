@@ -138,9 +138,7 @@ class SendersResource(SyncAPIResource):
           enable_sms_oneway: Enable the one-way SMS channel (`sms_oneway`). Needs nothing else — no phone
               number, no credential — so it is the fastest way to get a sender that can send.
               Recipients cannot reply. Confirm with `sms_oneway` in the `channels` array on
-              the response. Turning the channel on needs nothing, but SENDING on it requires
-              an approved business verification (KYB): without one every send is refused with
-              `403 kyb_required`.
+              the response.
 
           enable_voice: Let this sender place and answer phone calls. Requires `phoneNumber`; enabling
               it without one returns 400. Check the `channels` array on the response to
@@ -284,9 +282,7 @@ class SendersResource(SyncAPIResource):
 
           enable_sms_oneway: Turn the one-way SMS channel on or off. Enabling needs nothing else and takes
               effect immediately; disabling removes the channel from the sender. Confirm with
-              the `channels` array on the response. Turning the channel on needs nothing, but
-              SENDING on it requires an approved business verification (KYB): without one
-              every send is refused with `403 kyb_required`.
+              the `channels` array on the response.
 
           enable_voice: Turn the voice channel on or off. The sender must already have a phone number
               provisioned for calls; enabling it otherwise returns 400 instead of storing a
@@ -683,9 +679,7 @@ class AsyncSendersResource(AsyncAPIResource):
           enable_sms_oneway: Enable the one-way SMS channel (`sms_oneway`). Needs nothing else — no phone
               number, no credential — so it is the fastest way to get a sender that can send.
               Recipients cannot reply. Confirm with `sms_oneway` in the `channels` array on
-              the response. Turning the channel on needs nothing, but SENDING on it requires
-              an approved business verification (KYB): without one every send is refused with
-              `403 kyb_required`.
+              the response.
 
           enable_voice: Let this sender place and answer phone calls. Requires `phoneNumber`; enabling
               it without one returns 400. Check the `channels` array on the response to
@@ -829,9 +823,7 @@ class AsyncSendersResource(AsyncAPIResource):
 
           enable_sms_oneway: Turn the one-way SMS channel on or off. Enabling needs nothing else and takes
               effect immediately; disabling removes the channel from the sender. Confirm with
-              the `channels` array on the response. Turning the channel on needs nothing, but
-              SENDING on it requires an approved business verification (KYB): without one
-              every send is refused with `403 kyb_required`.
+              the `channels` array on the response.
 
           enable_voice: Turn the voice channel on or off. The sender must already have a phone number
               provisioned for calls; enabling it otherwise returns 400 instead of storing a
