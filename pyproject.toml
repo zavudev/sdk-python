@@ -37,8 +37,11 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/zavudev/sdk-python"
+Homepage = "https://zavu.dev"
+Documentation = "https://docs.zavu.dev"
 Repository = "https://github.com/zavudev/sdk-python"
+Issues = "https://github.com/zavudev/sdk-python/issues"
+Changelog = "https://github.com/zavudev/sdk-python/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.9"]
