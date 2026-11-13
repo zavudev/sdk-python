@@ -1,7 +1,17 @@
 [project]
 name = "zavudev"
 version = "0.50.0"
-description = "The official Python library for the zavudev API"
+description = "Communication infrastructure for AI agents (WhatsApp, SMS, email, Telegram, voice)"
+keywords = [
+  "communication infrastructure",
+  "ai agents",
+  "whatsapp",
+  "sms",
+  "email",
+  "telegram",
+  "voice",
+  "zavu",
+]
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
@@ -37,7 +47,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/zavudev/sdk-python"
+Homepage = "https://www.zavu.dev"
+Documentation = "https://www.zavu.dev/docs"
 Repository = "https://github.com/zavudev/sdk-python"
 
 [project.optional-dependencies]
