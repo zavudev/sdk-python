@@ -3,6 +3,8 @@
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/zavudev.svg?label=pypi%20(stable))](https://pypi.org/project/zavudev/)
 
+[Zavu](https://www.zavu.dev) is communication infrastructure for AI agents (WhatsApp, SMS, email, Telegram, and voice). Documentation: [https://www.zavu.dev/docs](https://www.zavu.dev/docs).
+
 The Zavudev Python library provides convenient access to the Zavudev REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
@@ -19,6 +21,8 @@ Use the Zavudev MCP Server to enable AI assistants to interact with this API, al
 > Note: You may need to set environment variables in your MCP client.
 
 ## Documentation
+
+The website is [https://www.zavu.dev](https://www.zavu.dev). Documentation is at [https://www.zavu.dev/docs](https://www.zavu.dev/docs).
 
 The REST API documentation can be found on [docs.zavu.dev](https://docs.zavu.dev). The full API of this library can be found in [api.md](api.md).
 
